@@ -1,17 +1,29 @@
 <template>
   <div id="app">
-    <p>项目初始化</p>
-    <div>
-      <el-button>elementUI按钮</el-button>
-    </div>
+    <main-content />
   </div>
 </template>
 
 <script>
+import mainContent from "@/components/main-content.vue";
 export default {
   name: "app",
-  components: {}
+  components: {
+    mainContent
+  }
 };
 </script>
 
-<style />
+<style lang="scss">
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  box-sizing: border-box;
+}
+#app {
+  width: 100%;
+  height: 100%;
+}
+</style>
