@@ -31,4 +31,6 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="@/assets/scss/main-content.scss" />
+<style scoped lang="scss">
+@import "~@/assets/scss/main-content.scss";
+</style>

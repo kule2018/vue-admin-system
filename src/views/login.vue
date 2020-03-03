@@ -1,7 +1,7 @@
 <!--登录组件-->
 <template>
   <div>
-    登录页面
+    登录
   </div>
 </template>
 
@@ -11,4 +11,6 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="@/assets/scss/login.scss" />
+<style scoped lang="scss">
+@import "~@/assets/scss/login.scss";
+</style>
