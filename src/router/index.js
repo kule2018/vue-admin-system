@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import IndexPage from "@/views/index";
 import LoginPage from "@/views/login";
+import ContentBody from "@/components/content-body";
 
 Vue.use(VueRouter);
 
@@ -19,7 +20,18 @@ const routes = [
     props: {
       index: true
     },
-    children: []
+    children: [
+      {
+        name: "contentBody",
+        path: "contentBody/:menuName",
+        components: {
+          contentBody: ContentBody
+        },
+        props: {
+          contentBody: true
+        }
+      }
+    ]
   },
   {
     name: "login",

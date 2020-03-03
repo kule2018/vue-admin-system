@@ -7,7 +7,7 @@
 * 使用vue-router进行路由管理
 * 使用scss作为css扩展语言
 * 使用lodash库进行非空校验等验证
-
+* 使用eslint进行代码规范校验
 ## 项目运行
 * 使用**yarn run service**命令运行
 * 使用**yarn run build**命令打包
@@ -33,9 +33,11 @@
         * main-content.scss 主内容页面样式文件
         * login.scss 登录页面样式文件
         * index.scss 项目主页样式文件
+        * content-body.scss 菜单跳转的公用组件样式
     * logo.png 当前项目logo
 * **components** 公用组件文件夹
     * main-content.vue 用于登录页面和后台主页面的跳转
+    * content-body.vue 菜单跳转的公用组件
 * **plugins** 插件配置文件夹，用于存储当前项目所使用插件的自定义配置
     * axios.js axios库的相关封装
     * element.js,elementUI插件配置文件
