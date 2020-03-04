@@ -6,54 +6,123 @@ $fontColor:#474D5B;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: url("http://v10.e-office.cn/eoffice10/server/public/login/theme/60f9efa4a3c74659861193043ad2269c.png") no-repeat center center;
+  background-size: cover;
 
-  .login-panel{
-    width: 620px;
-    min-height: 484px;
+  .login-panel {
+    width: 700px;
+    height: 460px;
+    border-radius: 10px;
+    overflow: hidden;
 
-    .title-panel{
-      width: 100%;
-      height: 40px;
-      text-align: center;
-      margin-bottom: 54px;
-
-      p{
-        line-height: 40px;
-        font-size: 30px;
-        color: $fontColor;
-      }
+    .left-banner {
+      width: 350px;
+      height: 460px;
+      background: url("http://v10.e-office.cn/eoffice10/server/public/login/left/left.png?123456") no-repeat center center;
+      background-size: cover;
+      float: left;
     }
 
-    .user-input-panel{
-      width: 100%;
-      min-height: 60px;
+    .right-panel {
+      width: 350px;
+      height: 460px;
+      background-color: #fff;
+      float: left;
+      padding: 34px 35px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
 
-      .row-panel{
-        width: 100%;
-        height: 100%;
-        margin-bottom: 20px;
+      & > div {
+        padding: 5px;
+        box-sizing: border-box;
+        margin-bottom: 5px;
+      }
 
-        .tips-panel{
+      .login-logo {
+        width: 264px;
+        height: 88px;
+        padding: 0;
+        margin-bottom: 5px;
+
+        img {
           width: 100%;
-          height: 25px;
+          height: 100%;
+        }
+      }
 
-          p{
+      .tools-bar {
+        text-align: right;
+
+        & > svg {
+          cursor: pointer;
+        }
+      }
+
+      .login-form {
+        margin-top: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        label {
+          width: 100%;
+          height: 34px;
+          position: relative;
+          margin-bottom: 15px;
+
+          i {
+            width: 34px;
+            height: 34px;
+            line-height: 34px;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            font-size: 18px;
+            border-right: 1px solid #989292;
+          }
+
+          input {
+            width: 100%;
+            height: 100%;
+            outline: none;
+            padding-left: 39px;
             font-size: 14px;
-            color: $fontColor;
+            box-sizing: border-box;
+            border: 1px solid #989292;
+            overflow: hidden;
+            border-radius: 5px;
+            transition: .2s;
+
+            &:focus {
+              border-color: rgb(198, 192, 192);
+              box-shadow: 0 0 2px 3px rgba(174, 219, 251, 0.64);
+            }
           }
         }
 
-        .input-panel{
+        button {
+          height: 34px;
           width: 100%;
-          height: 40px;
-          display: flex;
-          align-items: center;
-          .left-panel{
-            width: 90%;
-          }
-          .right-panel{
-            width: 10%;
-          }
+          background-color: #e64141;
+          border: 0;
+          color: #fff;
+          border-radius: 5px;
+          margin-top: 15px;
+          cursor: pointer;
+        }
+
+        .key-code {
+          width: 35%;
+          height: 34px;
+          border: 1px solid #989292;
+          display: inline-block;
+          float: left;
+          border-radius: 5px;
+          box-sizing: border-box;
         }
       }
     }
