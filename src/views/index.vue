@@ -8,10 +8,14 @@
             alt=""
           />
         </div>
-        <div class="contracted-state-panel" @click="isCollapse = !isCollapse">
-          <Icon class="el-icon-s-fold" />
+        <div class="contracted-state-panel" @click="zoom">
+          <i class="el-icon-s-fold" v-if="isCollapse === false" />
+          <i class="el-icon-s-unfold" v-else />
         </div>
-        <div class="headPortrait-panel" @click.stop="showFuncMenu = !showFuncMenu">
+        <div
+          class="headPortrait-panel"
+          @click.stop="showFuncMenu = !showFuncMenu"
+        >
           <div class="img-panel">
             <img
               src="https://oscimg.oschina.net/oscnet/up-01124e45c80b44b517b193304da773df.jpg!/both/50x50?t=1569379619000"
@@ -123,6 +127,9 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
+    },
+    zoom() {
+      this.isCollapse = !this.isCollapse;
     }
   }
 };
