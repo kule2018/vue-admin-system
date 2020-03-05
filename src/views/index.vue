@@ -29,7 +29,7 @@
           <transition name="func-menu">
             <dl class="func-menu" v-if="showFuncMenu">
               <dd><Icon class="el-icon-s-custom" /><span>个性设置</span></dd>
-              <dd><Icon class="el-icon-s-open" /><span>主题修改</span></dd>
+              <!--<dd><Icon class="el-icon-s-open" /><span>主题修改</span></dd>-->
               <dd><Icon class="el-icon-lock" /><span>密码修改</span></dd>
               <dd>
                 <Icon class="el-icon-switch-button" /><span>退出登录</span>
@@ -110,6 +110,7 @@ export default {
     };
   },
   mounted() {
+    this.$vb.plugin.showMsg("aa");
     if (this.$route.params.menuName !== "选项1") {
       this.showContent("选项1");
     }

@@ -5057,11 +5057,6 @@ launch-editor@^2.2.1:
     chalk "^2.3.0"
     shell-quote "^1.6.1"
 
-layui-src@^2.5.5:
-  version "2.5.5"
-  resolved "https://registry.npmjs.org/layui-src/-/layui-src-2.5.5.tgz#69cc2e5ca73c4cd0567753c35504e98609b40f5f"
-  integrity sha512-KFmVoXaHauba3UyTByM+IhyzyZTBD4ytl9Pq5uU0rYKICVSplyFIWU7+whW4lBOhXWxqNK6QGU1iWc1pG2njZw==
-
 lcid@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/lcid/-/lcid-1.0.0.tgz#308accafa0bc483a3867b4b6f2b9506251d1b835"
@@ -8485,6 +8480,11 @@ vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.npmjs.org/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
+
+vue-layer@^1.1.7:
+  version "1.1.7"
+  resolved "https://registry.npmjs.org/vue-layer/-/vue-layer-1.1.7.tgz#f89191ebb1b4783e435257b7ab1ae3a8976e99f0"
+  integrity sha512-hFfzvDaBK99+2y5/slp0No+VFGerjos6VuPOBla6rB14C6jUovwtBrlVEZIeHKHRT56FbfELkAfBGTFMRrAqqQ==
 
 vue-loader@^15.8.3:
   version "15.9.0"
