@@ -1,5 +1,5 @@
 <template>
-  <div id="contentPanel">
+  <div id="contentPanel" @click="showFuncMenu = false">
     <div class="header-panel">
       <div class="main-panel">
         <div class="logo-panel">
@@ -8,32 +8,39 @@
             alt=""
           />
         </div>
-        <div class="contracted-state-panel" @click="zoom">
-          <i class="el-icon-s-fold" v-if="isCollapse === false" />
-          <i class="el-icon-s-unfold" v-else />
+        <div class="contracted-state-panel" @click="isCollapse = !isCollapse">
+          <Icon class="el-icon-s-fold" />
         </div>
-        <div class="greetings-panel">
-          <p>你好! 用户名</p>
-        </div>
-        <div class="headPortrait-panel">
+        <div class="headPortrait-panel" @click.stop="showFuncMenu = !showFuncMenu">
           <div class="img-panel">
             <img
               src="https://oscimg.oschina.net/oscnet/up-01124e45c80b44b517b193304da773df.jpg!/both/50x50?t=1569379619000"
               alt=""
             />
           </div>
+          <div class="greetings-panel">
+            <p>开发者</p>
+            <Icon class="el-icon-caret-bottom" />
+          </div>
+          <transition name="func-menu">
+            <dl class="func-menu" v-if="showFuncMenu">
+              <dd><Icon class="el-icon-s-custom" /><span>个性设置</span></dd>
+              <dd><Icon class="el-icon-s-open" /><span>主题修改</span></dd>
+              <dd><Icon class="el-icon-lock" /><span>密码修改</span></dd>
+              <dd>
+                <Icon class="el-icon-switch-button" /><span>退出登录</span>
+              </dd>
+            </dl>
+          </transition>
         </div>
       </div>
     </div>
     <div class="content-panel">
       <div class="main-panel">
-        <div
-          class="side-panel"
-          :style="{ width: isCollapse === false ? '10%' : 'auto' }"
-        >
+        <div class="side-panel">
           <el-menu
             default-active="1-1"
-            class="el-menu-vertical-demo"
+            class="el-menu-vertical"
             @open="handleOpen"
             @close="handleClose"
             :collapse="isCollapse"
@@ -83,15 +90,19 @@
 </template>
 
 <script>
+import { Icon } from "element-ui";
 export default {
   name: "index",
+  components: {
+    Icon
+  },
   data() {
     return {
       current: 0,
       currentMore: 0,
       tabPosition: "left",
-      // 控制侧栏缩放状态
-      isCollapse: false
+      showFuncMenu: false, // 头像功能菜单显示状态
+      isCollapse: false // 控制侧栏缩放状态
     };
   },
   mounted() {
@@ -112,9 +123,6 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
-    },
-    zoom() {
-      this.isCollapse = !this.isCollapse;
     }
   }
 };
