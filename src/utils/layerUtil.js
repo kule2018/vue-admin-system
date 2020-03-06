@@ -1,9 +1,7 @@
-import Vue from "vue";
-
 const layerUtil = {
   // 打开组件窗口
-  openLayer(componentName, props, layerWidth, layerHeight, title) {
-    Vue.$layer.iframe({
+  openLayer(vueObject, componentName, props, layerWidth, layerHeight, title) {
+    vueObject.$layer.iframe({
       content: {
         // 子组件
         content: componentName,
@@ -18,8 +16,8 @@ const layerUtil = {
     });
   },
   // 显示消息提示
-  showMsg(msg) {
-    Vue.$layer.msg(msg);
+  showMsg(vueObject, msg) {
+    vueObject.$layer.msg(msg);
   }
 };
 
