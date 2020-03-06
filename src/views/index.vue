@@ -43,7 +43,6 @@
       <div class="main-panel">
         <div class="side-panel">
           <el-menu
-            default-active="1-1"
             class="el-menu-vertical"
             @open="handleOpen"
             @close="handleClose"

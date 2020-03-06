@@ -1,0 +1,140 @@
+.first-screen {
+  padding: 10px 15px;
+
+  .tips-card {
+    height: 125px;
+    overflow: hidden;
+    position: relative;
+    padding: 10px 10px 32px;
+    box-sizing: border-box;
+
+    & > svg {
+      position: absolute;
+      left: -10%;
+      bottom: -10%;
+    }
+
+    & > .tips-info-panel {
+      position: absolute;
+      right: 10px;
+      top: 15px;
+      font-weight: 300;
+      text-align: right;
+      color: #fff;
+
+      .num {
+        font-size: 34px;
+      }
+
+      .title {
+        font-size: 16px;
+      }
+    }
+
+    .more-link {
+      position: absolute;
+      width: 100%;
+      height: 30px;
+      line-height: 30px;
+      left: 0;
+      bottom: 0;
+      padding: 0 10px;
+      color: #ddd;
+      fill: #ddd;
+      text-decoration: none;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    &.msg-tips {
+      background-color: #3598dc;
+
+      & > svg {
+        fill: #49a2df;
+      }
+
+      .more-link {
+        background-color: #2a92d8;
+      }
+    }
+
+    &.watch-tips {
+      background-color: #e7505a;
+
+      & > svg {
+        fill: #e9616a;
+      }
+
+      .more-link {
+        background-color: #e6434e;
+      }
+    }
+
+    &.apple-tips {
+      background-color: #32c5d2;
+
+      & > svg {
+        fill: #46cbd6;
+      }
+
+      .more-link {
+        background-color: #2dbbc8;
+      }
+    }
+
+    &.android-tips {
+      background-color: #8e44ad;
+
+      & > svg {
+        fill: #9956b5;
+      }
+
+      .more-link {
+        background-color: #8640a2;
+      }
+    }
+  }
+
+  .table-panel {
+    width: 100%;
+    height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+    box-sizing: border-box;
+
+    &:hover {
+      padding-right: 0;
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+    }
+
+    /*整体部分*/
+    &::-webkit-scrollbar
+    {
+      width: 0;
+      height: 10px;
+    }
+    /*滑动轨道*/
+    &::-webkit-scrollbar-track
+    {
+      border-radius: 0;
+      background: none;
+    }
+    /*滑块*/
+    &::-webkit-scrollbar-thumb
+    {
+      border-radius: 5px;
+      background-color: #ddd;
+    }
+    /*滑块效果*/
+    &::-webkit-scrollbar-thumb:hover
+    {
+      border-radius: 5px;
+      background-color: #ddd;
+    }
+  }
+}
