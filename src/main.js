@@ -15,10 +15,8 @@ Vue.config.productionTip = false;
 Vue.prototype.$api = api;
 Vue.prototype.$layer = layer(Vue);
 Vue.prototype.$vb = utils;
-let vue = new Vue({
+window.$Vue = new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount("#app");
-
-export default vue;
