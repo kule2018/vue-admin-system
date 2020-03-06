@@ -8,6 +8,7 @@ import "./plugins/element.js";
 import layer from "vue-layer";
 import "vue-layer/lib/vue-layer.css";
 import utils from "./utils";
+import echarts from 'echarts'
 
 Vue.config.productionTip = false;
 
@@ -15,6 +16,7 @@ Vue.config.productionTip = false;
 Vue.prototype.$api = api;
 Vue.prototype.$layer = layer(Vue);
 Vue.prototype.$vb = utils;
+Vue.prototype.$echarts = echarts;
 const vue = new Vue({
   router,
   store,
