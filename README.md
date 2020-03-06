@@ -7,7 +7,7 @@
 * 使用vue-router进行路由管理
 * 使用scss作为css扩展语言
 * 使用lodash库进行非空校验等验证
-* 使用eslint进行代码规范校验
+* 使用eslint+Prettier进行代码规范校验
 ## 项目运行
 * 使用**yarn run service**命令运行
 * 使用**yarn run build**命令打包

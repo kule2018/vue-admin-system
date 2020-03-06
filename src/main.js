@@ -8,7 +8,7 @@ import "./plugins/element.js";
 import layer from "vue-layer";
 import "vue-layer/lib/vue-layer.css";
 import utils from "./utils";
-import echarts from 'echarts'
+import echarts from "echarts";
 
 Vue.config.productionTip = false;
 

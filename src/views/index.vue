@@ -31,6 +31,9 @@
               <dd><icon class="el-icon-s-custom" /><span>个性设置</span></dd>
               <!--<dd><icon class="el-icon-s-open" /><span>主题修改</span></dd>-->
               <dd><icon class="el-icon-lock" /><span>密码修改</span></dd>
+              <dd @click="testAdd()">
+                <icon class="el-icon-plus" /><span>录入页面测试</span>
+              </dd>
               <dd @click="logout">
                 <icon class="el-icon-switch-button" /><span>退出登录</span>
               </dd>
@@ -93,6 +96,7 @@
 <script>
 import { Icon } from "element-ui";
 import menu from "@/config/menu.json";
+import addDataPage from "@/views/add-data-page";
 export default {
   name: "index",
   components: {
@@ -134,6 +138,17 @@ export default {
     },
     logout() {
       this.$router.push("/login");
+    },
+    testAdd() {
+      console.log("aa");
+      this.$vb.plugin.openAddLayer(
+        addDataPage,
+        this,
+        { name: "传值测试" },
+        900,
+        600,
+        "录入"
+      );
     }
   }
 };
