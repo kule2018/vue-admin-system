@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import IndexPage from "@/views/index";
 import LoginPage from "@/views/login";
 import ContentBody from "@/components/content-body";
+import FirstScreen from "@/views/first-screen";
 
 Vue.use(VueRouter);
 
@@ -23,13 +24,22 @@ const routes = [
     children: [
       {
         name: "contentBody",
-        path: "contentBody/:menuName",
+        path: "contentBody",
         components: {
           contentBody: ContentBody
         },
         props: {
           contentBody: true
-        }
+        },
+        children: [
+          {
+            name: "firstScreen",
+            path: "firstScreen",
+            components: {
+              firstScreen: FirstScreen
+            }
+          }
+        ]
       }
     ]
   },

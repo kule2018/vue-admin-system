@@ -111,9 +111,10 @@ export default {
   },
   mounted() {
     this.$vb.plugin.showMsg("公用组件调用");
-    if (this.$route.params.menuName !== "选项1") {
-      this.showContent("选项1");
-    }
+    this.$router.push({
+      name: "contentBody",
+      params: { menuName: "firstScreen" }
+    });
   },
   methods: {
     showContent(val, index) {

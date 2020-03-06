@@ -1,11 +1,17 @@
 <template>
-  <div>{{ menuName }}，对应的内容</div>
+  <div>
+    <router-view name="firstScreen" />
+  </div>
 </template>
 
 <script>
 export default {
   name: "content-body",
-  props: ["menuName"]
+  props: ["menuName"],
+  created() {
+    console.log(this.$route.params.menuName);
+    this.$router.push({ name: this.menuName });
+  }
 };
 </script>
 
