@@ -2,7 +2,9 @@
   <div id="layerContent">
     <!--表单组件-->
     <div class="content-panel">
-      <div class="main-content"></div>
+      <div class="main-content">
+        <component :is="content" />
+      </div>
     </div>
     <!--按钮部分-->
     <div class="btn-panel">

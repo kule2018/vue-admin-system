@@ -52,7 +52,21 @@
 
 <script>
 export default {
-  name: "add-data-page"
+  name: "add-data-page",
+  data() {
+    return {
+      form: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: ""
+      }
+    };
+  }
 };
 </script>
 

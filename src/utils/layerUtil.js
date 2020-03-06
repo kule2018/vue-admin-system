@@ -15,7 +15,8 @@ export default {
       area: [`${layerWidth}px`, `${layerHeight}px`],
       title: title,
       // 关闭事件
-      cancel: () => {}
+      cancel: () => {},
+      shadeClose: false
     });
   },
   // 打开新增组件
@@ -41,7 +42,8 @@ export default {
       area: [`${layerWidth}px`, `${layerHeight}px`],
       title: title,
       // 关闭事件
-      cancel: () => {}
+      cancel: () => {},
+      shadeClose: false
     });
   },
   // 显示消息提示
