@@ -1,9 +1,21 @@
 /*
 elementUI 主题配置文件
 */
-$--color-primary: #3DAB53;
+$--color-primary: #409EFF;
 
 /* icon font path, required */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 @import "~element-ui/packages/theme-chalk/src/index";
+
+.vl-notify-mask {
+  background: black !important;
+}
+
+.vl-notify.vl-notify-alert h2.vl-notice-title .icon-remove{
+  font-size: 20px;
+}
+.vl-notify.vl-notify-alert h2.vl-notice-title .lv-title {
+  font-size: 18px;
+  font-weight: 500;
+}
