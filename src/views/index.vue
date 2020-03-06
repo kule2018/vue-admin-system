@@ -110,7 +110,7 @@ export default {
     };
   },
   mounted() {
-    this.$vb.plugin.showMsg(this, "公用组件调用");
+    this.$vb.plugin.showMsg("公用组件调用");
     if (this.$route.params.menuName !== "选项1") {
       this.showContent("选项1");
     }
