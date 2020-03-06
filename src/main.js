@@ -7,7 +7,7 @@ import api from "./api/index";
 import "./plugins/element.js";
 import layer from "vue-layer";
 import "vue-layer/lib/vue-layer.css";
-import utils from "./utils/index";
+import utils from "./utils";
 
 Vue.config.productionTip = false;
 
@@ -15,8 +15,10 @@ Vue.config.productionTip = false;
 Vue.prototype.$api = api;
 Vue.prototype.$layer = layer(Vue);
 Vue.prototype.$vb = utils;
-window.$Vue = new Vue({
+const vue = new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount("#app");
+
+export default vue;
