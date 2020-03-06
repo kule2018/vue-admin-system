@@ -1,9 +1,9 @@
-import Vue from "vue";
+import vue from "../main";
 
-const layerUtil = {
+export default {
   // 打开组件窗口
   openLayer(componentName, props, layerWidth, layerHeight, title) {
-    Vue.$layer.iframe({
+    vue.$layer.iframe({
       content: {
         // 子组件
         content: componentName,
@@ -19,8 +19,11 @@ const layerUtil = {
   },
   // 显示消息提示
   showMsg(msg) {
-    Vue.$layer.msg(msg);
+    let time = setInterval(() => {
+      if (vue !== undefined) {
+        vue.$layer.msg(msg);
+        clearInterval(time);
+      }
+    }, 100);
   }
 };
-
-export default layerUtil;

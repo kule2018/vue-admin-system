@@ -9,8 +9,8 @@
           />
         </div>
         <div class="contracted-state-panel" @click="zoom">
-          <i class="el-icon-s-fold" v-if="isCollapse === false" />
-          <i class="el-icon-s-unfold" v-else />
+          <icon class="el-icon-s-fold" v-if="isCollapse === false" />
+          <icon class="el-icon-s-unfold" v-else />
         </div>
         <div
           class="headPortrait-panel"
@@ -24,15 +24,15 @@
           </div>
           <div class="greetings-panel">
             <p>开发者</p>
-            <Icon class="el-icon-caret-bottom" />
+            <icon class="el-icon-caret-bottom" />
           </div>
           <transition name="func-menu">
             <dl class="func-menu" v-if="showFuncMenu">
-              <dd><Icon class="el-icon-s-custom" /><span>个性设置</span></dd>
-              <!--<dd><Icon class="el-icon-s-open" /><span>主题修改</span></dd>-->
-              <dd><Icon class="el-icon-lock" /><span>密码修改</span></dd>
-              <dd>
-                <Icon class="el-icon-switch-button" /><span>退出登录</span>
+              <dd><icon class="el-icon-s-custom" /><span>个性设置</span></dd>
+              <!--<dd><icon class="el-icon-s-open" /><span>主题修改</span></dd>-->
+              <dd><icon class="el-icon-lock" /><span>密码修改</span></dd>
+              <dd @click="logout">
+                <icon class="el-icon-switch-button" /><span>退出登录</span>
               </dd>
             </dl>
           </transition>
@@ -49,39 +49,37 @@
             @close="handleClose"
             :collapse="isCollapse"
           >
-            <el-submenu index="1">
+            <el-submenu
+              v-for="item in menu.subMenu"
+              :key="item.index"
+              index="1"
+            >
               <template slot="title">
-                <i class="el-icon-location" />
-                <span slot="title">导航一</span>
+                <icon :class="`el-icon-${item.icon}`" />
+                <span slot="title">{{ item.name }}</span>
               </template>
-              <el-menu-item-group>
-                <span slot="title">分组一</span>
-                <el-menu-item index="1-1" @click="showContent('选项一')">
-                  选项1
-                </el-menu-item>
-                <el-menu-item index="1-2" @click="showContent('选项二')">
-                  选项2
-                </el-menu-item>
+              <el-menu-item-group
+                v-for="group in item.group"
+                :key="group.title"
+                :title="group.title"
+              >
+                <el-menu-item
+                  v-for="groupItem in group.item"
+                  :key="groupItem.index"
+                  :index="groupItem.index"
+                  @click="showContent(groupItem.link)"
+                  >{{ groupItem.name }}</el-menu-item
+                >
               </el-menu-item-group>
-              <el-menu-item-group title="分组2">
-                <el-menu-item index="1-3" @click="showContent('选项三')">
-                  选项3
-                </el-menu-item>
-              </el-menu-item-group>
-              <el-submenu index="1-4">
-                <span slot="title">选项4</span>
-                <el-menu-item index="1-4-1" @click="showContent('选项一')">
-                  选项1
-                </el-menu-item>
-              </el-submenu>
             </el-submenu>
-            <el-menu-item index="2" @click="showContent('导航二')">
-              <i class="el-icon-menu" />
-              <span slot="title">导航二</span>
-            </el-menu-item>
-            <el-menu-item index="3" @click="showContent('导航三')">
-              <i class="el-icon-setting" />
-              <span slot="title">导航三</span>
+            <el-menu-item
+              v-for="item in menu.subItem"
+              :key="item.index"
+              :index="item.index"
+              @click="showContent(item.link)"
+            >
+              <icon :class="`el-icon-${item.icon}`" />
+              <span slot="title">{{ item.name }}</span>
             </el-menu-item>
           </el-menu>
         </div>
@@ -95,6 +93,7 @@
 
 <script>
 import { Icon } from "element-ui";
+import menu from "@/config/menu.json";
 export default {
   name: "index",
   components: {
@@ -106,7 +105,8 @@ export default {
       currentMore: 0,
       tabPosition: "left",
       showFuncMenu: false, // 头像功能菜单显示状态
-      isCollapse: false // 控制侧栏缩放状态
+      isCollapse: false, // 控制侧栏缩放状态
+      menu: menu
     };
   },
   mounted() {
@@ -131,6 +131,9 @@ export default {
     },
     zoom() {
       this.isCollapse = !this.isCollapse;
+    },
+    logout() {
+      this.$router.push("/login");
     }
   }
 };
