@@ -50,6 +50,7 @@
             @open="handleOpen"
             @close="handleClose"
             :collapse="isCollapse"
+            default-active="1-1"
           >
             <el-submenu
               v-for="item in menu.subMenu"
@@ -105,27 +106,17 @@ export default {
   data() {
     return {
       current: 0,
-      currentMore: 0,
       tabPosition: "left",
       showFuncMenu: false, // 头像功能菜单显示状态
       isCollapse: false, // 控制侧栏缩放状态
       menu: menu
     };
   },
-  mounted() {
-    this.$vb.plugin.showMsg("公用组件调用");
-    this.$router.push({
-      name: "contentBody",
-      params: { menuName: "firstScreen" }
-    });
-  },
+  mounted() {},
   methods: {
-    showContent(val, index) {
-      this.currentMore = index;
+    showContent(val) {
       // 路由切换
-      if (val !== this.$route.params.menuName) {
-        this.$router.push({ name: "contentBody", params: { menuName: val } });
-      }
+      this.$router.push({ name: val });
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -140,7 +131,6 @@ export default {
       this.$router.push("/login");
     },
     testAdd() {
-      console.log("aa");
       this.$vb.plugin.openAddLayer(
         addDataPage,
         this,

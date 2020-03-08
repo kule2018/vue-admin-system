@@ -23,6 +23,8 @@ const routes = [
     components: {
       index: IndexPage
     },
+    // 重定向到首屏
+    redirect: "index/contentBody/firstScreen",
     props: {
       index: true
     },
