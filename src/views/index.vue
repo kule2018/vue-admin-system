@@ -8,7 +8,7 @@
             alt=""
           />
         </div>
-        <div class="contracted-state-panel" @click="zoom">
+        <div class="contracted-state-panel" ref="zoom" @click="zoom">
           <icon class="el-icon-s-fold" v-if="isCollapse === false" />
           <icon class="el-icon-s-unfold" v-else />
         </div>
@@ -71,19 +71,13 @@
                 <icon :class="`el-icon-${item.icon}`" />
                 <span slot="title">{{ item.name }}</span>
               </template>
-              <el-menu-item-group
-                v-for="group in item.group"
-                :key="group.title"
-                :title="group.title"
+              <el-menu-item
+                v-for="subItem in item.subItem"
+                :key="subItem.index"
+                :index="subItem.index"
+                @click="showContent(subItem.link)"
+                >{{ subItem.name }}</el-menu-item
               >
-                <el-menu-item
-                  v-for="groupItem in group.item"
-                  :key="groupItem.index"
-                  :index="groupItem.index"
-                  @click="showContent(groupItem.link)"
-                  >{{ groupItem.name }}</el-menu-item
-                >
-              </el-menu-item-group>
             </el-submenu>
             <el-menu-item
               v-for="item in menu.subItem"

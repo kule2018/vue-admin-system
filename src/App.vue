@@ -15,9 +15,7 @@ export default {
     return {
       screenHeight: 0
     };
-  },
-  mounted() {},
-  methods: {}
+  }
 };
 </script>
 
@@ -33,5 +31,24 @@ body {
   width: 100%;
   height: 100%;
   position: fixed;
+}
+/*整体部分*/
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+/*滑动轨道*/
+::-webkit-scrollbar-track {
+  border-radius: 0;
+  background: none;
+}
+/*滑块*/
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #ddd;
+
+  &:hover {
+    background-color: #d3d3d3;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <!--首屏组件：显示图表等相关信息-->
 <template>
-  <div class="first-screen">
+  <div class="first-screen" ref="firstScreen">
     <el-row :gutter="15">
       <el-col :span="6">
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
@@ -207,11 +207,11 @@
         </el-card>
       </el-col>
       <el-col :span="12">
-        <el-card :style="{ height: '440px' }">
+        <el-card>
           <div slot="header" class="clearfix">
             <span>卡片名称</span>
           </div>
-          <div class="table-panel">
+          <div class="table-panel" :style="{ height: '400px' }">
             <el-table :data="tableData" style="width: 100%">
               <el-table-column prop="date" label="日期" width="180">
               </el-table-column>
@@ -295,11 +295,6 @@ export default {
         legend: {
           data: ["邮件营销", "联盟广告", "视频广告", "直接访问", "搜索引擎"],
           top: "10%"
-        },
-        toolbox: {
-          feature: {
-            saveAsImage: {}
-          }
         },
         grid: {
           y: "25%"
