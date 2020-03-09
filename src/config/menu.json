@@ -4,36 +4,11 @@
       "index": "1",
       "icon": "location",
       "name": "导航一",
-      "group": [
+      "subItem": [
         {
-          "title": "分组1",
-          "item": [
-            {
-              "index": "1-1",
-              "name": "首屏",
-              "link": "firstScreen"
-            },
-            {
-              "index": "1-2",
-              "name": "选项2",
-              "link": "option2"
-            }
-          ]
-        },
-        {
-          "title": "分组2",
-          "item": [
-            {
-              "index": "1-3",
-              "name": "选项1",
-              "link": "option3"
-            },
-            {
-              "index": "1-4",
-              "name": "选项2",
-              "link": "option4"
-            }
-          ]
+          "index": "1-1",
+          "name": "工作台",
+          "link": "firstScreen"
         }
       ]
     }

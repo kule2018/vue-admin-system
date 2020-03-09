@@ -18,6 +18,7 @@ export default {
       tableConfig: {
         url: `${baseAddress.mock}/getUserList`,
         dataPath: "userList",
+        totalPath: "totalElements",
         columns: [
           {
             prop: "name",
