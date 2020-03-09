@@ -9,8 +9,10 @@ export default {
   name: "content-body",
   props: ["menuName"],
   created() {
-    console.log(this.$route.params.menuName);
-    this.$router.push({ name: this.menuName });
+    // 默认跳转首屏
+    this.$router.push({
+      name: "firstScreen"
+    });
   }
 };
 </script>

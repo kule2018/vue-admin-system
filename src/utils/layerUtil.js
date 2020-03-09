@@ -54,5 +54,40 @@ export default {
         clearInterval(time);
       }
     }, 100);
+  },
+  // 通知气泡
+  message: {
+    success(title, message) {
+      vue.$notify({
+        type: "success",
+        title: title,
+        message: message,
+        duration: 2500
+      });
+    },
+    warn(title, message) {
+      vue.$notify({
+        type: "warning",
+        title: title,
+        message: message,
+        duration: 2500
+      });
+    },
+    error(title, message) {
+      vue.$notify({
+        type: "error",
+        title: title,
+        message: message,
+        duration: 2500
+      });
+    },
+    info(title, message) {
+      vue.$notify({
+        type: "info",
+        title: title,
+        message: message,
+        duration: 2500
+      });
+    }
   }
 };

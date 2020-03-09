@@ -10,8 +10,8 @@
           "item": [
             {
               "index": "1-1",
-              "name": "选项1",
-              "link": "option1"
+              "name": "首屏",
+              "link": "firstScreen"
             },
             {
               "index": "1-2",

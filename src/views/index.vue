@@ -23,7 +23,7 @@
             />
           </div>
           <div class="greetings-panel">
-            <p>开发者</p>
+            <p>{{ user }}</p>
             <icon class="el-icon-caret-bottom" />
           </div>
           <transition name="func-menu">
@@ -33,6 +33,9 @@
               <dd><icon class="el-icon-lock" /><span>密码修改</span></dd>
               <dd @click="testAdd()">
                 <icon class="el-icon-plus" /><span>录入页面测试</span>
+              </dd>
+              <dd @click="testNotify()">
+                <icon class="el-icon-info" /><span>测试通知气泡</span>
               </dd>
               <dd @click="logout">
                 <icon class="el-icon-switch-button" /><span>退出登录</span>
@@ -50,6 +53,7 @@
             @open="handleOpen"
             @close="handleClose"
             :collapse="isCollapse"
+            default-active="1-1"
           >
             <el-submenu
               v-for="item in menu.subMenu"
@@ -105,27 +109,18 @@ export default {
   data() {
     return {
       current: 0,
-      currentMore: 0,
       tabPosition: "left",
       showFuncMenu: false, // 头像功能菜单显示状态
       isCollapse: false, // 控制侧栏缩放状态
-      menu: menu
+      menu: menu,
+      user: "开发者"
     };
   },
-  mounted() {
-    this.$vb.plugin.showMsg("公用组件调用");
-    this.$router.push({
-      name: "contentBody",
-      params: { menuName: "firstScreen" }
-    });
-  },
+  mounted() {},
   methods: {
-    showContent(val, index) {
-      this.currentMore = index;
+    showContent(val) {
       // 路由切换
-      if (val !== this.$route.params.menuName) {
-        this.$router.push({ name: "contentBody", params: { menuName: val } });
-      }
+      this.$router.push({ name: val });
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -140,7 +135,6 @@ export default {
       this.$router.push("/login");
     },
     testAdd() {
-      console.log("aa");
       this.$vb.plugin.openAddLayer(
         addDataPage,
         this,
@@ -149,6 +143,9 @@ export default {
         600,
         "录入"
       );
+    },
+    testNotify() {
+      this.$vb.plugin.message.success("测试", "测试内容");
     }
   }
 };
