@@ -27,5 +27,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/scss/result-content.scss";
+@import "~@/assets/scss/result-content.scss";
 </style>

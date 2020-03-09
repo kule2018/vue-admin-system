@@ -3,14 +3,23 @@ import AddLayer from "@/components/add-layer";
 
 export default {
   // 打开默认弹层
-  openLayer(componentName, props, layerWidth, layerHeight, title) {
+  openLayer(
+    componentName,
+    componentObj,
+    props,
+    layerWidth,
+    layerHeight,
+    title
+  ) {
     vue.$layer.iframe({
       content: {
         // 子组件
         content: componentName,
-        parent: this,
+        parent: componentObj,
         // 子组件传值
-        data: props
+        data: {
+          parentData: props
+        }
       },
       area: [`${layerWidth}px`, `${layerHeight}px`],
       title: title,

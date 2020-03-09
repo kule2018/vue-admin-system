@@ -9,6 +9,8 @@ import layer from "vue-layer";
 import "vue-layer/lib/vue-layer.css";
 import utils from "./utils";
 import echarts from "echarts";
+import ElDataTable from "@femessage/el-data-table";
+import ElFormRenderer from "@femessage/el-form-renderer";
 
 Vue.config.productionTip = false;
 
@@ -17,6 +19,9 @@ Vue.prototype.$api = api;
 Vue.prototype.$layer = layer(Vue);
 Vue.prototype.$vb = utils;
 Vue.prototype.$echarts = echarts;
+// 注册组件
+Vue.component("el-form-renderer", ElFormRenderer);
+Vue.component("el-data-table", ElDataTable);
 const vue = new Vue({
   router,
   store,

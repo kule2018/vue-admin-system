@@ -71,7 +71,7 @@ _axios.interceptors.response.use(
   function(error) {
     if (error) {
       // 请求已发出，但不在2xx范围内
-      errorHandle(error.status, error.data.msg);
+      errorHandle(error.status, error.data);
       return Promise.reject(error);
     } else {
       // 断网

@@ -4,8 +4,10 @@
  * */
 // 网站管理接口
 import websiteManageAPI from "./websiteManageAPI";
+import userInfoAPI from "@/api/userInfoAPI";
 
 // 导出接口
 export default {
-  websiteManageAPI
+  websiteManageAPI,
+  userInfoAPI
 };
