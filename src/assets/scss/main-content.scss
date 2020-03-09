@@ -2,3 +2,11 @@
   width: 100%;
   height: 100%;
 }
+
+.result-show-enter-active, .result-show-leave-active {
+  transition: opacity .2s;
+}
+
+.result-show-enter, .result-show-leave-to {
+  opacity: 0;
+}
