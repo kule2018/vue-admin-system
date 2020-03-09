@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :style="{ height: screenHeight }">
+  <div id="app">
     <main-content />
   </div>
 </template>
@@ -16,13 +16,8 @@ export default {
       screenHeight: 0
     };
   },
-  mounted() {
-    this.screenHeight = this.getThisWindowHeight() + "px";
-  },
-  methods: {
-    // 获取当前屏幕高度
-    getThisWindowHeight: () => window.innerHeight
-  }
+  mounted() {},
+  methods: {}
 };
 </script>
 
@@ -37,5 +32,6 @@ body {
 #app {
   width: 100%;
   height: 100%;
+  position: fixed;
 }
 </style>
