@@ -7,12 +7,19 @@
   <!--加载登录后的页面-->
   <div v-else class="main-content">
     <router-view name="index" />
+    <transition name="result-show">
+      <result-content v-if="$store.state.resultShow" />
+    </transition>
   </div>
 </template>
 
 <script>
+import resultContent from "@/components/result-content";
 export default {
   name: "main-content",
+  components: {
+    resultContent
+  },
   data() {
     return {
       // 当前路由使用的组件

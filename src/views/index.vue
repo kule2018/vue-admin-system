@@ -35,7 +35,11 @@
                 <icon class="el-icon-plus" /><span>录入页面测试</span>
               </dd>
               <dd @click="testNotify()">
-                <icon class="el-icon-info" /><span>测试通知气泡</span>
+                <icon class="el-icon-warning-outline" />
+                <span>测试通知气泡</span>
+              </dd>
+              <dd @click="testResult()">
+                <icon class="el-icon-bangzhu" /><span>操作结果测试</span>
               </dd>
               <dd @click="logout">
                 <icon class="el-icon-switch-button" /><span>退出登录</span>
@@ -146,6 +150,9 @@ export default {
     },
     testNotify() {
       this.$vb.plugin.message.success("测试", "测试内容");
+    },
+    testResult() {
+      this.$store.commit("changeResultState", "error");
     }
   }
 };
