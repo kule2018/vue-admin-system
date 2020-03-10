@@ -6,7 +6,7 @@ $fontColor:#474D5B;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("http://v10.e-office.cn/eoffice10/server/public/login/theme/60f9efa4a3c74659861193043ad2269c.png") no-repeat center center;
+  background: url("http://v10.e-office.cn/eoffice10/server/public/login/theme/715219c9248d1a730a6d8dd165b61309.png") no-repeat center center;
   background-size: cover;
 
   .login-panel {
@@ -14,11 +14,12 @@ $fontColor:#474D5B;
     height: 460px;
     border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
 
     .left-banner {
       width: 350px;
       height: 460px;
-      background: url("http://v10.e-office.cn/eoffice10/server/public/login/left/left.png?123456") no-repeat center center;
+      background: url("http://v10.e-office.cn/eoffice10/client/web/assets/images/login/login_from_left.png") no-repeat center center;
       background-size: cover;
       float: left;
     }
@@ -26,7 +27,7 @@ $fontColor:#474D5B;
     .right-panel {
       width: 350px;
       height: 460px;
-      background-color: #fff;
+      background-color: rgba(0, 0, 0, .25);
       float: left;
       padding: 34px 35px;
       box-sizing: border-box;
@@ -57,6 +58,7 @@ $fontColor:#474D5B;
 
         & > svg {
           cursor: pointer;
+          fill: #eee;
         }
       }
 
@@ -98,8 +100,8 @@ $fontColor:#474D5B;
             transition: .2s;
 
             &:focus {
-              border-color: rgb(198, 192, 192);
-              box-shadow: 0 0 2px 3px rgba(174, 219, 251, 0.64);
+              border-color: rgba(0, 0, 0, 1);
+              box-shadow: 0 0 10px rgba(0, 0, 0, .5);
             }
           }
         }
