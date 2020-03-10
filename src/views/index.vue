@@ -98,9 +98,12 @@
 
 <script>
 import { Icon } from "element-ui";
-import menu from "@/config/menu.json";
+import menu from "@/config/menu";
 import addDataPage from "@/views/add-data-page";
 import dataTablePage from "@/views/data-table-page";
+import base from "@/api/base";
+import lodash from "lodash";
+
 export default {
   name: "index",
   components: {
@@ -113,13 +116,20 @@ export default {
       showFuncMenu: false, // 头像功能菜单显示状态
       isCollapse: false, // 控制侧栏缩放状态
       menu: menu,
-      userInfo: {}
+      userInfo: {},
+      baseAddress: base.defaultBaseUrl
     };
   },
   mounted() {
-    this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.$axios.get("/sys/home/menu").then(res => {
+    this.userInfo = this.$store.state.userInfo;
+    // 获取菜单列表
+    this.$api.systemManageAPI.getMenuList({}).then(res => {
+      console.log("获取菜单列表");
       console.log(res);
+      if (lodash.isEqual(res.code, "success")) {
+        console.log(res.data);
+        this.menu = res.data;
+      }
     });
   },
   methods: {

@@ -6,15 +6,20 @@
 
 <script>
 import mainContent from "@/components/main-content.vue";
+import lodash from "lodash";
 export default {
   name: "app",
   components: {
     mainContent
   },
+  created() {
+    // 给vuex中的userInfo赋值
+    if (!lodash.isUndefined(localStorage.getItem("userInfo"))) {
+      this.$store.state.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    }
+  },
   data() {
-    return {
-      screenHeight: 0
-    };
+    return {};
   }
 };
 </script>

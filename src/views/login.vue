@@ -73,6 +73,7 @@
 
 <script>
 import { Icon } from "element-ui";
+import lodash from "lodash";
 export default {
   name: "login",
   components: {
@@ -98,10 +99,16 @@ export default {
     login: function() {
       const self = this;
       this.loading = true;
-      this.$axios
-        .post(
-          `/sys/login?name=${self.userInfo.userName}&pwd=${self.userInfo.password}`
-        )
+      if (
+        lodash.isEmpty(self.userInfo.userName) ||
+        lodash.isEmpty(self.userInfo.password)
+      ) {
+        self.$vb.plugin.message.error("错误", "账号和密码为必填项");
+        self.loading = false;
+        return false;
+      }
+      this.$api.websiteManageAPI
+        .login({ name: self.userInfo.userName, pwd: self.userInfo.password })
         .then(res => {
           self.loading = false;
           if (res.code === "success") {
