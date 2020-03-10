@@ -2,6 +2,7 @@
 
 import Vue from "vue";
 import axios from "axios";
+import baseAddress from "@/api/base";
 
 let config = {
   // baseURL在此处省略配置,考虑到项目可能由多人协作完成开发，域名也各不相同，此处通过对api的抽离，域名单独配置在base.js中
@@ -47,6 +48,8 @@ const errorHandle = (status, other) => {
 
 // 创建实例
 const _axios = axios.create(config);
+// 默认请求的URL
+_axios.defaults.baseURL = baseAddress.defaultBaseUrl;
 // 请求拦截器
 _axios.interceptors.request.use(
   function(config) {

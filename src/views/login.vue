@@ -1,6 +1,11 @@
 <!--登录组件-->
 <template>
-  <div id="loginArea">
+  <div
+    id="loginArea"
+    v-loading="loading"
+    element-loading-background="rgba(0, 0, 0, 0.4)"
+    element-loading-text="登录中"
+  >
     <div class="login-panel">
       <div class="left-banner"></div>
       <div class="right-panel">
@@ -27,7 +32,7 @@
             />
           </svg>
         </div>
-        <div class="login-form">
+        <div class="login-form" @keydown.enter="login">
           <label>
             <Icon class="el-icon-user" />
             <input
@@ -40,7 +45,7 @@
           <label>
             <Icon class="el-icon-unlock" />
             <input
-              type="text"
+              type="password"
               ref="password"
               placeholder="密码"
               v-model="userInfo.password"
@@ -85,12 +90,28 @@ export default {
       rememberPasswordStatus: "",
       state: {
         showLanguages: false
-      }
+      },
+      loading: false
     };
   },
   methods: {
     login: function() {
-      this.$router.push({ name: "index" });
+      const self = this;
+      this.loading = true;
+      this.$axios
+        .post(
+          `/sys/login?name=${self.userInfo.userName}&pwd=${self.userInfo.password}`
+        )
+        .then(res => {
+          self.loading = false;
+          if (res.code === "success") {
+            localStorage.setItem("userInfo", JSON.stringify(res.data));
+            self.$store.commit("setUserInfo", res.data);
+            this.$router.push({ name: "index" });
+            return;
+          }
+          self.$vb.plugin.message.error("错误", res.msg);
+        });
     }
   },
   mounted() {
