@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     resultFlag: "",
-    resultShow: false
+    resultShow: false,
+    userInfo: {}
   },
   mutations: {
     changeResultState(state, val) {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     changeResultClose(state) {
       state.resultShow = false;
+    },
+    setUserInfo(state, val) {
+      state.userInfo = val;
     }
   },
   actions: {},
