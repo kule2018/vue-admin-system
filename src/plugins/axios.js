@@ -3,6 +3,7 @@
 import Vue from "vue";
 import axios from "axios";
 import store from "@/store";
+import lodash from "lodash";
 
 let config = {
   // baseURL在此处省略配置,考虑到项目可能由多人协作完成开发，域名也各不相同，此处通过对api的抽离，域名单独配置在base.js中
@@ -52,7 +53,10 @@ const _axios = axios.create(config);
 _axios.interceptors.request.use(
   function(config) {
     // 判断token是否存在，请求头添加token
-    let token = store.state.userInfo.token;
+    let token = null;
+    if (!lodash.isNull(store.state.userInfo)) {
+      token = store.state.userInfo.token;
+    }
     token && (config.headers.token = token);
     return config;
   },

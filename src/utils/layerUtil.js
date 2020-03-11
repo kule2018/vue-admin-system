@@ -8,7 +8,8 @@ export default {
     props,
     layerWidth,
     layerHeight,
-    title
+    title,
+    cancel
   ) {
     vue.$layer.iframe({
       content: {
@@ -23,7 +24,7 @@ export default {
       area: [`${layerWidth}px`, `${layerHeight}px`],
       title: title,
       // 关闭事件
-      cancel: () => {},
+      cancel: cancel,
       shadeClose: false
     });
   },

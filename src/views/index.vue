@@ -45,6 +45,9 @@
               <dd @click="testDetail()">
                 <icon class="el-icon-view" /><span>测试详情页</span>
               </dd>
+              <dd @click="testDetailOne()">
+                <icon class="el-icon-view" /><span>测试详情页(单列)</span>
+              </dd>
               <dd @click="logout">
                 <icon class="el-icon-switch-button" /><span>退出登录</span>
               </dd>
@@ -111,6 +114,7 @@ import dataTablePage from "@/views/data-table-page";
 import base from "@/api/base";
 import lodash from "lodash";
 import detailPage from "@/views/detail-page";
+import detailPageOne from "@/views/detail-page-one";
 
 export default {
   name: "index",
@@ -189,9 +193,22 @@ export default {
         detailPage,
         this,
         { name: "传值测试" },
-        600,
-        820,
+        580,
+        480,
         "详情页面测试"
+      );
+    },
+    testDetailOne() {
+      this.$vb.plugin.openLayer(
+        detailPageOne,
+        this,
+        { name: "传值测试" },
+        580,
+        820,
+        "详情页面测试",
+        function() {
+          // 窗口关闭后执行
+        }
       );
     }
   }
