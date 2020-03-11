@@ -61,19 +61,23 @@
             @open="handleOpen"
             @close="handleClose"
             :collapse="isCollapse"
-            default-active="1-1"
+            default-active="0"
           >
+            <el-menu-item index="0" @click="showContent('firstScreen')">
+              <icon class="el-icon-s-platform" />
+              <span slot="title">工作台</span>
+            </el-menu-item>
             <el-submenu
               v-for="item in menu.subMenu"
               :key="item.index"
               index="1"
             >
               <template slot="title">
-                <icon :class="`el-icon-${item.icon}`" />
+                <icon :class="item.icon" />
                 <span slot="title">{{ item.name }}</span>
               </template>
               <el-menu-item
-                v-for="subItem in item.subItem"
+                v-for="subItem in item.group"
                 :key="subItem.index"
                 :index="subItem.index"
                 @click="showContent(subItem.link)"
@@ -128,7 +132,6 @@ export default {
     this.userInfo = this.$store.state.userInfo;
     // 获取菜单列表
     this.$api.systemManageAPI.getMenuList({}).then(res => {
-      console.log("获取菜单列表");
       console.log(res);
       if (lodash.isEqual(res.code, "success")) {
         console.log(res.data);
@@ -151,6 +154,8 @@ export default {
       this.isCollapse = !this.isCollapse;
     },
     logout() {
+      localStorage.removeItem("userInfo");
+      this.$store.state.userInfo = {};
       this.$router.push("/login");
     },
     testAdd() {
@@ -185,7 +190,7 @@ export default {
         this,
         { name: "传值测试" },
         600,
-        800,
+        820,
         "详情页面测试"
       );
     }

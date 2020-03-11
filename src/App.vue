@@ -56,4 +56,8 @@ body {
     background-color: #d3d3d3;
   }
 }
+
+.el-image-viewer__wrapper {
+  top: 42px !important;
+}
 </style>
