@@ -18,7 +18,7 @@
         >
           <div class="img-panel">
             <!--src="https://oscimg.oschina.net/oscnet/up-01124e45c80b44b517b193304da773df.jpg!/both/50x50?t=1569379619000"-->
-            <img :src="userInfo.iconPath" alt="" />
+            <img :src="baseAddress + userInfo.iconPath" alt="" />
           </div>
           <div class="greetings-panel">
             <p>{{ userInfo.nickName }}</p>
@@ -41,6 +41,9 @@
               </dd>
               <dd @click="testDataTable()">
                 <icon class="el-icon-s-help" /><span>数据表格测试</span>
+              </dd>
+              <dd @click="testDetail()">
+                <icon class="el-icon-view" /><span>测试详情页</span>
               </dd>
               <dd @click="logout">
                 <icon class="el-icon-switch-button" /><span>退出登录</span>
@@ -103,6 +106,7 @@ import addDataPage from "@/views/add-data-page";
 import dataTablePage from "@/views/data-table-page";
 import base from "@/api/base";
 import lodash from "lodash";
+import detailPage from "@/views/detail-page";
 
 export default {
   name: "index",
@@ -173,6 +177,16 @@ export default {
         900,
         600,
         "数据表格测试"
+      );
+    },
+    testDetail() {
+      this.$vb.plugin.openLayer(
+        detailPage,
+        this,
+        { name: "传值测试" },
+        600,
+        800,
+        "详情页面测试"
       );
     }
   }
