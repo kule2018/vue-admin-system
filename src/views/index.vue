@@ -154,13 +154,13 @@ export default {
       this.$router.push("/login");
     },
     testAdd() {
-      this.$vb.plugin.openAddLayer(
+      this.$vb.plugin.openLayer(
         addDataPage,
         this,
         { name: "传值测试" },
         900,
         600,
-        "录入"
+        "录入页面"
       );
     },
     testNotify() {
