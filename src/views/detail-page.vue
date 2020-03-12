@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-box two-col">
+  <div class="detail-box" :class="parentData.colNum">
     <div>
       <div>登记单号</div>
       <div>AHKJ091823900981</div>

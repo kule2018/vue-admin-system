@@ -72,8 +72,8 @@
             </el-menu-item>
             <el-submenu
               v-for="item in menu.subMenu"
-              :key="item.index"
-              index="1"
+              :key="item.menuid"
+              :index="`${item.menuid}`"
             >
               <template slot="title">
                 <icon :class="item.icon" />
@@ -81,16 +81,16 @@
               </template>
               <el-menu-item
                 v-for="subItem in item.group"
-                :key="subItem.index"
-                :index="subItem.index"
+                :key="subItem.menuid"
+                :index="`${subItem.menuid}`"
                 @click="showContent(subItem.link)"
                 >{{ subItem.name }}</el-menu-item
               >
             </el-submenu>
             <el-menu-item
               v-for="item in menu.subItem"
-              :key="item.index"
-              :index="item.index"
+              :key="item.menuid"
+              :index="`${item.menuid}`"
               @click="showContent(item.link)"
             >
               <icon :class="`el-icon-${item.icon}`" />
@@ -110,7 +110,7 @@
 import { Icon } from "element-ui";
 import menu from "@/config/menu";
 import addDataPage from "@/views/add-data-page";
-import dataTablePage from "@/views/data-table-page";
+import tablePage from "@/views/table-page";
 import base from "@/api/base";
 import lodash from "lodash";
 import detailPage from "@/views/detail-page";
@@ -163,13 +163,13 @@ export default {
       this.$router.push("/login");
     },
     testAdd() {
-      this.$vb.plugin.openLayer(
+      this.$vb.plugin.openAddLayer(
         addDataPage,
         this,
         { name: "传值测试" },
+        "录入",
         900,
-        600,
-        "录入页面"
+        600
       );
     },
     testNotify() {
@@ -180,32 +180,32 @@ export default {
     },
     testDataTable() {
       this.$vb.plugin.openLayer(
-        dataTablePage,
+        tablePage,
         this,
         { name: "传值测试" },
+        "数据表格测试",
         900,
-        600,
-        "数据表格测试"
+        600
       );
     },
     testDetail() {
       this.$vb.plugin.openLayer(
         detailPage,
         this,
-        { name: "传值测试" },
-        580,
-        480,
-        "详情页面测试"
+        { name: "传值测试", colNum: "two-col" },
+        "详情页面测试",
+        650,
+        520
       );
     },
     testDetailOne() {
       this.$vb.plugin.openLayer(
         detailPageOne,
         this,
-        { name: "传值测试" },
+        { name: "传值测试", colNum: "one-col" },
+        "详情页面测试",
         580,
         820,
-        "详情页面测试",
         function() {
           // 窗口关闭后执行
         }
