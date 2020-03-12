@@ -5,21 +5,21 @@ import base from "./base"; // 导入接口域名列表
 const sysUserInfoAPI = {
   // 获取角色列表 {name:"",roleTypeId:""}
   getRoleList(params) {
-    return services._axios.get(
-      `${base.defaultBaseUrl}/common/role/list`,
+    return services._axios.get(`${base.defaultBaseUrl}/common/role/list`, {
       params
-    );
+    });
   },
   // 获取用户列表 {name:""}
   getUserInfoList(params) {
-    return services._axios.get(
-      `${base.defaultBaseUrl}/sys/user/search`,
+    return services._axios.get(`${base.defaultBaseUrl}/sys/user/search`, {
       params
-    );
+    });
   },
   // 获取用户详情 {userid:""}
   getUserInfo(params) {
-    return services._axios.get(`${base.defaultBaseUrl}/sys/user/info`, params);
+    return services._axios.get(`${base.defaultBaseUrl}/sys/user/info`, {
+      params
+    });
   },
   // 更新用户信息 {userid:"",roleTypeid:"",nickName:"",loginName:"",loginPwd:"",iconPath:""}
   updateUserInfo(params) {
