@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-view name="firstScreen" />
+    <router-view />
   </div>
 </template>
 
