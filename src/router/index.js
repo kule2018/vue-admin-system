@@ -47,6 +47,11 @@ const routes = [
             name: "sysUserSearch",
             path: "sysUserSearch",
             component: () => import("@/views/sys-user-list-page")
+          },
+          {
+            name: "sysPersonSearch",
+            path: "sysPersonSearch",
+            component: () => import("@/views/user-list-page")
           }
         ]
       }

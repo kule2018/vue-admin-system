@@ -16,7 +16,9 @@
       <el-button type="primary" plain icon="el-icon-plus" size="small"
         >增加</el-button
       >
-      <el-button plain icon="el-icon-refresh-left" size="small" @click="reset">重置</el-button>
+      <el-button plain icon="el-icon-refresh-left" size="small" @click="reset"
+        >重置</el-button
+      >
     </div>
     <el-tabs v-model="tabActiveName" @tab-click="handleClick">
       <el-tab-pane label="全部" name="all"></el-tab-pane>

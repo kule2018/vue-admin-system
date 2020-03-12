@@ -5,17 +5,15 @@ import base from "./base"; // 导入接口域名列表
 const weChatUserInfoAPI = {
   // 获取用户列表 {name:"",nickName:""}
   getUserInfoList(params) {
-    return services._axios.get(
-      `${base.defaultBaseUrl}/sys/person/search`,
+    return services._axios.get(`${base.defaultBaseUrl}/sys/person/search`, {
       params
-    );
+    });
   },
   // 获取用户详情 {personId:""}
   getUserInfo(params) {
-    return services._axios.get(
-      `${base.defaultBaseUrl}/sys/person/info`,
+    return services._axios.get(`${base.defaultBaseUrl}/sys/person/info`, {
       params
-    );
+    });
   },
   // 冻结用户 {personId:""}
   freezeUserInfo(params) {

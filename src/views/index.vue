@@ -61,8 +61,6 @@
         <div class="side-panel">
           <el-menu
             class="el-menu-vertical"
-            @open="handleOpen"
-            @close="handleClose"
             :collapse="isCollapse"
             default-active="0"
           >
@@ -136,9 +134,7 @@ export default {
     this.userInfo = this.$store.state.userInfo;
     // 获取菜单列表
     this.$api.systemManageAPI.getMenuList({}).then(res => {
-      console.log(res);
       if (lodash.isEqual(res.code, "success")) {
-        console.log(res.data);
         this.menu = res.data;
       }
     });
@@ -147,12 +143,6 @@ export default {
     showContent(val) {
       // 路由切换
       this.$router.push({ name: val });
-    },
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
     },
     zoom() {
       this.isCollapse = !this.isCollapse;
