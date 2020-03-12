@@ -4,13 +4,20 @@
  * */
 // 网站管理接口
 import websiteManageAPI from "./websiteManageAPI";
-import userInfoAPI from "@/api/userInfoAPI";
 // 系统管理接口
 import systemManageAPI from "@/api/systemManageAPI";
+// 文件管理接口
+import fileManageAPI from "@/api/fileManageAPI";
+// 系统用户管理接口
+import sysUserInfoAPI from "@/api/sysUserInfoAPI";
+// 微信用户管理接口
+import weChatUserInfoAPI from "@/api/weChatUserInfoAPI";
 
 // 导出接口
 export default {
   websiteManageAPI,
-  userInfoAPI,
-  systemManageAPI
+  sysUserInfoAPI,
+  systemManageAPI,
+  fileManageAPI,
+  weChatUserInfoAPI
 };
