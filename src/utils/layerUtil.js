@@ -1,5 +1,4 @@
 import vue from "../main";
-import AddLayer from "@/components/add-layer";
 
 export default {
   // 打开默认弹层
@@ -9,7 +8,8 @@ export default {
     props,
     layerWidth,
     layerHeight,
-    title
+    title,
+    cancel
   ) {
     vue.$layer.iframe({
       content: {
@@ -24,34 +24,7 @@ export default {
       area: [`${layerWidth}px`, `${layerHeight}px`],
       title: title,
       // 关闭事件
-      cancel: () => {},
-      shadeClose: false
-    });
-  },
-  // 打开新增组件
-  openAddLayer(
-    componentName,
-    componentObj,
-    props,
-    layerWidth,
-    layerHeight,
-    title
-  ) {
-    vue.$layer.iframe({
-      content: {
-        // 子组件
-        content: AddLayer,
-        parent: componentObj,
-        // 子组件传值
-        data: {
-          content: componentName,
-          info: props
-        }
-      },
-      area: [`${layerWidth}px`, `${layerHeight}px`],
-      title: title,
-      // 关闭事件
-      cancel: () => {},
+      cancel: cancel,
       shadeClose: false
     });
   },
