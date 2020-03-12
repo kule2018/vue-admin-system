@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 import IndexPage from "@/views/index";
 import LoginPage from "@/views/login";
 import ContentBody from "@/components/content-body";
-import FirstScreen from "@/views/first-screen";
 
 Vue.use(VueRouter);
 
@@ -42,9 +41,12 @@ const routes = [
           {
             name: "firstScreen",
             path: "firstScreen",
-            components: {
-              firstScreen: FirstScreen
-            }
+            component: () => import("@/views/first-screen")
+          },
+          {
+            name: "sysUserSearch",
+            path: "sysUserSearch",
+            component: () => import("@/views/sys-user-list-page")
           }
         ]
       }
