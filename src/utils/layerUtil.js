@@ -6,11 +6,19 @@ export default {
     componentName,
     componentObj,
     props,
-    layerWidth,
-    layerHeight,
     title,
+    layerWidth = 1200,
+    layerHeight = "80%",
     cancel
   ) {
+    layerWidth =
+      layerWidth.toString().substring(layerWidth.length - 1) === "%"
+        ? layerWidth
+        : `${layerWidth}px`;
+    layerHeight =
+      layerHeight.toString().substring(layerHeight.length - 1) === "%"
+        ? layerHeight
+        : `${layerHeight}px`;
     vue.$layer.iframe({
       content: {
         // 子组件
@@ -21,7 +29,7 @@ export default {
           parentData: props
         }
       },
-      area: [`${layerWidth}px`, `${layerHeight}px`],
+      area: [layerWidth, layerHeight],
       title: title,
       // 关闭事件
       cancel: cancel,

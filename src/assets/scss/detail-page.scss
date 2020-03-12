@@ -7,6 +7,14 @@
   box-sizing: border-box;
   padding: 10px 15px;
 
+  &.one-col {
+    padding: 10px 50px;
+
+    & > div > div:nth-of-type(1) {
+      width: 28%;
+    }
+  }
+
   & > div {
     box-sizing: border-box;
     display: flex;
