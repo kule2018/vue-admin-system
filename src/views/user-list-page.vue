@@ -1,7 +1,7 @@
 <template>
   <div id="userListPanel">
     <div class="table-panel">
-      <div class="search-bar">
+      <div class="search-bar" @keydown.enter="search">
         <el-input
           v-model="searchParam"
           placeholder="请输入用户名"
@@ -27,15 +27,15 @@
         <el-tab-pane label="黑名单" name="blacklist" />
       </el-tabs>
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column label="用户头像">
+        <el-table-column label="头像" width="120" align="center">
           <template slot-scope="scope">
-            <img :src="scope.row.avatarUrl" width="40" height="40" />
+            <el-avatar :src="scope.row.avatarUrl" />
           </template>
         </el-table-column>
         <el-table-column prop="nickName" label="昵称" />
         <el-table-column prop="gender" label="性别" />
         <el-table-column prop="province" label="省" />
-        <el-table-column fixed="right" width="280" label="操作">
+        <el-table-column fixed="right" width="350" label="操作">
           <template slot-scope="scope">
             <el-button
               @click="handleClick(0, scope.row)"

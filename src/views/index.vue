@@ -18,10 +18,13 @@
         >
           <div class="img-panel">
             <!--src="https://oscimg.oschina.net/oscnet/up-01124e45c80b44b517b193304da773df.jpg!/both/50x50?t=1569379619000"-->
-            <img :src="baseAddress + userInfo.iconPath" alt="" />
+            <el-avatar
+              :src="baseAddress + $store.state.userInfo.iconPath"
+              alt=""
+            />
           </div>
           <div class="greetings-panel">
-            <p>{{ userInfo.nickName }}</p>
+            <p>{{ $store.state.userInfo.nickName }}</p>
             <icon class="el-icon-caret-bottom" />
           </div>
           <transition name="func-menu">
@@ -126,12 +129,10 @@ export default {
       showFuncMenu: false, // 头像功能菜单显示状态
       isCollapse: false, // 控制侧栏缩放状态
       menu: menu,
-      userInfo: {},
       baseAddress: base.defaultBaseUrl
     };
   },
   mounted() {
-    this.userInfo = this.$store.state.userInfo;
     // 获取菜单列表
     this.$api.systemManageAPI.getMenuList({}).then(res => {
       if (lodash.isEqual(res.code, "success")) {

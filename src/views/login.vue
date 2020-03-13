@@ -45,10 +45,16 @@
           <label>
             <Icon class="el-icon-unlock" />
             <input
-              type="password"
+              :type="showPwdType"
               ref="password"
               placeholder="密码"
               v-model="userInfo.password"
+            />
+            <i
+              class="el-icon-view"
+              @mousedown="showPwd = true"
+              @mouseup="showPwd = false"
+              :style="{ color: showPwdIcon }"
             />
           </label>
           <label style="width: 60%">
@@ -92,8 +98,20 @@ export default {
       state: {
         showLanguages: false
       },
-      loading: false
+      loading: false,
+      showPwd: false,
+      showPwdType: "password"
     };
+  },
+  watch: {
+    showPwd() {
+      this.showPwdType = this.showPwd ? "text" : "password";
+    }
+  },
+  computed: {
+    showPwdIcon() {
+      return this.showPwd ? "#409eff" : "#999";
+    }
   },
   methods: {
     login: function() {

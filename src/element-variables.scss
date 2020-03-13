@@ -53,8 +53,9 @@ $layer-main-width: 90%;
   /*按钮区域*/
   .btn-panel{
     width: 100%;
-    height: 37px;
+    height: 32px;
     position: fixed;
+    left: 0;
     bottom: 20px;
 
     .main-content{
