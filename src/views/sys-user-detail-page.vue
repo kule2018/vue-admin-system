@@ -59,7 +59,7 @@ export default {
   mounted() {
     const self = this;
     this.$api.sysUserInfoAPI
-      .getUserInfo({ userid: this.parentData.userid })
+      .getUserInfo({ userid: this.parentData.userid[0] })
       .then(res => {
         self.sysUserInfo = res.data;
         this.baseUrl = baseUrl.defaultBaseUrl;
