@@ -4,6 +4,7 @@ import Vue from "vue";
 import axios from "axios";
 import store from "@/store";
 import lodash from "lodash";
+import vueObj from "@/main";
 
 let config = {
   // baseURL在此处省略配置,考虑到项目可能由多人协作完成开发，域名也各不相同，此处通过对api的抽离，域名单独配置在base.js中
@@ -26,6 +27,7 @@ let config = {
  * 请求失败后的错误统一处理，当然还有更多状态码判断，根据自己业务需求去扩展即可
  * @param {Number} status 请求失败的状态码
  */
+// eslint-disable-next-line no-unused-vars
 const errorHandle = (status, other) => {
   // 状态码判断
   switch (status) {
@@ -43,7 +45,7 @@ const errorHandle = (status, other) => {
       // 提示资源不存在
       break;
     default:
-      console.log(other);
+      vueObj.$vb.plugin.message.error(`接口调用失败，状态码: ${status}`);
   }
 };
 
@@ -82,6 +84,7 @@ _axios.interceptors.response.use(
       return Promise.reject(error);
     } else {
       // 断网
+      vueObj.$vb.plugin.message.error("网络错误");
       return Promise.reject(error);
     }
   }

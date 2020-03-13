@@ -2,20 +2,13 @@
   <div id="userListPanel">
     <div class="table-panel">
       <div class="search-bar">
-        <el-input
-          v-model="searchParam"
-          placeholder="请输入用户名"
-          size="small"
-        />
+        <el-input v-model="searchParam" placeholder="请输入昵称" size="small" />
         <el-button
           type="primary"
           icon="el-icon-search"
           size="small"
           @click="search"
           >查询</el-button
-        >
-        <el-button type="primary" plain icon="el-icon-plus" size="small"
-          >增加</el-button
         >
         <el-button plain icon="el-icon-refresh-left" size="small"
           >重置</el-button
@@ -87,6 +80,10 @@ export default {
     };
   },
   created() {
+    // 跨域测试
+    this.$api.websiteManageAPI.testMock({}).then(res => {
+      console.log(res);
+    });
     this.$api.weChatUserInfoAPI.getUserInfoList().then(res => {
       if (lodash.isEqual(res.code, "success")) {
         this.tableData = res.data;
