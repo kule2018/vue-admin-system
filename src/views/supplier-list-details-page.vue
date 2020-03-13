@@ -1,49 +1,20 @@
 <template>
-  <div>
-    <div class="detail-box" :class="parentData.colNum">
-      <div>
-        <div>用户头像</div>
-        <div><el-avatar :src="userInfo.avatarUrl" /></div>
-      </div>
-      <div>
-        <div>名称</div>
-        <div>{{ userInfo.name }}</div>
-      </div>
-      <div>
-        <div>手机号</div>
-        <div>{{ userInfo.phone }}</div>
-      </div>
-      <div>
-        <div>
-          openid
-        </div>
-        <div>
-          {{ userInfo.openid }}
-        </div>
-      </div>
-      <div>
-        <div>
-          用户id
-        </div>
-        <div>
-          {{ userInfo.personId }}
-        </div>
-      </div>
-      <div>
-        <div>单位</div>
-        <div>{{ userInfo.unit }}</div>
-      </div>
+  <div class="detail-box" :class="parentData.colNum">
+    <div>
+      <div></div>
+      <div></div>
     </div>
   </div>
 </template>
 
 <script>
 import lodash from "lodash";
+
 export default {
-  name: "user-list-details-page",
+  name: "supplier-list-details-page",
   data() {
     return {
-      userInfo: {},
+      detailsInfo: {},
       baseUrl: ""
     };
   },
@@ -54,7 +25,7 @@ export default {
       })
       .then(res => {
         if (lodash.isEqual(res.code, "success")) {
-          this.userInfo = res.data;
+          this.detailsInfo = res.data;
         } else {
           this.$vb.plugin.message.error(`获取用户信息失败:${res.code}`);
         }
@@ -85,5 +56,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/user-list-details-page.scss";
+@import "~@/assets/scss/supplier-list-details-page.scss";
 </style>
