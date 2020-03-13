@@ -31,6 +31,33 @@ const sysUserInfoAPI = {
   // 新增用户 {roleTypeid:"",nickName:"",loginName:"",loginPwd:"",iconPath:""}
   addUserInfo(params) {
     return services._axios.post(`${base.defaultBaseUrl}/sys/user/add`, params);
+  },
+  // 查询冻结用户 {name:"",nickName:""}
+  queryFreezeUserInfo(params) {
+    return services._axios.get(`${base.defaultBaseUrl}/sys/user/freezeSearch`, {
+      params
+    });
+  },
+  // 查询拉黑用户  {name:"",nickName:""}
+  queryDefriendUserInfo(params) {
+    return services._axios.get(
+      `${base.defaultBaseUrl}/sys/user/defriendSearch`,
+      { params }
+    );
+  },
+  // 解除冻结 {personId：“”}
+  relieveFreezeUserInfo(params) {
+    return services._axios.post(
+      `${base.defaultBaseUrl}/sys/user/unfreeze`,
+      params
+    );
+  },
+  // 解除拉黑 {personId：“”}
+  relieveDefriendUserInfo(params) {
+    return services._axios.post(
+      `${base.defaultBaseUrl}/sys/user/relieve`,
+      params
+    );
   }
 };
 
