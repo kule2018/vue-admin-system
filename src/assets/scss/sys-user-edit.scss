@@ -1,0 +1,51 @@
+.sys-user-edit {
+  padding: 20px 0 0 !important;
+  box-sizing: border-box;
+  overflow-y: auto;
+
+  .avatar-box {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+  }
+  .avatar {
+    background-color: #fff;
+    border: 1px dashed #ccc;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: border-color .2s;
+
+    &:hover {
+      border-color: #409eff;
+
+      i {
+        color: #409eff;
+      }
+    }
+
+    i {
+      color: #999;
+      vertical-align: top;
+    }
+  }
+
+  .showAvatar {
+    cursor: pointer;
+  }
+
+  .upload {
+    display: none;
+  }
+
+  .btn-group {
+    text-align: right;
+    position: fixed;
+    bottom: 0;
+    padding: 15px 0;
+    background-color: #fff;
+    width: 100%;
+    left: 0;
+  }
+}

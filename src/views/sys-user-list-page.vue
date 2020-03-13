@@ -1,6 +1,6 @@
 <template>
   <div class="table-panel">
-    <div class="search-bar">
+    <div class="search-bar" @keydown.enter="search">
       <el-input
         v-model="searchParam"
         placeholder="请输入昵称"
@@ -13,34 +13,45 @@
         @click="search"
         >查询</el-button
       >
-      <el-button type="primary" plain icon="el-icon-plus" size="small"
+      <el-button
+        type="primary"
+        plain
+        icon="el-icon-plus"
+        size="small"
+        @click="handleClick('add')"
         >增加</el-button
       >
       <el-button plain icon="el-icon-refresh-left" size="small" @click="reset"
         >重置</el-button
       >
     </div>
-    <el-tabs v-model="tabActiveName" @tab-click="handleClick">
+    <el-tabs v-model="tabActiveName" @tab-click="handleTabClick">
       <el-tab-pane label="全部" name="all"></el-tab-pane>
       <el-tab-pane label="冻结" name="freeze"></el-tab-pane>
       <el-tab-pane label="黑名单" name="blacklist"></el-tab-pane>
     </el-tabs>
     <el-table :data="tableData" style="width: 100%">
-      <el-table-column label="用户头像" width="120" align="center">
+      <el-table-column label="头像" width="120" align="center">
         <template slot-scope="scope">
           <el-avatar :src="baseUrl + scope.row.iconPath" />
         </template>
       </el-table-column>
+      <el-table-column prop="nickName" label="昵称"></el-table-column>
       <el-table-column prop="loginName" label="用户名"></el-table-column>
       <el-table-column prop="roleName" label="用户类型"></el-table-column>
-      <el-table-column prop="nickName" label="昵称"></el-table-column>
       <el-table-column label="操作" width="350">
         <template slot-scope="scope">
           <el-button
-            @click="showDialog(scope.row.userid)"
+            @click="handleClick('detail', scope.row.userid)"
             type="primary"
-            size="small"
+            size="mini"
             >查看</el-button
+          >
+          <el-button
+            @click="handleClick('update', scope.row.userid)"
+            type="warning"
+            size="mini"
+            >修改</el-button
           >
         </template>
       </el-table-column>
@@ -61,7 +72,8 @@
 
 <script>
 import baseUrl from "@/api/base";
-import sysUserDetail from "@/views/sys-user-detail";
+import sysUserDetail from "@/views/sys-user-detail-page";
+import sysUserEdit from "@/views/sys-user-edit-page";
 export default {
   name: "sys-user-list-page",
   data() {
@@ -86,20 +98,41 @@ export default {
       this.searchParam = "";
       this.search();
     },
-    showDialog(userid) {
-      this.$vb.plugin.openLayer(
-        sysUserDetail,
-        this,
-        { colNum: "one-col", userid: userid },
-        "系统用户详情",
-        580,
-        350,
-        function() {
-          // 窗口关闭后执行
-        }
-      );
+    handleClick(state, ...userid) {
+      switch (state) {
+        case "detail":
+          this.$vb.plugin.openLayer(
+            sysUserDetail,
+            this,
+            { colNum: "one-col", userid: userid },
+            "系统用户详情",
+            580,
+            350
+          );
+          break;
+        case "add":
+          this.$vb.plugin.openLayer(
+            sysUserEdit,
+            this,
+            { state: state, userid: userid },
+            "新增系统用户",
+            620,
+            440
+          );
+          break;
+        case "update":
+          this.$vb.plugin.openLayer(
+            sysUserEdit,
+            this,
+            { state: state, userid: userid },
+            "修改系统用户",
+            620,
+            380
+          );
+          break;
+      }
     },
-    handleClick() {},
+    handleTabClick() {},
     handleSizeChange() {},
     handleCurrentChange() {}
   },
