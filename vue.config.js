@@ -22,7 +22,16 @@ module.exports = {
     port: 8020,
     https: false,
     hotOnly: false,
-    proxy: null,
+    proxy: {
+      "/mock": {
+        target: "http://mock-api.com/mnE66LKJ.mock/vas",
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          "^/mock": ""
+        }
+      }
+    },
     // eslint-disable-next-line no-unused-vars
     before: app => {}
   },

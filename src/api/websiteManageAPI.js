@@ -14,9 +14,9 @@ const websiteManageAPI = {
       {}
     );
   },
-  // 注册
-  registered(params) {
-    return services._axios.post(``, params);
+  // 测试mock服务
+  testMock(params) {
+    return services._axios.get(`/mock/getUserList`, params);
   }
 };
 
