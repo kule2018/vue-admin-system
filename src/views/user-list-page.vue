@@ -83,7 +83,7 @@ export default {
       currentPage: 1
     };
   },
-  created() {
+  mounted() {
     // 跨域测试
     this.$api.websiteManageAPI.testMock({}).then(res => {
       console.log(res);
