@@ -1,8 +1,56 @@
 <template>
   <div class="detail-box" :class="parentData.colNum">
     <div>
-      <div></div>
-      <div></div>
+      <div>供应商id</div>
+      <div>{{ detailsInfo.supplierId }}</div>
+    </div>
+    <div>
+      <div>企业性质</div>
+      <div>{{ detailsInfo.enterprisNature }}</div>
+    </div>
+    <div>
+      <div>营业执照号</div>
+      <div>{{ detailsInfo.businessLicenseNumber }}</div>
+    </div>
+    <div>
+      <div>营业执照电子图</div>
+      <div>{{ detailsInfo.businessLicenseElecChart }}</div>
+    </div>
+    <div>
+      <div>
+        卫生许可证号
+      </div>
+      <div>
+        {{ detailsInfo.sanitaryPermitNumber }}
+      </div>
+    </div>
+    <div>
+      <div>卫生许可证电子图</div>
+      <div>{{ detailsInfo.sanitaryPermitElecChart }}</div>
+    </div>
+    <div>
+      <div>法人</div>
+      <div>{{ detailsInfo.legalPerson }}</div>
+    </div>
+    <div>
+      <div>证件类型</div>
+      <div>{{ detailsInfo.certificateType }}</div>
+    </div>
+    <div>
+      <div>证件类型名称</div>
+      <div>{{ detailsInfo.certificateName }}</div>
+    </div>
+    <div>
+      <div>证件号</div>
+      <div>{{ detailsInfo.certificateNumber }}</div>
+    </div>
+    <div>
+      <div>固定电话</div>
+      <div>{{ detailsInfo.phone }}</div>
+    </div>
+    <div>
+      <div>供应商状态名称</div>
+      <div>{{ detailsInfo.supplierStatusName }}</div>
     </div>
   </div>
 </template>
@@ -18,16 +66,16 @@ export default {
       baseUrl: ""
     };
   },
-  created() {
-    this.$api.weChatUserInfoAPI
-      .getUserInfo({
-        personId: this.parentData.personId
+  mounted() {
+    this.$api.supplierManageAPI
+      .getSupplierInfo({
+        supplierId: this.parentData.supplierId
       })
       .then(res => {
         if (lodash.isEqual(res.code, "success")) {
           this.detailsInfo = res.data;
         } else {
-          this.$vb.plugin.message.error(`获取用户信息失败:${res.code}`);
+          this.$vb.plugin.message.error(`获取供应商信息失败:${res.code}`);
         }
       });
   },

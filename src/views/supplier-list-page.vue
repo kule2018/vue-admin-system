@@ -15,11 +15,18 @@
             @click="search"
             >查询</el-button
           >
+          <el-button
+            type="primary"
+            icon="el-icon-plus"
+            size="small"
+            @click="handleClick(3, '')"
+            >增加</el-button
+          >
           <el-button plain icon="el-icon-refresh-left" size="small"
             >重置</el-button
           >
         </div>
-        <el-tabs v-model="tabActiveName" @tab-click="handleClick">
+        <el-tabs v-model="tabActiveName" @tab-click="tabsClick(tabActiveName)">
           <el-tab-pane label="全部" name="all" />
           <el-tab-pane label="冻结" name="freeze" />
           <el-tab-pane label="黑名单" name="blacklist" />
@@ -31,7 +38,7 @@
           <el-table-column prop="scopeBusine" label="经营范围" />
           <el-table-column prop="companyAddress" label="公司地址" />
           <el-table-column prop="mobilePhone" label="手机" />
-          <el-table-column fixed="right" width="280" label="操作">
+          <el-table-column fixed="right" width="360" label="操作">
             <template slot-scope="scope">
               <el-button
                 @click="handleClick(0, scope.row)"
@@ -40,17 +47,41 @@
                 >查看</el-button
               >
               <el-button
+                @click="handleClick(4, scope.row)"
+                type="primary"
+                size="mini"
+                >编辑</el-button
+              >
+              <el-button
+                v-if="tabActiveName === 'freeze'"
+                @click="handleClick(5, scope.row)"
+                type="primary"
+                size="mini"
+                >解除冻结</el-button
+              >
+              <el-button
+                v-else
                 @click="handleClick(1, scope.row)"
                 type="primary"
                 size="mini"
                 >冻结</el-button
               >
               <el-button
+                v-if="tabActiveName === 'blacklist'"
+                @click="handleClick(6, scope.row)"
+                type="primary"
+                size="mini"
+              >
+                解除拉黑
+              </el-button>
+              <el-button
+                v-else
                 @click="handleClick(2, scope.row)"
                 type="primary"
                 size="mini"
-                >拉黑</el-button
               >
+                拉黑
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -73,6 +104,7 @@
 <script>
 import lodash from "lodash";
 import supplierListDetails from "@/views/supplier-list-details-page";
+import supplierListEditPage from "@/views/supplier-list-edit-page";
 
 export default {
   name: "supplier-list-page",
@@ -84,7 +116,7 @@ export default {
       currentPage: 1
     };
   },
-  created() {
+  mounted() {
     this.$api.supplierManageAPI.getSupplierList().then(res => {
       if (lodash.isEqual(res.code, "success")) {
         this.tableData = res.data;
@@ -95,9 +127,9 @@ export default {
   },
   methods: {
     search() {
-      this.$api.weChatUserInfoAPI
-        .getUserInfoList({
-          nickName: this.searchParam
+      this.$api.supplierManageAPI
+        .getSupplierList({
+          name: this.searchParam
         })
         .then(res => {
           if (lodash.isEqual(res.code, "success")) {
@@ -117,20 +149,20 @@ export default {
             { personId: val.personId, colNum: "one-col" },
             "查看供应商信息",
             "580",
-            "330",
+            "600",
             function() {}
           );
           break;
         case 1:
           // 冻结
-          this.$confirm("此操作将冻结该用户, 是否继续?", "提示", {
+          this.$confirm("此操作将冻结该供应商, 是否继续?", "提示", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
             type: "warning"
           })
             .then(() => {
-              this.$api.weChatUserInfoAPI
-                .freezeUserInfo({ personId: val.personId })
+              this.$api.supplierManageAPI
+                .freezeSupplierInfo({ supplierId: val.supplierId })
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
@@ -143,14 +175,14 @@ export default {
           break;
         case 2:
           // 拉黑
-          this.$confirm("此操作将拉黑该用户, 是否继续?", "提示", {
+          this.$confirm("此操作将拉黑该供应商, 是否继续?", "提示", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
             type: "warning"
           })
             .then(() => {
-              this.$api.weChatUserInfoAPI
-                .defriendUserInfo({ personId: val.personId })
+              this.$api.supplierManageAPI
+                .defriendSupplierInfo({ supplierId: val.supplierId })
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
@@ -160,6 +192,105 @@ export default {
                 });
             })
             .catch(() => {});
+          break;
+        // 增加
+        case 3:
+          this.$vb.plugin.openLayer(
+            supplierListEditPage,
+            this,
+            { state: "add" },
+            "新增供应商",
+            960,
+            690,
+            function() {}
+          );
+          break;
+        // 编辑
+        case 4:
+          this.$vb.plugin.openLayer(
+            supplierListEditPage,
+            this,
+            { state: "update", supplierId: val.supplierId },
+            "编辑供应商",
+            960,
+            690,
+            function() {}
+          );
+          break;
+        // 解除冻结
+        case 5:
+          this.$confirm("此操作将解除该供应商的冻结状态, 是否继续?", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          })
+            .then(() => {
+              this.$api.supplierManageAPI
+                .relieveFreezeSupplierInfo({ supplierId: val.supplierId })
+                .then(res => {
+                  if (lodash.isEqual(res.code, "success")) {
+                    this.$vb.plugin.message.success(res.msg);
+                  } else {
+                    this.$vb.plugin.message.error(res.msg);
+                  }
+                });
+            })
+            .catch(() => {});
+          break;
+        // 解除拉黑
+        case 6:
+          this.$confirm(
+            "此操作将会把当前供应商从黑名单中移除, 是否继续?",
+            "提示",
+            {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            }
+          )
+            .then(() => {
+              this.$api.supplierManageAPI
+                .relieveRelieveSupplierInfo({ supplierId: val.supplierId })
+                .then(res => {
+                  if (lodash.isEqual(res.code, "success")) {
+                    this.$vb.plugin.message.success(res.msg);
+                  } else {
+                    this.$vb.plugin.message.error(res.msg);
+                  }
+                });
+            })
+            .catch(() => {});
+          break;
+        default:
+          break;
+      }
+    },
+    tabsClick(val) {
+      console.log(val);
+      switch (val) {
+        // 全部
+        case "all":
+          this.search();
+          break;
+        // 查询冻结
+        case "freeze":
+          this.$api.supplierManageAPI.queryFreezeSuppliers().then(res => {
+            if (lodash.isEqual(res.code, "success")) {
+              this.tableData = res.data;
+            } else {
+              this.$vb.plugin.message.error(res.msg);
+            }
+          });
+          break;
+        // 查询拉黑
+        case "blacklist":
+          this.$api.supplierManageAPI.queryPullBlackSuppliers().then(res => {
+            if (lodash.isEqual(res.code, "success")) {
+              this.tableData = res.data;
+            } else {
+              this.$vb.plugin.message.error(res.msg);
+            }
+          });
           break;
         default:
           break;
