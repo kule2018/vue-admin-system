@@ -2,11 +2,7 @@
   <div id="userListPanel">
     <div class="table-panel">
       <div class="search-bar" @keydown.enter="search">
-        <el-input
-          v-model="searchParam"
-          placeholder="请输入用户名"
-          size="small"
-        />
+        <el-input v-model="searchParam" placeholder="请输入昵称" size="small" />
         <el-button
           type="primary"
           icon="el-icon-search"

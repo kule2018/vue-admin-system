@@ -14,7 +14,13 @@
     </div>
     <div>
       <div>营业执照电子图</div>
-      <div>{{ detailsInfo.businessLicenseElecChart }}</div>
+      <div>
+        <el-image
+          style="width: 100px; height: 100px"
+          :src="baseUrl + detailsInfo.businessLicenseElecChart"
+        >
+        </el-image>
+      </div>
     </div>
     <div>
       <div>
@@ -26,7 +32,13 @@
     </div>
     <div>
       <div>卫生许可证电子图</div>
-      <div>{{ detailsInfo.sanitaryPermitElecChart }}</div>
+      <div>
+        <el-image
+          style="width: 100px; height: 100px"
+          :src="baseUrl + detailsInfo.sanitaryPermitElecChart"
+        >
+        </el-image>
+      </div>
     </div>
     <div>
       <div>法人</div>
@@ -57,7 +69,7 @@
 
 <script>
 import lodash from "lodash";
-
+import base from "@/api/base";
 export default {
   name: "supplier-list-details-page",
   data() {
@@ -74,6 +86,7 @@ export default {
       .then(res => {
         if (lodash.isEqual(res.code, "success")) {
           this.detailsInfo = res.data;
+          this.baseUrl = base.defaultBaseUrl;
         } else {
           this.$vb.plugin.message.error(`获取供应商信息失败:${res.code}`);
         }

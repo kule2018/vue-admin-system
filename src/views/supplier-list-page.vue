@@ -146,7 +146,7 @@ export default {
           this.$vb.plugin.openLayer(
             supplierListDetails,
             this,
-            { personId: val.personId, colNum: "one-col" },
+            { supplierId: val.supplierId, colNum: "one-col" },
             "查看供应商信息",
             "580",
             "600",
@@ -166,6 +166,9 @@ export default {
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
+                    // 刷新列表
+                    this.tabActiveName = "freeze";
+                    this.tabsClick("freeze");
                   } else {
                     this.$vb.plugin.message.error(res.msg);
                   }
@@ -186,6 +189,9 @@ export default {
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
+                    this.tabActiveName = "blacklist";
+                    // 刷新列表
+                    this.tabsClick("blacklist");
                   } else {
                     this.$vb.plugin.message.error(res.msg);
                   }
@@ -230,6 +236,8 @@ export default {
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
+                    // 刷新列表
+                    this.tabsClick(this.tabActiveName);
                   } else {
                     this.$vb.plugin.message.error(res.msg);
                   }
@@ -254,6 +262,8 @@ export default {
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
+                    // 刷新列表
+                    this.tabsClick(this.tabActiveName);
                   } else {
                     this.$vb.plugin.message.error(res.msg);
                   }
