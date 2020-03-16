@@ -66,6 +66,7 @@
             class="el-menu-vertical"
             :collapse="isCollapse"
             default-active="0"
+            :unique-opened="true"
           >
             <el-menu-item index="0" @click="showContent('firstScreen')">
               <icon class="el-icon-s-platform" />

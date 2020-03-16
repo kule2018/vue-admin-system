@@ -15,6 +15,24 @@ const weChatUserInfoAPI = {
       params
     });
   },
+  // 获取用户冻结列表 {name:"",nickName:""}
+  getUserFreezeList(params) {
+    return services._axios.get(
+      `${base.defaultBaseUrl}/sys/person/freezeSearch`,
+      {
+        params
+      }
+    );
+  },
+  // 获取用户黑名单列表 {name:"",nickName:""}
+  getUserBlockList(params) {
+    return services._axios.get(
+      `${base.defaultBaseUrl}/sys/person/defriendSearch`,
+      {
+        params
+      }
+    );
+  },
   // 冻结用户 {personId:""}
   freezeUserInfo(params) {
     return services._axios.post(
@@ -26,6 +44,20 @@ const weChatUserInfoAPI = {
   defriendUserInfo(params) {
     return services._axios.post(
       `${base.defaultBaseUrl}/sys/person/defriend`,
+      params
+    );
+  },
+  // 解冻用户 {personId:""}
+  unfreezeUser(params) {
+    return services._axios.post(
+      `${base.defaultBaseUrl}/sys/person/unfreeze`,
+      params
+    );
+  },
+  // 移除黑名单 {personId:""}
+  unblockUser(params) {
+    return services._axios.post(
+      `${base.defaultBaseUrl}/sys/person/relieve`,
       params
     );
   }
