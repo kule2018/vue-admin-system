@@ -11,15 +11,21 @@ const supplierManageAPI = {
   },
   // 查询拉黑供应商
   queryPullBlackSuppliers(params) {
-    return services._axios.get(`${base.defaultBaseUrl}/sys/supplier/search`, {
-      params
-    });
+    return services._axios.get(
+      `${base.defaultBaseUrl}/sys/supplier/defriendSearch`,
+      {
+        params
+      }
+    );
   },
   // 查询冻结供应商
   queryFreezeSuppliers(params) {
-    return services._axios.get(`${base.defaultBaseUrl}/sys/supplier/search`, {
-      params
-    });
+    return services._axios.get(
+      `${base.defaultBaseUrl}/sys/supplier/freezeSearch`,
+      {
+        params
+      }
+    );
   },
   // 获取供应商信息 {supplierId:""}
   getSupplierInfo(params) {
