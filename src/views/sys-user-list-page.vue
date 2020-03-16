@@ -13,17 +13,10 @@
         @click="search"
         >查询</el-button
       >
-      <el-button
-        type="primary"
-        plain
-        icon="el-icon-plus"
-        size="small"
-        @click="handleClick('add')"
+      <el-button type="primary" plain size="small" @click="handleClick('add')"
         >增加</el-button
       >
-      <el-button plain icon="el-icon-refresh-left" size="small" @click="reset"
-        >重置</el-button
-      >
+      <el-button plain size="small" @click="reset">重置</el-button>
     </div>
     <el-tabs v-model="tabActiveName" @tab-click="handleTabClick">
       <el-tab-pane label="全部" name="all"></el-tab-pane>
@@ -34,6 +27,8 @@
       :data="tableData"
       style="width: 100%"
       v-if="tabActiveName === 'all'"
+      @row-click="openDetails"
+      v-loading.fullscreen="isLoading"
     >
       <el-table-column label="头像" width="120" align="center">
         <template slot-scope="scope">
@@ -46,16 +41,10 @@
       <el-table-column label="操作" width="350">
         <template slot-scope="scope">
           <el-button
-            @click="handleClick('detail', scope.row.userid)"
+            @click.stop="handleClick('update', scope.row.userid)"
             type="primary"
             size="mini"
-            >查看</el-button
-          >
-          <el-button
-            @click="handleClick('update', scope.row.userid)"
-            type="warning"
-            size="mini"
-            >修改</el-button
+            >编辑</el-button
           >
         </template>
       </el-table-column>
@@ -114,18 +103,21 @@ export default {
       currentPage: 1,
       tabActiveName: "all",
       tableData: [],
-      baseUrl: ""
+      baseUrl: "",
+      isLoading: false
     };
   },
   methods: {
     search() {
       const self = this;
+      this.isLoading = true;
       if (this.tabActiveName === "all") {
         this.$api.sysUserInfoAPI
           .getUserInfoList({ name: this.searchParam })
           .then(res => {
             if (lodash.isEqual(res.code, "success")) {
               self.tableData = res.data;
+              this.isLoading = false;
             } else {
               self.$vb.plugin.message.error(res.msg);
             }
@@ -140,6 +132,7 @@ export default {
           .then(res => {
             if (lodash.isEqual(res.code, "success")) {
               self.tableData = res.data;
+              this.isLoading = false;
             } else {
               self.$vb.plugin.message.error(res.msg);
             }
@@ -154,6 +147,7 @@ export default {
           .then(res => {
             if (lodash.isEqual(res.code, "success")) {
               self.tableData = res.data;
+              this.isLoading = false;
             } else {
               self.$vb.plugin.message.error(res.msg);
             }
@@ -173,8 +167,8 @@ export default {
             this,
             { colNum: "one-col", userid: userid },
             "系统用户详情",
-            580,
-            350
+            800,
+            "80%"
           );
           break;
         case "add":
@@ -184,7 +178,7 @@ export default {
             { state: state, userid: userid },
             "新增系统用户",
             620,
-            440
+            "80%"
           );
           break;
         case "update":
@@ -194,7 +188,7 @@ export default {
             { state: state, userid: userid },
             "修改系统用户",
             620,
-            380
+            "80%"
           );
           break;
         case "unfreeze":
@@ -243,7 +237,10 @@ export default {
       this.search();
     },
     handleSizeChange() {},
-    handleCurrentChange() {}
+    handleCurrentChange() {},
+    openDetails(row) {
+      this.handleClick("detail", row.userid);
+    }
   },
   mounted() {
     this.search();

@@ -3,12 +3,8 @@
     <div>
       <div>用户头像</div>
       <div>
-        <el-avatar :src="baseUrl + sysUserInfo.iconPath" />
+        <el-avatar :src="sysUserInfo.iconPath" />
       </div>
-    </div>
-    <div>
-      <div>用户ID</div>
-      <div>{{ sysUserInfo.userid }}</div>
     </div>
     <div>
       <div>用户名</div>
@@ -31,8 +27,7 @@ export default {
   name: "sys-user-detail",
   data() {
     return {
-      sysUserInfo: {},
-      baseUrl: ""
+      sysUserInfo: {}
     };
   },
   props: {
@@ -61,8 +56,8 @@ export default {
     this.$api.sysUserInfoAPI
       .getUserInfo({ userid: this.parentData.userid[0] })
       .then(res => {
+        res.data.iconPath = baseUrl.defaultBaseUrl + res.data.iconPath;
         self.sysUserInfo = res.data;
-        this.baseUrl = baseUrl.defaultBaseUrl;
       });
   }
 };

@@ -10,16 +10,19 @@
           @click="search"
           >查询</el-button
         >
-        <el-button plain icon="el-icon-refresh-left" size="small"
-          >重置</el-button
-        >
+        <el-button plain size="small">重置</el-button>
       </div>
       <el-tabs v-model="tabActiveName" @tab-click="handleTabClick">
         <el-tab-pane label="全部" name="all" />
         <el-tab-pane label="冻结" name="freeze" />
         <el-tab-pane label="黑名单" name="block" />
       </el-tabs>
-      <el-table :data="tableData" style="width: 100%">
+      <el-table
+        :data="tableData"
+        style="width: 100%"
+        @row-click="openDetails"
+        v-loading.fullscreen="isLoading"
+      >
         <el-table-column label="头像" width="120" align="center">
           <template slot-scope="scope">
             <el-avatar :src="scope.row.avatarUrl" />
@@ -32,19 +35,13 @@
           <template slot-scope="scope">
             <template v-if="tabActiveName === 'all'">
               <el-button
-                @click="handleClick(0, scope.row)"
-                type="primary"
-                size="mini"
-                >查看</el-button
-              >
-              <el-button
-                @click="handleClick(1, scope.row)"
+                @click.stop="handleClick(1, scope.row)"
                 type="primary"
                 size="mini"
                 >冻结</el-button
               >
               <el-button
-                @click="handleClick(2, scope.row)"
+                @click.stop="handleClick(2, scope.row)"
                 type="primary"
                 size="mini"
                 >拉黑</el-button
@@ -96,7 +93,8 @@ export default {
       searchParam: "",
       tabActiveName: "all",
       tableData: [],
-      currentPage: 1
+      currentPage: 1,
+      isLoading: false
     };
   },
   mounted() {
@@ -109,6 +107,7 @@ export default {
   methods: {
     search() {
       this.tableData = [];
+      this.isLoading = true;
       if (this.tabActiveName === "all") {
         this.$api.weChatUserInfoAPI
           .getUserInfoList({
@@ -117,6 +116,7 @@ export default {
           .then(res => {
             if (lodash.isEqual(res.code, "success")) {
               this.tableData = res.data;
+              this.isLoading = false;
             } else {
               this.$vb.plugin.message.error(res.msg);
             }
@@ -130,6 +130,7 @@ export default {
           .then(res => {
             if (lodash.isEqual(res.code, "success")) {
               this.tableData = res.data;
+              this.isLoading = false;
             } else {
               this.$vb.plugin.message.error(res.msg);
             }
@@ -143,23 +144,24 @@ export default {
           .then(res => {
             if (lodash.isEqual(res.code, "success")) {
               this.tableData = res.data;
+              this.isLoading = false;
             } else {
               this.$vb.plugin.message.error(res.msg);
             }
           });
       }
     },
-    handleClick(status, val) {
+    handleClick(status, ...val) {
       switch (status) {
         case 0:
           // 查看
           this.$vb.plugin.openLayer(
             userListDetails,
             this,
-            { personId: val.personId, colNum: "one-col" },
+            { personId: val[0].personId, colNum: "one-col" },
             "查看用户信息",
-            "580",
-            "330",
+            "800",
+            "80%",
             function() {}
           );
           break;
@@ -172,7 +174,7 @@ export default {
           })
             .then(() => {
               this.$api.weChatUserInfoAPI
-                .freezeUserInfo({ personId: val.personId })
+                .freezeUserInfo({ personId: val[0].personId })
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
@@ -192,7 +194,7 @@ export default {
           })
             .then(() => {
               this.$api.weChatUserInfoAPI
-                .defriendUserInfo({ personId: val.personId })
+                .defriendUserInfo({ personId: val[0].personId })
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
@@ -212,7 +214,7 @@ export default {
           })
             .then(() => {
               this.$api.weChatUserInfoAPI
-                .unfreezeUser({ personId: val.personId })
+                .unfreezeUser({ personId: val[0].personId })
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
@@ -233,7 +235,7 @@ export default {
           })
             .then(() => {
               this.$api.weChatUserInfoAPI
-                .unblockUser({ personId: val.personId })
+                .unblockUser({ personId: val[0].personId })
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
@@ -253,7 +255,10 @@ export default {
       this.search();
     },
     handleSizeChange() {},
-    handleCurrentChange() {}
+    handleCurrentChange() {},
+    openDetails(row) {
+      this.handleClick(0, row);
+    }
   }
 };
 </script>

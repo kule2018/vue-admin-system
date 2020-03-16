@@ -6,28 +6,12 @@
         <div><el-avatar :src="userInfo.avatarUrl" /></div>
       </div>
       <div>
-        <div>名称</div>
-        <div>{{ userInfo.name }}</div>
+        <div>昵称</div>
+        <div>{{ userInfo.nickName }}</div>
       </div>
       <div>
         <div>手机号</div>
         <div>{{ userInfo.phone }}</div>
-      </div>
-      <div>
-        <div>
-          openid
-        </div>
-        <div>
-          {{ userInfo.openid }}
-        </div>
-      </div>
-      <div>
-        <div>
-          用户id
-        </div>
-        <div>
-          {{ userInfo.personId }}
-        </div>
       </div>
       <div>
         <div>单位</div>

@@ -93,34 +93,56 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="营业执照电子图">
+                <el-image
+                  :class="{ hide: !businessLicense }"
+                  :src="businessLicense"
+                  :preview-src-list="[businessLicense]"
+                  class="avatar"
+                >
+                </el-image>
                 <el-upload
                   class="avatar-uploader"
+                  :class="{ hide: businessLicense }"
                   action="http://172.16.0.110/common/upload"
                   :show-file-list="false"
                   :on-success="operateSuccess"
                   :before-upload="beforeAvatarUpload"
                 >
-                  <img
-                    v-if="businessLicense"
-                    :src="businessLicense"
-                    class="avatar"
-                  />
-                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                  <i
+                    class="el-icon-plus avatar-uploader-icon"
+                    ref="uploadFile1"
+                  ></i>
                 </el-upload>
+                <el-button size="mini" plain @click="$refs.uploadFile1.click()"
+                  >上传</el-button
+                >
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="卫生许可证电子图">
+                <el-image
+                  :class="{ hide: !healthPermit }"
+                  :src="healthPermit"
+                  :preview-src-list="[healthPermit]"
+                  class="avatar"
+                >
+                </el-image>
                 <el-upload
                   class="avatar-uploader"
+                  :class="{ hide: healthPermit }"
                   action="http://172.16.0.110/common/upload"
                   :show-file-list="false"
                   :on-success="healthSuccess"
                   :before-upload="beforeAvatarUpload"
                 >
-                  <img v-if="healthPermit" :src="healthPermit" class="avatar" />
-                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                  <i
+                    class="el-icon-plus avatar-uploader-icon"
+                    ref="uploadFile2"
+                  ></i>
                 </el-upload>
+                <el-button size="mini" plain @click="$refs.uploadFile2.click()"
+                  >上传</el-button
+                >
               </el-form-item>
             </el-col>
           </el-row>

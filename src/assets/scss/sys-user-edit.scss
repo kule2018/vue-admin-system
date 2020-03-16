@@ -3,32 +3,23 @@
   box-sizing: border-box;
   overflow-y: auto;
 
+  .upload-avatar {
+    display: flex;
+    align-items: center;
+  }
+
   .avatar-box {
     width: 40px;
     height: 40px;
     display: inline-block;
   }
   .avatar {
+    border: 1px solid #ddd;
     background-color: #fff;
-    border: 1px dashed #ccc;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: border-color .2s;
-
-    &:hover {
-      border-color: #409eff;
-
-      i {
-        color: #409eff;
-      }
-    }
-
-    i {
-      color: #999;
-      vertical-align: top;
-    }
   }
 
   .showAvatar {
