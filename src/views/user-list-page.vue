@@ -14,10 +14,10 @@
           >重置</el-button
         >
       </div>
-      <el-tabs v-model="tabActiveName" @tab-click="handleClick">
+      <el-tabs v-model="tabActiveName" @tab-click="handleTabClick">
         <el-tab-pane label="全部" name="all" />
         <el-tab-pane label="冻结" name="freeze" />
-        <el-tab-pane label="黑名单" name="blacklist" />
+        <el-tab-pane label="黑名单" name="block" />
       </el-tabs>
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="头像" width="120" align="center">
@@ -30,24 +30,44 @@
         <el-table-column prop="province" label="省" />
         <el-table-column fixed="right" width="350" label="操作">
           <template slot-scope="scope">
-            <el-button
-              @click="handleClick(0, scope.row)"
-              type="primary"
-              size="mini"
-              >查看</el-button
-            >
-            <el-button
-              @click="handleClick(1, scope.row)"
-              type="primary"
-              size="mini"
-              >冻结</el-button
-            >
-            <el-button
-              @click="handleClick(2, scope.row)"
-              type="primary"
-              size="mini"
-              >拉黑</el-button
-            >
+            <template v-if="tabActiveName === 'all'">
+              <el-button
+                @click="handleClick(0, scope.row)"
+                type="primary"
+                size="mini"
+                >查看</el-button
+              >
+              <el-button
+                @click="handleClick(1, scope.row)"
+                type="primary"
+                size="mini"
+                >冻结</el-button
+              >
+              <el-button
+                @click="handleClick(2, scope.row)"
+                type="primary"
+                size="mini"
+                >拉黑</el-button
+              >
+            </template>
+            <template v-else-if="tabActiveName === 'freeze'">
+              <el-button
+                @click="handleClick(3, scope.row)"
+                type="primary"
+                size="mini"
+                v-if="tabActiveName === 'freeze'"
+                >解冻</el-button
+              >
+            </template>
+            <template v-else-if="tabActiveName === 'block'">
+              <el-button
+                @click="handleClick(4, scope.row)"
+                type="primary"
+                size="mini"
+                v-if="tabActiveName === 'block'"
+                >移出黑名单</el-button
+              >
+            </template>
           </template>
         </el-table-column>
       </el-table>
@@ -84,27 +104,50 @@ export default {
     this.$api.websiteManageAPI.testMock({}).then(res => {
       console.log(res);
     });
-    this.$api.weChatUserInfoAPI.getUserInfoList().then(res => {
-      if (lodash.isEqual(res.code, "success")) {
-        this.tableData = res.data;
-      } else {
-        this.$vb.plugin.message.error(`获取用户列表失败,${res.code}`);
-      }
-    });
+    this.search();
   },
   methods: {
     search() {
-      this.$api.weChatUserInfoAPI
-        .getUserInfoList({
-          nickName: this.searchParam
-        })
-        .then(res => {
-          if (lodash.isEqual(res.code, "success")) {
-            this.tableData = res.data;
-          } else {
-            this.$vb.plugin.message.error(res.msg);
-          }
-        });
+      this.tableData = [];
+      if (this.tabActiveName === "all") {
+        this.$api.weChatUserInfoAPI
+          .getUserInfoList({
+            nickName: this.searchParam
+          })
+          .then(res => {
+            if (lodash.isEqual(res.code, "success")) {
+              this.tableData = res.data;
+            } else {
+              this.$vb.plugin.message.error(res.msg);
+            }
+          });
+      }
+      if (this.tabActiveName === "freeze") {
+        this.$api.weChatUserInfoAPI
+          .getUserFreezeList({
+            nickName: this.searchParam
+          })
+          .then(res => {
+            if (lodash.isEqual(res.code, "success")) {
+              this.tableData = res.data;
+            } else {
+              this.$vb.plugin.message.error(res.msg);
+            }
+          });
+      }
+      if (this.tabActiveName === "block") {
+        this.$api.weChatUserInfoAPI
+          .getUserBlockList({
+            nickName: this.searchParam
+          })
+          .then(res => {
+            if (lodash.isEqual(res.code, "success")) {
+              this.tableData = res.data;
+            } else {
+              this.$vb.plugin.message.error(res.msg);
+            }
+          });
+      }
     },
     handleClick(status, val) {
       switch (status) {
@@ -160,9 +203,54 @@ export default {
             })
             .catch(() => {});
           break;
+        case 3:
+          // 解冻
+          this.$confirm("是否将该用户解冻?", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          })
+            .then(() => {
+              this.$api.weChatUserInfoAPI
+                .unfreezeUser({ personId: val.personId })
+                .then(res => {
+                  if (lodash.isEqual(res.code, "success")) {
+                    this.$vb.plugin.message.success(res.msg);
+                    this.search();
+                  } else {
+                    this.$vb.plugin.message.error(res.msg);
+                  }
+                });
+            })
+            .catch(() => {});
+          break;
+        case 4:
+          // 移出黑名单
+          this.$confirm("是否将该用户移出黑名单?", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          })
+            .then(() => {
+              this.$api.weChatUserInfoAPI
+                .unblockUser({ personId: val.personId })
+                .then(res => {
+                  if (lodash.isEqual(res.code, "success")) {
+                    this.$vb.plugin.message.success(res.msg);
+                    this.search();
+                  } else {
+                    this.$vb.plugin.message.error(res.msg);
+                  }
+                });
+            })
+            .catch(() => {});
+          break;
         default:
           break;
       }
+    },
+    handleTabClick() {
+      this.search();
     },
     handleSizeChange() {},
     handleCurrentChange() {}
