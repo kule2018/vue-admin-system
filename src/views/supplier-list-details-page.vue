@@ -17,7 +17,8 @@
       <div>
         <el-image
           style="width: 100px; height: 100px"
-          :src="baseUrl + detailsInfo.businessLicenseElecChart"
+          :src="detailsInfo.businessLicenseElecChart"
+          :preview-src-list="[detailsInfo.businessLicenseElecChart]"
         >
         </el-image>
       </div>
@@ -35,7 +36,8 @@
       <div>
         <el-image
           style="width: 100px; height: 100px"
-          :src="baseUrl + detailsInfo.sanitaryPermitElecChart"
+          :src="detailsInfo.sanitaryPermitElecChart"
+          :preview-src-list="[detailsInfo.sanitaryPermitElecChart]"
         >
         </el-image>
       </div>
@@ -69,7 +71,8 @@
 
 <script>
 import lodash from "lodash";
-import base from "@/api/base";
+import baseUrl from "@/api/base";
+
 export default {
   name: "supplier-list-details-page",
   data() {
@@ -85,8 +88,12 @@ export default {
       })
       .then(res => {
         if (lodash.isEqual(res.code, "success")) {
+          res.data.businessLicenseElecChart =
+            baseUrl.defaultBaseUrl + res.data.businessLicenseElecChart;
+          res.data.sanitaryPermitElecChart =
+            baseUrl.defaultBaseUrl + res.data.sanitaryPermitElecChart;
           this.detailsInfo = res.data;
-          this.baseUrl = base.defaultBaseUrl;
+          this.detailsInfo = Object.assign({}, this.detailsInfo);
         } else {
           this.$vb.plugin.message.error(`获取供应商信息失败:${res.code}`);
         }

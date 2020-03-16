@@ -1,3 +1,12 @@
+.avatar-uploader {
+  display: inline-block;
+  border: 1px solid #ddd;
+
+  & + button {
+    margin-left: 15px;
+    vertical-align: top;
+  }
+}
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
@@ -19,5 +28,9 @@
 .avatar {
   width: 100px;
   height: 100px;
-  display: block;
+  display: inline-block;
+}
+
+.hide {
+  display: none;
 }
