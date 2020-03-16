@@ -4,27 +4,29 @@
       <div class="main-content">
         <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="头像" style="height: 40px;">
-            <span
-              @click="$refs.uploadFile.click()"
-              ref="upload"
-              class="avatar-box"
-            >
-              <el-avatar v-if="!form.iconPath" class="avatar">
-                <i class="el-icon-plus"></i>
-              </el-avatar>
-              <el-avatar
-                v-else
-                :src="baseUrl + form.iconPath"
-                class="showAvatar"
-              ></el-avatar>
-            </span>
-            <input
-              type="file"
-              class="upload"
-              accept="image/png,image/jpeg"
-              @change="upload($event)"
-              ref="uploadFile"
-            />
+            <div class="upload-avatar">
+              <span
+                ref="upload"
+                class="avatar-box"
+                @click="$refs.uploadFile.click()"
+              >
+                <el-avatar :src="form.iconPath" class="avatar"></el-avatar>
+              </span>
+              <input
+                type="file"
+                class="upload"
+                accept="image/png,image/jpeg"
+                @change="upload($event)"
+                ref="uploadFile"
+              />
+              <el-button
+                style="margin-left: 15px;"
+                plain
+                size="mini"
+                @click="$refs.uploadFile.click()"
+                >上传</el-button
+              >
+            </div>
           </el-form-item>
           <el-form-item label="昵称">
             <el-input
@@ -143,6 +145,7 @@ export default {
       this.$layer.close(this.layerid);
     },
     upload(ev) {
+      console.log(ev);
       const self = this;
       this.form.iconPath = "";
       this.form = Object.assign({}, this.form);
@@ -150,11 +153,8 @@ export default {
       let formData = new FormData();
       formData.append("file", file, file.name);
       this.$nextTick(() => {
-        this.$refs.upload
-          .querySelector("i")
-          .setAttribute("class", "el-icon-loading");
         this.$api.fileManageAPI.singleFileUpload(formData).then(res => {
-          self.form.iconPath = res.data.path;
+          self.form.iconPath = baseUrl.defaultBaseUrl + res.data.path;
           self.form = Object.assign({}, self.form);
         });
       });
@@ -205,6 +205,7 @@ export default {
       this.$api.sysUserInfoAPI
         .getUserInfo({ userid: this.parentData.userid[0] })
         .then(res => {
+          res.data.iconPath = baseUrl.defaultBaseUrl + res.data.iconPath;
           self.form = Object.assign({}, res.data);
         });
     }

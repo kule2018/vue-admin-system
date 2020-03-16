@@ -17,21 +17,24 @@
           >
           <el-button
             type="primary"
-            icon="el-icon-plus"
+            plain
             size="small"
             @click="handleClick(3, '')"
             >增加</el-button
           >
-          <el-button plain icon="el-icon-refresh-left" size="small"
-            >重置</el-button
-          >
+          <el-button plain size="small">重置</el-button>
         </div>
         <el-tabs v-model="tabActiveName" @tab-click="tabsClick(tabActiveName)">
           <el-tab-pane label="全部" name="all" />
           <el-tab-pane label="冻结" name="freeze" />
           <el-tab-pane label="黑名单" name="blacklist" />
         </el-tabs>
-        <el-table :data="tableData" style="width: 100%">
+        <el-table
+          :data="tableData"
+          style="width: 100%"
+          @row-click="openDetails"
+          v-loading.fullscreen="isLoading"
+        >
           <el-table-column prop="name" label="名称" />
           <el-table-column prop="establTime" label="建立时间" />
           <el-table-column prop="registerCapital" label="注册资金" />
@@ -41,42 +44,36 @@
           <el-table-column fixed="right" width="360" label="操作">
             <template slot-scope="scope">
               <el-button
-                @click="handleClick(0, scope.row)"
-                type="primary"
-                size="mini"
-                >查看</el-button
-              >
-              <el-button
-                @click="handleClick(4, scope.row)"
+                @click.stop="handleClick(4, scope.row)"
                 type="primary"
                 size="mini"
                 >编辑</el-button
               >
               <el-button
-                v-if="tabActiveName === 'freeze'"
-                @click="handleClick(5, scope.row)"
+                v-if="scope.row.statusCode === 71"
+                @click.stop="handleClick(5, scope.row)"
                 type="primary"
                 size="mini"
                 >解除冻结</el-button
               >
               <el-button
-                v-else
-                @click="handleClick(1, scope.row)"
+                v-if="scope.row.statusCode !== 71"
+                @click.stop="handleClick(1, scope.row)"
                 type="primary"
                 size="mini"
                 >冻结</el-button
               >
               <el-button
-                v-if="tabActiveName === 'blacklist'"
-                @click="handleClick(6, scope.row)"
+                v-if="scope.row.statusCode === 81"
+                @click.stop="handleClick(6, scope.row)"
                 type="primary"
                 size="mini"
               >
                 解除拉黑
               </el-button>
               <el-button
-                v-else
-                @click="handleClick(2, scope.row)"
+                v-if="scope.row.statusCode !== 81"
+                @click.stop="handleClick(2, scope.row)"
                 type="primary"
                 size="mini"
               >
@@ -113,7 +110,8 @@ export default {
       searchParam: "",
       tabActiveName: "all",
       tableData: [],
-      currentPage: 1
+      currentPage: 1,
+      isLoading: false
     };
   },
   mounted() {
@@ -127,6 +125,7 @@ export default {
   },
   methods: {
     search() {
+      this.isLoading = true;
       this.$api.supplierManageAPI
         .getSupplierList({
           name: this.searchParam
@@ -134,22 +133,23 @@ export default {
         .then(res => {
           if (lodash.isEqual(res.code, "success")) {
             this.tableData = res.data;
+            this.isLoading = false;
           } else {
             this.$vb.plugin.message.error(res.msg);
           }
         });
     },
-    handleClick(status, val) {
+    handleClick(status, ...val) {
       switch (status) {
         case 0:
           // 查看
           this.$vb.plugin.openLayer(
             supplierListDetails,
             this,
-            { supplierId: val.supplierId, colNum: "one-col" },
+            { supplierId: val[0].supplierId, colNum: "one-col" },
             "查看供应商信息",
-            "580",
-            "600",
+            "800",
+            "80%",
             function() {}
           );
           break;
@@ -162,7 +162,7 @@ export default {
           })
             .then(() => {
               this.$api.supplierManageAPI
-                .freezeSupplierInfo({ supplierId: val.supplierId })
+                .freezeSupplierInfo({ supplierId: val[0].supplierId })
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
@@ -185,7 +185,7 @@ export default {
           })
             .then(() => {
               this.$api.supplierManageAPI
-                .defriendSupplierInfo({ supplierId: val.supplierId })
+                .defriendSupplierInfo({ supplierId: val[0].supplierId })
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
@@ -207,7 +207,7 @@ export default {
             { state: "add" },
             "新增供应商",
             960,
-            690,
+            "80%",
             function() {}
           );
           break;
@@ -216,10 +216,10 @@ export default {
           this.$vb.plugin.openLayer(
             supplierListEditPage,
             this,
-            { state: "update", supplierId: val.supplierId },
+            { state: "update", supplierId: val[0].supplierId },
             "编辑供应商",
             960,
-            690,
+            "80%",
             function() {}
           );
           break;
@@ -232,7 +232,7 @@ export default {
           })
             .then(() => {
               this.$api.supplierManageAPI
-                .relieveFreezeSupplierInfo({ supplierId: val.supplierId })
+                .relieveFreezeSupplierInfo({ supplierId: val[0].supplierId })
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
@@ -258,7 +258,7 @@ export default {
           )
             .then(() => {
               this.$api.supplierManageAPI
-                .relieveRelieveSupplierInfo({ supplierId: val.supplierId })
+                .relieveRelieveSupplierInfo({ supplierId: val[0].supplierId })
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
@@ -307,7 +307,10 @@ export default {
       }
     },
     handleSizeChange() {},
-    handleCurrentChange() {}
+    handleCurrentChange() {},
+    openDetails(row) {
+      this.handleClick(0, row);
+    }
   }
 };
 </script>
