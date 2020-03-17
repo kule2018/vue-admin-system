@@ -44,6 +44,11 @@ const routes = [
             component: () => import("@/views/first-screen")
           },
           {
+            name: "sysOrderSearch",
+            path: "sysOrderSearch",
+            component: () => import("@/views/order-list-page")
+          },
+          {
             name: "sysUserSearch",
             path: "sysUserSearch",
             component: () => import("@/views/sys-user-list-page")

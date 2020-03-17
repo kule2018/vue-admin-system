@@ -99,9 +99,6 @@ export default {
   },
   mounted() {
     // 跨域测试
-    this.$api.websiteManageAPI.testMock({}).then(res => {
-      console.log(res);
-    });
     this.search();
   },
   methods: {

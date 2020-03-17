@@ -14,6 +14,8 @@ import sysUserInfoAPI from "@/api/sysUserInfoAPI";
 import weChatUserInfoAPI from "@/api/weChatUserInfoAPI";
 // 供应商管理接口
 import supplierManageAPI from "@/api/supplierManageAPI";
+// 订单管理接口
+import orderManageAPI from "@/api/orderManageAPI";
 
 // 导出接口
 export default {
@@ -22,5 +24,6 @@ export default {
   systemManageAPI,
   fileManageAPI,
   weChatUserInfoAPI,
-  supplierManageAPI
+  supplierManageAPI,
+  orderManageAPI
 };
