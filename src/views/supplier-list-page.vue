@@ -68,17 +68,15 @@
                 @click.stop="handleClick(6, scope.row)"
                 type="primary"
                 size="mini"
+                >解除拉黑</el-button
               >
-                解除拉黑
-              </el-button>
               <el-button
                 v-if="scope.row.statusCode !== 81"
                 @click.stop="handleClick(2, scope.row)"
                 type="primary"
                 size="mini"
+                >拉黑</el-button
               >
-                拉黑
-              </el-button>
             </template>
           </el-table-column>
         </el-table>
