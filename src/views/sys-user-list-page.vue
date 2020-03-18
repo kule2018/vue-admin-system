@@ -2,7 +2,7 @@
   <div class="table-panel">
     <div class="search-bar" @keydown.enter="search">
       <el-input
-        v-model="searchParam"
+        v-model="searchForm.name"
         placeholder="请输入昵称"
         size="small"
       ></el-input>
@@ -16,13 +16,12 @@
       <el-button type="primary" plain size="small" @click="handleClick('add')"
         >增加</el-button
       >
-      <el-button plain size="small" @click="reset">重置</el-button>
     </div>
-    <el-tabs v-model="tabActiveName" @tab-click="handleTabClick">
+    <!--<el-tabs v-model="tabActiveName" @tab-click="handleTabClick">
       <el-tab-pane label="全部" name="all"></el-tab-pane>
       <el-tab-pane label="冻结" name="freeze"></el-tab-pane>
       <el-tab-pane label="黑名单" name="block"></el-tab-pane>
-    </el-tabs>
+    </el-tabs>-->
     <el-table
       :data="tableData"
       style="width: 100%"
@@ -61,14 +60,14 @@
         <template slot-scope="scope">
           <el-button
             v-if="tabActiveName === 'freeze'"
-            @click="handleClick('unfreeze', scope.row.personId)"
+            @click.stop="handleClick('unfreeze', scope.row.personId)"
             type="primary"
             size="mini"
             >解冻</el-button
           >
           <el-button
             v-else-if="tabActiveName === 'block'"
-            @click="handleClick('unblock', scope.row.personId)"
+            @click.stop="handleClick('unblock', scope.row.personId)"
             type="warning"
             size="mini"
             >移出黑名单</el-button
@@ -79,11 +78,11 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[10, 20, 30, 40]"
-      :page-size="10"
+      :current-page="searchForm.pageNum"
+      :page-sizes="[5, 10, 15, 20]"
+      :page-size="searchForm.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="20"
+      :total="total"
       class="page"
     >
     </el-pagination>
@@ -99,12 +98,16 @@ export default {
   name: "sys-user-list-page",
   data() {
     return {
-      searchParam: "",
-      currentPage: 1,
+      searchForm: {
+        name: "",
+        pageNum: 1,
+        pageSize: 10
+      },
       tabActiveName: "all",
       tableData: [],
       baseUrl: "",
-      isLoading: false
+      isLoading: false,
+      total: 0
     };
   },
   methods: {
@@ -117,6 +120,7 @@ export default {
           .then(res => {
             if (lodash.isEqual(res.code, "success")) {
               self.tableData = res.data;
+              self.total = res.total;
               this.isLoading = false;
             } else {
               self.$vb.plugin.message.error(res.msg);
@@ -132,6 +136,7 @@ export default {
           .then(res => {
             if (lodash.isEqual(res.code, "success")) {
               self.tableData = res.data;
+              self.total = res.total;
               this.isLoading = false;
             } else {
               self.$vb.plugin.message.error(res.msg);
@@ -147,16 +152,13 @@ export default {
           .then(res => {
             if (lodash.isEqual(res.code, "success")) {
               self.tableData = res.data;
+              self.total = res.total;
               this.isLoading = false;
             } else {
               self.$vb.plugin.message.error(res.msg);
             }
           });
       }
-    },
-    reset() {
-      this.searchParam = "";
-      this.search();
     },
     handleClick(state, ...userid) {
       const self = this;

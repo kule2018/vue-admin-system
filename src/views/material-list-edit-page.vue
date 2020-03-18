@@ -2,14 +2,14 @@
   <div id="layerContent" class="sys-user-edit">
     <div class="content-panel">
       <div class="main-content">
-        <el-form ref="form" :model="form" label-width="130px">
+        <el-form ref="form" :model="form" :rules="rules" label-width="130px">
           <el-row>
             <el-col :span="12">
-              <el-form-item label="商品图">
+              <el-form-item label="商品图" prop="coverFigurePath">
                 <el-image
                   :class="{ hide: !form.coverFigurePath }"
-                  :src="form.coverFigurePath"
-                  :preview-src-list="[form.coverFigurePath]"
+                  :src="coverFigurePathAndBase"
+                  :preview-src-list="[coverFigurePathAndBase]"
                   class="avatar"
                 >
                 </el-image>
@@ -32,7 +32,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="商品名称">
+              <el-form-item label="商品名称" prop="name">
                 <el-input
                   v-model="form.name"
                   size="small"
@@ -43,13 +43,15 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="分类">
+              <el-form-item label="分类" prop="secondCategoryName">
                 <el-select
-                  v-model="form.firstCategoryName"
+                  v-model="form.classifyName"
                   value=""
                   size="small"
                   @change="categoryChange"
                   placeholder="请选择大类"
+                  ref="classify"
+                  @click.native.once="getSelect('classify')"
                 >
                   <el-option
                     v-for="(item, index) in firstCategorys"
@@ -59,7 +61,7 @@
                   ></el-option>
                 </el-select>
                 <el-select
-                  v-model="form.secondCategoryName"
+                  v-model="form.categoryName"
                   value=""
                   size="small"
                   placeholder="请选择小类"
@@ -80,6 +82,7 @@
                   value=""
                   size="small"
                   placeholder="请选择品牌"
+                  @click.native.once="getSelect('brand')"
                 >
                   <el-option
                     v-for="(item, index) in brands"
@@ -93,12 +96,13 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="单位">
+              <el-form-item label="单位" prop="unitName">
                 <el-select
                   v-model="form.unitName"
                   value=""
                   size="small"
                   placeholder="请选择单位"
+                  @click.native.once="getSelect('unit')"
                 >
                   <el-option
                     v-for="(item, index) in units"
@@ -110,7 +114,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="价格">
+              <el-form-item label="价格" prop="price">
                 <el-input
                   v-model="form.price"
                   size="small"
@@ -130,12 +134,13 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="状态">
+              <el-form-item label="状态" prop="statusName">
                 <el-select
                   v-model="form.statusName"
                   value=""
                   size="small"
-                  placeholder="请输入商品状态"
+                  placeholder="请选择商品状态"
+                  @click.native.once="getSelect('status')"
                 >
                   <el-option
                     v-for="(item, index) in statuses"
@@ -149,7 +154,7 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="起售数">
+              <el-form-item label="起售数" prop="saleNum">
                 <el-input
                   v-model="form.saleNum"
                   size="small"
@@ -158,7 +163,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="库存数">
+              <el-form-item label="库存数" prop="inventoryNum">
                 <el-input
                   v-model="form.inventoryNum"
                   size="small"
@@ -232,8 +237,8 @@ export default {
       form: {
         name: "", // 商品名
         categoryId: "", // 分类id
-        firstCategoryName: "", // 一级分类名
-        secondCategoryName: "", // 二级分类名
+        classifyName: "", // 一级分类名
+        categoryName: "", // 二级分类名
         coverFigurePath: "", // 商品图地址
         unitId: "", // 单位id
         unitName: "", // 单位名
@@ -248,8 +253,26 @@ export default {
         describe: "", // 描述
         newProduct: false, // 是否新产品
         newProductName: "否", // 是否新产品选项名
-        price: 0, // 价格
+        price: "", // 价格
         saleNum: 1 //起售数
+      },
+      rules: {
+        name: [{ required: true, message: "请输入商品名称", trigger: "blur" }],
+        coverFigurePath: [{ required: true, message: "请上传商品图" }],
+        categoryName: [
+          { required: true, message: "请选择分类", trigger: "change" }
+        ],
+        price: [{ required: true, message: "请输入价格", trigger: "blur" }],
+        saleNum: [{ required: true, message: "请输入起售数", trigger: "blur" }],
+        unitName: [
+          { required: true, message: "请选择单位", trigger: "change" }
+        ],
+        inventoryNum: [
+          { required: true, message: "请输入库存数", trigger: "blur" }
+        ],
+        statusName: [
+          { required: true, message: "请选择商品状态", trigger: "change" }
+        ]
       },
       statuses: [], // 状态集合
       firstCategorys: [], // 一级分类集合
@@ -259,15 +282,15 @@ export default {
       submissionStatus: false // 提交状态
     };
   },
+  computed: {
+    coverFigurePathAndBase() {
+      return base.defaultBaseUrl + this.form.coverFigurePath;
+    }
+  },
   methods: {
     onSubmit() {
-      if (this.form.secondCategoryName === "") {
-        !_.isNaN(+this.form.firstCategoryName) &&
-          (this.form.categoryId = this.form.firstCategoryName);
-      } else {
-        !_.isNaN(+this.form.secondCategoryName) &&
-          (this.form.categoryId = this.form.secondCategoryName);
-      }
+      !_.isNaN(+this.form.secondCategoryName) &&
+        (this.form.categoryId = this.form.secondCategoryName);
       !_.isNaN(+this.form.unitName) && (this.form.unitId = this.form.unitName);
       !_.isNaN(+this.form.brandName) &&
         (this.form.brandId = this.form.brandName);
@@ -277,27 +300,32 @@ export default {
         (this.form.special = this.form.specialName);
       !_.isNaN(+this.form.newProductName) &&
         (this.form.newProduct = this.form.newProductName);
-      console.log(this.form);
-      if (this.parentData.state === "add") {
-        this.$api.orderManageAPI.addOrderInfo(this.form).then(res => {
-          this.$layer.msg(res.msg);
-          this.$parent.search();
-          this.$layer.close(this.layerid);
-        });
-      } else {
-        this.form.materialId = this.parentData.materialId;
-        this.$api.orderManageAPI.updateOrderInfo(this.form).then(res => {
-          this.$layer.msg(res.msg);
-          this.$parent.search();
-          this.$layer.close(this.layerid);
-        });
-      }
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          if (this.parentData.state === "add") {
+            this.$api.orderManageAPI.addOrderInfo(this.form).then(res => {
+              this.$layer.msg(res.msg);
+              this.$parent.search();
+              this.$layer.close(this.layerid);
+            });
+          } else {
+            this.form.materialId = this.parentData.materialId;
+            this.$api.orderManageAPI.updateOrderInfo(this.form).then(res => {
+              this.$layer.msg(res.msg);
+              this.$parent.search();
+              this.$layer.close(this.layerid);
+            });
+          }
+        } else {
+          return false;
+        }
+      });
     },
     cancel() {
       this.$layer.close(this.layerid);
     },
     uploadSuccess(res) {
-      this.form.coverFigurePath = base.defaultBaseUrl + res.data.path;
+      this.form.coverFigurePath = res.data.path;
     },
     beforeUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -312,7 +340,6 @@ export default {
       return isJPG && isLt2M;
     },
     categoryChange(val) {
-      console.log(val);
       this.form.secondCategoryName = "";
       // 获取二级分类集合
       this.$api.orderManageAPI
@@ -320,25 +347,39 @@ export default {
         .then(res => {
           this.secondCategorys = res.data;
         });
+    },
+    getSelect(status) {
+      switch (status) {
+        case "status":
+          // 获取商品状态集合
+          this.$api.orderManageAPI.getMaterialStatus({}).then(res => {
+            this.statuses = res.data;
+          });
+          break;
+        case "unit":
+          // 获取商品单位集合
+          this.$api.orderManageAPI.getMaterialUnit({}).then(res => {
+            this.units = res.data;
+          });
+          break;
+        case "brand":
+          // 获取商品品牌集合
+          this.$api.orderManageAPI.getMaterialBrand({}).then(res => {
+            this.brands = res.data;
+          });
+          break;
+        case "classify":
+          // 获取一级分类集合
+          this.$api.orderManageAPI.getClassify({}).then(res => {
+            this.firstCategorys = res.data;
+          });
+          break;
+        default:
+          break;
+      }
     }
   },
   mounted() {
-    // 获取商品状态集合
-    this.$api.orderManageAPI.getMaterialStatus({}).then(res => {
-      this.statuses = res.data;
-    });
-    // 获取商品单位集合
-    this.$api.orderManageAPI.getMaterialUnit({}).then(res => {
-      this.units = res.data;
-    });
-    // 获取商品品牌集合
-    this.$api.orderManageAPI.getMaterialBrand({}).then(res => {
-      this.brands = res.data;
-    });
-    // 获取一级分类集合
-    this.$api.orderManageAPI.getClassify({}).then(res => {
-      this.firstCategorys = res.data;
-    });
     if (this.parentData.state === "update") {
       this.$api.orderManageAPI
         .getOrderInfo({
@@ -346,9 +387,8 @@ export default {
         })
         .then(res => {
           if (_.isEqual(res.code, "success")) {
-            res.data.coverFigurePath =
-              base.defaultBaseUrl + res.data.coverFigurePath;
             Object.assign(this.form, res.data);
+            this.categoryChange(this.form.classifyId);
           } else {
             this.$vb.plugin.message.error(`获取订单信息失败:${res.code}`);
           }

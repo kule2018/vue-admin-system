@@ -17,6 +17,7 @@
       <div>
         <el-image
           style="width: 100px; height: 100px"
+          v-if="detailsInfo.businessLicenseElecChart"
           :src="detailsInfo.businessLicenseElecChart"
           :preview-src-list="[detailsInfo.businessLicenseElecChart]"
         >
@@ -36,6 +37,7 @@
       <div>
         <el-image
           style="width: 100px; height: 100px"
+          v-if="detailsInfo.sanitaryPermitElecChart"
           :src="detailsInfo.sanitaryPermitElecChart"
           :preview-src-list="[detailsInfo.sanitaryPermitElecChart]"
         >
