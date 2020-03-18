@@ -44,9 +44,9 @@ const routes = [
             component: () => import("@/views/first-screen")
           },
           {
-            name: "sysOrderSearch",
-            path: "sysOrderSearch",
-            component: () => import("@/views/order-list-page")
+            name: "sysMaterialSearch",
+            path: "sysMaterialSearch",
+            component: () => import("@/views/material-list-page")
           },
           {
             name: "sysUserSearch",
