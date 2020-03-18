@@ -2,8 +2,8 @@
   <div id="layerContent" class="sys-user-edit">
     <div class="content-panel">
       <div class="main-content">
-        <el-form ref="form" :model="form" label-width="80px">
-          <el-form-item label="头像" style="height: 40px;">
+        <el-form :model="form" :rules="rules" ref="form" label-width="80px">
+          <el-form-item label="头像" style="height: 40px;" prop="iconPath">
             <div class="upload-avatar">
               <span
                 ref="upload"
@@ -28,19 +28,23 @@
               >
             </div>
           </el-form-item>
-          <el-form-item label="昵称">
+          <el-form-item label="昵称" prop="nickName">
             <el-input
               v-model="form.nickName"
               placeholder="请输入昵称"
             ></el-input>
           </el-form-item>
-          <el-form-item label="用户名">
+          <el-form-item label="用户名" prop="loginName">
             <el-input
               v-model="form.loginName"
               placeholder="请输入用户名"
             ></el-input>
           </el-form-item>
-          <el-form-item label="密码" v-if="!(parentData.state === 'update')">
+          <el-form-item
+            label="密码"
+            v-if="!(parentData.state === 'update')"
+            prop="loginPwd"
+          >
             <el-input
               :type="showPwdType"
               placeholder="请输入密码"
@@ -55,7 +59,7 @@
               ></i>
             </el-input>
           </el-form-item>
-          <el-form-item label="角色类型">
+          <el-form-item label="角色类型" prop="roleName">
             <el-select
               v-model="form.roleName"
               placeholder="请选择角色类型"
@@ -99,6 +103,17 @@ export default {
         roleTypeid: "",
         roleName: ""
       },
+      rules: {
+        iconPath: [{ required: true, message: "请上传头像" }],
+        nickName: [{ required: true, message: "请输入昵称", trigger: "blur" }],
+        loginName: [
+          { required: true, message: "请输入用户名", trigger: "blur" }
+        ],
+        loginPwd: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        roleName: [
+          { required: true, message: "请选择角色类型", trigger: "blur" }
+        ]
+      },
       roleList: [],
       defaultRole: "",
       showPwd: false,
@@ -122,34 +137,44 @@ export default {
       if (!_.isNaN(+this.form.roleName)) {
         this.form.roleTypeId = this.form.roleName;
       }
-      if (this.parentData.state === "add") {
-        this.$api.sysUserInfoAPI.addUserInfo(this.form).then(res => {
-          if (res.code === "success") {
-            self.$vb.plugin.message.success("成功", "增加成功");
-            this.$parent.search();
-            this.$layer.close(this.layerid);
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          if (this.parentData.state === "add") {
+            this.$api.sysUserInfoAPI.addUserInfo(this.form).then(res => {
+              if (res.code === "success") {
+                self.$vb.plugin.message.success("成功", "增加成功");
+                this.$parent.search();
+                this.$layer.close(this.layerid);
+              }
+            });
+          } else {
+            this.$api.sysUserInfoAPI.updateUserInfo(this.form).then(res => {
+              if (res.code === "success") {
+                self.$vb.plugin.message.success("成功", "修改成功");
+                this.updateLocal(this.form);
+                this.$parent.search();
+                this.$layer.close(this.layerid);
+              }
+            });
           }
-        });
-      } else {
-        this.$api.sysUserInfoAPI.updateUserInfo(this.form).then(res => {
-          if (res.code === "success") {
-            self.$vb.plugin.message.success("成功", "修改成功");
-            this.updateLocal(this.form);
-            this.$parent.search();
-            this.$layer.close(this.layerid);
-          }
-        });
-      }
+        } else {
+          return false;
+        }
+      });
     },
     cancel() {
       this.$layer.close(this.layerid);
     },
     upload(ev) {
-      console.log(ev);
       const self = this;
+      let file = ev.target.files[0];
+      if (file.size > 1024 * 1024) {
+        this.$layer.msg("头像大小不能超过1M");
+        ev.target.value = "";
+        return;
+      }
       this.form.iconPath = "";
       this.form = Object.assign({}, this.form);
-      let file = ev.target.files[0];
       let formData = new FormData();
       formData.append("file", file, file.name);
       this.$nextTick(() => {

@@ -2,7 +2,11 @@
   <div id="userListPanel">
     <div class="table-panel">
       <div class="search-bar" @keydown.enter="search">
-        <el-input v-model="searchParam" placeholder="请输入昵称" size="small" />
+        <el-input
+          v-model="searchForm.nickName"
+          placeholder="请输入昵称"
+          size="small"
+        />
         <el-button
           type="primary"
           icon="el-icon-search"
@@ -10,7 +14,6 @@
           @click="search"
           >查询</el-button
         >
-        <el-button plain size="small">重置</el-button>
       </div>
       <el-tabs v-model="tabActiveName" @tab-click="handleTabClick">
         <el-tab-pane label="全部" name="all" />
@@ -49,7 +52,7 @@
             </template>
             <template v-else-if="tabActiveName === 'freeze'">
               <el-button
-                @click="handleClick(3, scope.row)"
+                @click.stop="handleClick(3, scope.row)"
                 type="primary"
                 size="mini"
                 v-if="tabActiveName === 'freeze'"
@@ -58,7 +61,7 @@
             </template>
             <template v-else-if="tabActiveName === 'block'">
               <el-button
-                @click="handleClick(4, scope.row)"
+                @click.stop="handleClick(4, scope.row)"
                 type="primary"
                 size="mini"
                 v-if="tabActiveName === 'block'"
@@ -71,11 +74,11 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[10, 20, 30, 40]"
-        :page-size="10"
+        :current-page="searchForm.pageNum"
+        :page-sizes="[5, 10, 15, 20]"
+        :page-size="searchForm.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="20"
+        :total="total"
         class="page"
       >
       </el-pagination>
@@ -90,11 +93,15 @@ export default {
   name: "user-list-page",
   data() {
     return {
-      searchParam: "",
+      searchForm: {
+        nickName: "",
+        pageNum: 1,
+        pageSize: 5
+      },
       tabActiveName: "all",
       tableData: [],
-      currentPage: 1,
-      isLoading: false
+      isLoading: false,
+      total: 0
     };
   },
   mounted() {
@@ -113,6 +120,7 @@ export default {
           .then(res => {
             if (lodash.isEqual(res.code, "success")) {
               this.tableData = res.data;
+              this.total = res.total;
               this.isLoading = false;
             } else {
               this.$vb.plugin.message.error(res.msg);
@@ -127,6 +135,7 @@ export default {
           .then(res => {
             if (lodash.isEqual(res.code, "success")) {
               this.tableData = res.data;
+              this.total = res.total;
               this.isLoading = false;
             } else {
               this.$vb.plugin.message.error(res.msg);
@@ -141,6 +150,7 @@ export default {
           .then(res => {
             if (lodash.isEqual(res.code, "success")) {
               this.tableData = res.data;
+              this.total = res.total;
               this.isLoading = false;
             } else {
               this.$vb.plugin.message.error(res.msg);
