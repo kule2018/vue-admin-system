@@ -62,6 +62,21 @@ const routes = [
             name: "sysSupplierSearch",
             path: "sysSupplierSearch",
             component: () => import("@/views/supplier-list-page")
+          },
+          {
+            name: "commonClassifySearch",
+            path: "commonClassifySearch",
+            component: () => import("@/views/commodity-classify-list-page")
+          },
+          {
+            name: "commonMaterialCategorySearch",
+            path: "commonMaterialCategorySearch",
+            component: () => import("@/views/commodity-category-list-page")
+          },
+          {
+            name: "commonMaterialBrandSearch",
+            path: "commonMaterialBrandSearch",
+            component: () => import("@/views/commodity-brand-list-page")
           }
         ]
       }

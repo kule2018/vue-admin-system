@@ -16,7 +16,12 @@ import weChatUserInfoAPI from "@/api/weChatUserInfoAPI";
 import supplierManageAPI from "@/api/supplierManageAPI";
 // 订单管理接口
 import orderManageAPI from "@/api/orderManageAPI";
-
+// 商品分类接口
+import commodityClassifyMangeAPI from "@/api/commodityClassifyMangeAPI";
+// 商品类别接口
+import commodityCategoryMangeAPI from "@/api/commodityCategoryMangeAPI";
+// 商品品牌接口
+import commodityBrandMangeAPI from "@/api/commodityBrandMangeAPI";
 // 导出接口
 export default {
   websiteManageAPI,
@@ -25,5 +30,8 @@ export default {
   fileManageAPI,
   weChatUserInfoAPI,
   supplierManageAPI,
-  orderManageAPI
+  orderManageAPI,
+  commodityClassifyMangeAPI,
+  commodityCategoryMangeAPI,
+  commodityBrandMangeAPI
 };
