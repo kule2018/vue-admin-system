@@ -35,6 +35,19 @@
         <el-option label="是" :value="1"></el-option>
         <el-option label="否" :value="0"></el-option>
       </el-select>
+      <el-select
+        v-model="searchForm.statusCode"
+        value=""
+        size="small"
+        placeholder="请选择商品状态"
+      >
+        <el-option
+          v-for="(item, index) in statuses"
+          :key="index"
+          :label="item.statusName"
+          :value="item.statusCodeId"
+        ></el-option>
+      </el-select>
       <div></div>
       <el-button
         type="primary"
@@ -80,7 +93,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="searchForm.pageNum"
-      :page-sizes="[10, 20, 30, 40]"
+      :page-sizes="[5, 10, 15, 20]"
       :page-size="searchForm.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
@@ -92,8 +105,8 @@
 
 <script>
 import _ from "lodash";
-import orderDetailPage from "@/views/order-list-details-page";
-import orderEditPage from "@/views/order-list-edit-page";
+import materialDetailPage from "@/views/material-list-details-page";
+import materialEditPage from "@/views/material-list-edit-page";
 export default {
   name: "order-list-page",
   data() {
@@ -104,13 +117,16 @@ export default {
         endPrice: "",
         special: "",
         newProduct: "",
+        categoryId: "",
+        statusCode: "",
         pageNum: 1,
-        pageSize: 10
+        pageSize: 5
       },
       currentPage: 1,
       tableData: [],
       isLoading: false,
-      total: 0
+      total: 0,
+      statuses: []
     };
   },
   methods: {
@@ -130,7 +146,7 @@ export default {
       switch (state) {
         case "detail":
           this.$vb.plugin.openLayer(
-            orderDetailPage,
+            materialDetailPage,
             this,
             { colNum: "two-col", materialId: val[0].materialId },
             "订单详情",
@@ -140,20 +156,20 @@ export default {
           break;
         case "add":
           this.$vb.plugin.openLayer(
-            orderEditPage,
+            materialEditPage,
             this,
             { state: state },
-            "新增订单",
+            "商品增加",
             800,
             "80%"
           );
           break;
         case "update":
           this.$vb.plugin.openLayer(
-            orderEditPage,
+            materialEditPage,
             this,
             { state: state, materialId: val[0].materialId },
-            "编辑订单",
+            "商品编辑",
             800,
             "80%"
           );
@@ -174,6 +190,10 @@ export default {
   },
   mounted() {
     this.search();
+    // 获取商品状态集合
+    this.$api.orderManageAPI.getMaterialStatus({}).then(res => {
+      this.statuses = res.data;
+    });
   }
 };
 </script>

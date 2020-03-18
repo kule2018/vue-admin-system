@@ -22,7 +22,6 @@
             @click="handleClick(3, '')"
             >增加</el-button
           >
-          <el-button plain size="small">重置</el-button>
         </div>
         <el-tabs v-model="tabActiveName" @tab-click="tabsClick(tabActiveName)">
           <el-tab-pane label="全部" name="all" />
