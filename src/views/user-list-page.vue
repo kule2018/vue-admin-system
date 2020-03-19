@@ -261,8 +261,14 @@ export default {
     handleTabClick() {
       this.search();
     },
-    handleSizeChange() {},
-    handleCurrentChange() {},
+    handleSizeChange(size) {
+      this.searchForm.pageSize = size;
+      this.search();
+    },
+    handleCurrentChange(page) {
+      this.searchForm.pageNum = page;
+      this.search();
+    },
     openDetails(row) {
       this.handleClick(0, row);
     }

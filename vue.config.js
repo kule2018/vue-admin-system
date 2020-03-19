@@ -14,6 +14,18 @@ module.exports = {
       .loader("url-loader")
       .tap(options => Object.assign(options, { limit: 10240 }));
   },
+  pages: {
+    index: {
+      // page 的入口
+      entry: "src/main.js",
+      // template from
+      template: "public/index.html",
+      // 在 dist/index.html 的输出
+      filename: "index.html",
+      // htmlWebpackPlugin.options.title 网页title
+      title: "海南菜篮子"
+    }
+  },
   // 部署应用包时的基本 URL(解决build打包后资源文件404问题) :https://cli.vuejs.org/zh/config/#baseurl
   publicPath: "./",
   devServer: {
