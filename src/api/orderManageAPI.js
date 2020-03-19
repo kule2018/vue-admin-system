@@ -3,64 +3,41 @@ import services from "../plugins/axios";
 import base from "./base"; // 导入接口域名列表
 
 const orderManageAPI = {
-  // 获取订单列表
+  // 获取未分配订单列表
   getOrderList(params) {
-    return services._axios.get(`${base.defaultBaseUrl}/sys/material/search`, {
+    return services._axios.get(`${base.defaultBaseUrl}/sys/order/search`, {
       params
     });
+  },
+  // 获取已分配订单列表
+  getAllotOrderList(params) {
+    return services._axios.get(
+      `${base.defaultBaseUrl}/sys/order/searchAllocated`,
+      {
+        params
+      }
+    );
   },
   // 获取订单详情
-  getOrderInfo(params) {
-    return services._axios.get(`${base.defaultBaseUrl}/sys/material/info`, {
+  getOrderDetail(params) {
+    return services._axios.get(`${base.defaultBaseUrl}/sys/order/info`, {
       params
     });
   },
-  // 新增订单
-  addOrderInfo(params) {
+  // 获取订单状态
+  getOrderState(params) {
+    return services._axios.get(
+      `${base.defaultBaseUrl}/common/orderState/list`,
+      {
+        params
+      }
+    );
+  },
+  // 分配供应商
+  allotSupplierToOrder(params) {
     return services._axios.post(
-      `${base.defaultBaseUrl}/sys/material/add`,
+      `${base.defaultBaseUrl}/sys/order/allocationSupplier`,
       params
-    );
-  },
-  // 变动订单
-  updateOrderInfo(params) {
-    return services._axios.post(
-      `${base.defaultBaseUrl}/sys/material/update`,
-      params
-    );
-  },
-  // 商品数据状态
-  getMaterialStatus(params) {
-    return services._axios.get(
-      `${base.defaultBaseUrl}/common/materialStatus/list`,
-      { params }
-    );
-  },
-  // 商品单位
-  getMaterialUnit(params) {
-    return services._axios.get(
-      `${base.defaultBaseUrl}/common/materialUnit/list`,
-      { params }
-    );
-  },
-  // 商品品牌
-  getMaterialBrand(params) {
-    return services._axios.get(
-      `${base.defaultBaseUrl}/common/materialBrand/list`,
-      { params }
-    );
-  },
-  // 商品大分类
-  getClassify(params) {
-    return services._axios.get(`${base.defaultBaseUrl}/common/classify/list`, {
-      params
-    });
-  },
-  // 商品小分类
-  getMaterialCategory(params) {
-    return services._axios.get(
-      `${base.defaultBaseUrl}/common/materialCategory/list`,
-      { params }
     );
   }
 };
