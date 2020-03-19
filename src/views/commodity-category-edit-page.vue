@@ -1,4 +1,4 @@
-<!--商品分类编辑页面-->
+<!--商品类别编辑-->
 <template>
   <div id="layerContent" class="sys-user-edit">
     <div class="content-panel">
@@ -9,6 +9,13 @@
               v-model="form.name"
               size="small"
               placeholder="请输入类别名"
+            />
+          </el-form-item>
+          <el-form-item label="商品分类id" prop="classifyId">
+            <el-input
+              v-model="form.classifyId"
+              size="small"
+              placeholder="请输入分类id"
             />
           </el-form-item>
           <el-row>
@@ -59,10 +66,11 @@
 </template>
 
 <script>
-import base from "@/api/base";
 import lodash from "lodash";
+import base from "@/api/base";
+
 export default {
-  name: "commodity-classify-edit-page",
+  name: "commodity-category-edit-page",
   data() {
     return {
       form: {
@@ -70,11 +78,15 @@ export default {
         name: "",
         // 类别图
         icon: "",
+        classifyId: "",
         // 排序号
         sortNumber: ""
       },
       rules: {
         name: [{ required: true, message: "请输入类别名", trigger: "blur" }],
+        classifyId: [
+          { required: true, message: "请输入分类id", trigger: "blur" }
+        ],
         icon: [{ required: true, message: "请上传类别图" }]
       },
       // 提交状态
@@ -88,8 +100,8 @@ export default {
         this.submissionStatus = true;
         if (valid) {
           if (this.parentData.state === "add") {
-            this.$api.commodityClassifyMangeAPI
-              .addCommodityClassifyInfo(this.form)
+            this.$api.commodityCategoryMangeAPI
+              .addCommodityCategory(this.form)
               .then(res => {
                 this.submissionStatus = false;
                 if (lodash.isEqual(res.code, "success")) {
@@ -106,8 +118,8 @@ export default {
                 }
               });
           } else {
-            this.$api.commodityClassifyMangeAPI
-              .changeCommodityClassifyInfo(this.form)
+            this.$api.commodityCategoryMangeAPI
+              .changeCommodityCategory(this.form)
               .then(res => {
                 if (lodash.isEqual(res.code, "success")) {
                   this.submissionStatus = false;
@@ -158,12 +170,13 @@ export default {
   },
   mounted() {
     if (this.parentData.state === "update") {
-      this.$api.commodityClassifyMangeAPI
-        .getCommodityClassifyList({
-          name: this.parentData.name
+      this.$api.commodityCategoryMangeAPI
+        .getCommodityCategoryList({
+          classifyId: this.parentData.classifyId
         })
         .then(res => {
           if (lodash.isEqual(res.code, "success")) {
+            // console.log(res.data);
             this.form = res.data[0];
           } else {
             this.$vb.plugin.message.error("获取商品类别失败");
@@ -197,5 +210,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/commodity-classify-edit-page";
+@import "~@/assets/scss/commodity-category-edit-page";
 </style>

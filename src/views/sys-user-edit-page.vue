@@ -149,7 +149,7 @@ export default {
             });
           } else {
             this.$api.sysUserInfoAPI.updateUserInfo(this.form).then(res => {
-              if (res.code === "success") {;
+              if (res.code === "success") {
                 self.$vb.plugin.message.success("成功", "修改成功");
                 this.updateLocal(this.form);
                 this.$parent.search();
