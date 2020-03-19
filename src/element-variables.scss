@@ -174,3 +174,15 @@ $layer-main-width: 90%;
     flex-basis: 100% !important;
   }
 }
+
+.button__bottom {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

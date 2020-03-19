@@ -81,8 +81,8 @@ export default {
     };
   },
   mounted() {
-    this.$api.orderManageAPI
-      .getOrderInfo({
+    this.$api.materialManageAPI
+      .getMaterialInfo({
         materialId: this.parentData.materialId
       })
       .then(res => {
