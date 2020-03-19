@@ -4,7 +4,7 @@
       <div class="table-panel">
         <div class="search-bar">
           <el-input
-            v-model="searchParam"
+            v-model="searchForm.name"
             placeholder="请输入昵称"
             size="small"
           />
@@ -82,11 +82,11 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="[10, 20, 30, 40]"
-          :page-size="10"
+          :current-page="searchForm.pageNum"
+          :page-sizes="[5, 10, 15, 20]"
+          :page-size="searchForm.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="20"
+          :total="total"
           class="page"
         >
         </el-pagination>
@@ -104,37 +104,32 @@ export default {
   name: "supplier-list-page",
   data() {
     return {
-      searchParam: "",
+      searchForm: {
+        name: "",
+        pageNum: 1,
+        pageSize: 5
+      },
       tabActiveName: "all",
       tableData: [],
-      currentPage: 1,
-      isLoading: false
+      isLoading: false,
+      total: 0
     };
   },
   mounted() {
-    this.$api.supplierManageAPI.getSupplierList().then(res => {
-      if (lodash.isEqual(res.code, "success")) {
-        this.tableData = res.data;
-      } else {
-        this.$vb.plugin.message.error(`获取供应商列表失败,${res.code}`);
-      }
-    });
+    this.search();
   },
   methods: {
     search() {
       this.isLoading = true;
-      this.$api.supplierManageAPI
-        .getSupplierList({
-          name: this.searchParam
-        })
-        .then(res => {
-          if (lodash.isEqual(res.code, "success")) {
-            this.tableData = res.data;
-            this.isLoading = false;
-          } else {
-            this.$vb.plugin.message.error(res.msg);
-          }
-        });
+      this.$api.supplierManageAPI.getSupplierList(this.searchForm).then(res => {
+        if (lodash.isEqual(res.code, "success")) {
+          this.total = res.total;
+          this.tableData = res.data;
+          this.isLoading = false;
+        } else {
+          this.$vb.plugin.message.error(res.msg);
+        }
+      });
     },
     handleClick(status, ...val) {
       switch (status) {
@@ -303,8 +298,14 @@ export default {
           break;
       }
     },
-    handleSizeChange() {},
-    handleCurrentChange() {},
+    handleSizeChange(size) {
+      this.searchForm.pageSize = size;
+      this.search();
+    },
+    handleCurrentChange(page) {
+      this.searchForm.pageNum = page;
+      this.search();
+    },
     openDetails(row) {
       this.handleClick(0, row);
     }

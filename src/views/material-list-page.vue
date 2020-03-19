@@ -22,6 +22,7 @@
         placeholder="是否特价"
         value=""
         size="small"
+        clearable
       >
         <el-option label="是" :value="1"></el-option>
         <el-option label="否" :value="0"></el-option>
@@ -31,6 +32,7 @@
         placeholder="是否新产品"
         value=""
         size="small"
+        clearable
       >
         <el-option label="是" :value="1"></el-option>
         <el-option label="否" :value="0"></el-option>
@@ -40,12 +42,45 @@
         value=""
         size="small"
         placeholder="请选择商品状态"
+        clearable
       >
         <el-option
           v-for="(item, index) in statuses"
           :key="index"
           :label="item.statusName"
           :value="item.statusCodeId"
+        ></el-option>
+      </el-select>
+      <el-select
+        v-model="searchForm.classifyId"
+        value=""
+        size="small"
+        @visible-change="categoryChange"
+        placeholder="请选择大类"
+        ref="classify"
+        @click.native.once="getSelect('classify')"
+        clearable
+        @clear="clearClassify"
+      >
+        <el-option
+          v-for="(item, index) in firstCategorys"
+          :key="index"
+          :label="item.name"
+          :value="item.classifyId"
+        ></el-option>
+      </el-select>
+      <el-select
+        v-model="searchForm.categoryId"
+        value=""
+        size="small"
+        placeholder="请选择小类"
+        clearable
+      >
+        <el-option
+          v-for="(item, index) in secondCategorys"
+          :key="index"
+          :label="item.name"
+          :value="item.categoryId"
         ></el-option>
       </el-select>
       <div></div>
@@ -117,6 +152,7 @@ export default {
         endPrice: "",
         special: "",
         newProduct: "",
+        classifyId: "",
         categoryId: "",
         statusCode: "",
         pageNum: 1,
@@ -126,13 +162,15 @@ export default {
       tableData: [],
       isLoading: false,
       total: 0,
-      statuses: []
+      statuses: [],
+      firstCategorys: [],
+      secondCategorys: []
     };
   },
   methods: {
     search() {
       this.isLoading = true;
-      this.$api.orderManageAPI.getOrderList(this.searchForm).then(res => {
+      this.$api.materialManageAPI.getMaterialList(this.searchForm).then(res => {
         if (_.isEqual(res.code, "success")) {
           this.tableData = res.data;
           this.total = res.total;
@@ -186,14 +224,41 @@ export default {
     },
     openDetails(row) {
       this.handleClick("detail", row);
+    },
+    categoryChange() {
+      this.searchForm.categoryId = "";
+      // 获取二级分类集合
+      this.$api.materialManageAPI
+        .getMaterialCategory({ classifyId: this.searchForm.classifyId })
+        .then(res => {
+          this.secondCategorys = res.data;
+        });
+    },
+    getSelect(status) {
+      switch (status) {
+        case "status":
+          // 获取商品状态集合
+          this.$api.materialManageAPI.getMaterialStatus({}).then(res => {
+            this.statuses = res.data;
+          });
+          break;
+        case "classify":
+          // 获取一级分类集合
+          this.$api.materialManageAPI.getClassify({}).then(res => {
+            this.firstCategorys = res.data;
+          });
+          break;
+        default:
+          break;
+      }
+    },
+    clearClassify() {
+      this.searchForm.categoryId = "";
+      this.secondCategorys = [];
     }
   },
   mounted() {
     this.search();
-    // 获取商品状态集合
-    this.$api.orderManageAPI.getMaterialStatus({}).then(res => {
-      this.statuses = res.data;
-    });
   }
 };
 </script>

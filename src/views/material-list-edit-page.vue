@@ -289,8 +289,8 @@ export default {
   },
   methods: {
     onSubmit() {
-      !_.isNaN(+this.form.secondCategoryName) &&
-        (this.form.categoryId = this.form.secondCategoryName);
+      !_.isNaN(+this.form.categoryName) &&
+        (this.form.categoryId = this.form.categoryName);
       !_.isNaN(+this.form.unitName) && (this.form.unitId = this.form.unitName);
       !_.isNaN(+this.form.brandName) &&
         (this.form.brandId = this.form.brandName);
@@ -303,18 +303,20 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           if (this.parentData.state === "add") {
-            this.$api.orderManageAPI.addOrderInfo(this.form).then(res => {
+            this.$api.materialManageAPI.addMaterialInfo(this.form).then(res => {
               this.$layer.msg(res.msg);
               this.$parent.search();
               this.$layer.close(this.layerid);
             });
           } else {
             this.form.materialId = this.parentData.materialId;
-            this.$api.orderManageAPI.updateOrderInfo(this.form).then(res => {
-              this.$layer.msg(res.msg);
-              this.$parent.search();
-              this.$layer.close(this.layerid);
-            });
+            this.$api.materialManageAPI
+              .updateMaterialInfo(this.form)
+              .then(res => {
+                this.$layer.msg(res.msg);
+                this.$parent.search();
+                this.$layer.close(this.layerid);
+              });
           }
         } else {
           return false;
@@ -340,9 +342,9 @@ export default {
       return isJPG && isLt2M;
     },
     categoryChange(val) {
-      this.form.secondCategoryName = "";
+      this.form.categoryName = "";
       // 获取二级分类集合
-      this.$api.orderManageAPI
+      this.$api.materialManageAPI
         .getMaterialCategory({ classifyId: val })
         .then(res => {
           this.secondCategorys = res.data;
@@ -352,25 +354,25 @@ export default {
       switch (status) {
         case "status":
           // 获取商品状态集合
-          this.$api.orderManageAPI.getMaterialStatus({}).then(res => {
+          this.$api.materialManageAPI.getMaterialStatus({}).then(res => {
             this.statuses = res.data;
           });
           break;
         case "unit":
           // 获取商品单位集合
-          this.$api.orderManageAPI.getMaterialUnit({}).then(res => {
+          this.$api.materialManageAPI.getMaterialUnit({}).then(res => {
             this.units = res.data;
           });
           break;
         case "brand":
           // 获取商品品牌集合
-          this.$api.orderManageAPI.getMaterialBrand({}).then(res => {
+          this.$api.materialManageAPI.getMaterialBrand({}).then(res => {
             this.brands = res.data;
           });
           break;
         case "classify":
           // 获取一级分类集合
-          this.$api.orderManageAPI.getClassify({}).then(res => {
+          this.$api.materialManageAPI.getClassify({}).then(res => {
             this.firstCategorys = res.data;
           });
           break;
@@ -381,8 +383,8 @@ export default {
   },
   mounted() {
     if (this.parentData.state === "update") {
-      this.$api.orderManageAPI
-        .getOrderInfo({
+      this.$api.materialManageAPI
+        .getMaterialInfo({
           materialId: this.parentData.materialId
         })
         .then(res => {

@@ -6,7 +6,7 @@ $fontColor:#474D5B;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("http://v10.e-office.cn/eoffice10/server/public/login/theme/715219c9248d1a730a6d8dd165b61309.png") no-repeat center center;
+  background: url("http://v10.e-office.cn/eoffice10/server/public/login/theme/702cb10d2996291d5e18fdf17f0e0dba.png") no-repeat center center;
   background-size: cover;
 
   .login-panel {
@@ -19,7 +19,7 @@ $fontColor:#474D5B;
     .left-banner {
       width: 350px;
       height: 460px;
-      background: url("http://v10.e-office.cn/eoffice10/client/web/assets/images/login/login_from_left.png") no-repeat center center;
+      background: url("http://v10.e-office.cn/eoffice10/server/public/login/left/left.gif?123456") no-repeat center center;
       background-size: cover;
       float: left;
     }
@@ -27,7 +27,7 @@ $fontColor:#474D5B;
     .right-panel {
       width: 350px;
       height: 460px;
-      background-color: rgba(0, 0, 0, .25);
+      background-color: #fff;
       float: left;
       padding: 34px 35px;
       box-sizing: border-box;
@@ -125,7 +125,7 @@ $fontColor:#474D5B;
         button {
           height: 34px;
           width: 100%;
-          background-color: rgba(0, 0, 0, .3);
+          background-color: #006727;
           border: 0;
           color: #fff;
           border-radius: 5px;
@@ -135,7 +135,7 @@ $fontColor:#474D5B;
           outline: none;
 
           &:hover {
-            background-color: rgba(0, 0, 0, .5);
+            background-color: #338552;
           }
         }
 

@@ -101,7 +101,7 @@ export default {
       searchForm: {
         name: "",
         pageNum: 1,
-        pageSize: 10
+        pageSize: 5
       },
       tabActiveName: "all",
       tableData: [],
@@ -238,8 +238,14 @@ export default {
     handleTabClick() {
       this.search();
     },
-    handleSizeChange() {},
-    handleCurrentChange() {},
+    handleSizeChange(size) {
+      this.searchForm.pageSize = size;
+      this.search();
+    },
+    handleCurrentChange(page) {
+      this.searchForm.pageNum = page;
+      this.search();
+    },
     openDetails(row) {
       this.handleClick("detail", row.userid);
     }

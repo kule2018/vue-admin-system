@@ -77,6 +77,11 @@ const routes = [
             name: "commonMaterialBrandSearch",
             path: "commonMaterialBrandSearch",
             component: () => import("@/views/commodity-brand-list-page")
+          },
+          {
+            name: "sysOrderSearch",
+            path: "sysOrderSearch",
+            component: () => import("@/views/order-list-page")
           }
         ]
       }

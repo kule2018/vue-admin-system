@@ -1,70 +1,108 @@
 <template>
-  <div class="detail-box" :class="parentData.colNum">
-    <div class="fill">
-      <div>商品图</div>
-      <div>
-        <el-image
-          v-if="detailsInfo.coverFigurePath"
-          style="width: 100px; height: 100px"
-          :src="detailsInfo.coverFigurePath"
-          :preview-src-list="[detailsInfo.coverFigurePath]"
-        >
-        </el-image>
-      </div>
-    </div>
-    <div class="fill">
-      <div>商品名称</div>
-      <div>{{ detailsInfo.name }}</div>
-    </div>
-    <div>
-      <div>分类</div>
-      <div>{{ detailsInfo.categoryName }}</div>
-    </div>
-    <div>
-      <div>品牌</div>
-      <div>{{ detailsInfo.brandName }}</div>
-    </div>
-    <div>
-      <div>单位</div>
-      <div>{{ detailsInfo.unitName }}</div>
-    </div>
-    <div>
-      <div>价格</div>
-      <div>{{ detailsInfo.price }}</div>
-    </div>
-    <div>
-      <div>规格</div>
-      <div>{{ detailsInfo.specs }}</div>
-    </div>
-    <div>
-      <div>状态</div>
-      <div>{{ detailsInfo.statusName }}</div>
-    </div>
-    <div>
-      <div>起售数</div>
-      <div>{{ detailsInfo.saleNum }}</div>
-    </div>
-    <div>
-      <div>库存数</div>
-      <div>{{ detailsInfo.inventoryNum }}</div>
-    </div>
-    <div>
-      <div>是否新产品</div>
-      <div>
-        <template v-if="detailsInfo.newProduct">是</template>
-        <template v-else>否</template>
-      </div>
-    </div>
-    <div>
-      <div>是否特价</div>
-      <div>
-        <template v-if="detailsInfo.special">是</template>
-        <template v-else>否</template>
-      </div>
-    </div>
-    <div class="fill">
-      <div>描述</div>
-      <div>{{ detailsInfo.describe }}</div>
+  <div class="order-detail">
+    <el-tabs v-model="activeName" type="card" class="orderDetailTab">
+      <el-tab-pane label="订单信息" name="orderInfo">
+        <div class="detail-box" :class="parentData.colNum">
+          <div class="fill">
+            <div>订单号</div>
+            <div>{{ detailsInfo.orderNo }}</div>
+          </div>
+          <div class="fill">
+            <div>流水号</div>
+            <div>{{ detailsInfo.serialNumber }}</div>
+          </div>
+          <div>
+            <div>订单名称</div>
+            <div>{{ detailsInfo.name }}</div>
+          </div>
+          <div>
+            <div>订单用户</div>
+            <div>{{ detailsInfo.nickName }}</div>
+          </div>
+          <div>
+            <div>下单时间</div>
+            <div>{{ detailsInfo.orderTime }}</div>
+          </div>
+          <div>
+            <div>订单状态</div>
+            <div>{{ detailsInfo.orderStateName }}</div>
+          </div>
+          <div>
+            <div>待付金额</div>
+            <div>{{ detailsInfo.amountToBePaid || 0 }}</div>
+          </div>
+          <div>
+            <div>折扣金额</div>
+            <div>{{ detailsInfo.discountAmount || 0 }}</div>
+          </div>
+          <div>
+            <div>支付金额</div>
+            <div>{{ detailsInfo.amountPay || 0 }}</div>
+          </div>
+          <div>
+            <div>运费</div>
+            <div>{{ detailsInfo.freight || 0 }}</div>
+          </div>
+          <div>
+            <div>总金额</div>
+            <div>{{ detailsInfo.totalAmount || 0 }}</div>
+          </div>
+          <div>
+            <div>付款方式</div>
+            <div>{{ detailsInfo.modePayment }}</div>
+          </div>
+          <div>
+            <div>供应商名</div>
+            <div>{{ detailsInfo.supplierName }}</div>
+          </div>
+          <div>
+            <div>分配状态</div>
+            <div>{{ detailsInfo.osStatusName }}</div>
+          </div>
+          <div>
+            <div>分配时间</div>
+            <div>{{ detailsInfo.allocationTime }}</div>
+          </div>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="商品信息" name="materialInfo">
+        <el-table :data="detailsInfo.orderMaterialList" style="width: 100%">
+          <el-table-column type="expand">
+            <template slot-scope="props">
+              <el-form label-position="left" inline class="demo-table-expand">
+                <el-form-item label="商品图">
+                  <el-image
+                    v-if="props.row.coverFigurePath"
+                    style="width: 100px; height: 100px"
+                    :src="props.row.coverFigurePath"
+                    :preview-src-list="[props.row.coverFigurePath]"
+                  >
+                  </el-image>
+                </el-form-item>
+                <el-form-item label="商品名称">
+                  <span>{{ props.row.name }}</span>
+                </el-form-item>
+                <el-form-item label="商品数量">
+                  <span>{{ props.row.number }}</span>
+                </el-form-item>
+                <el-form-item label="商品价格">
+                  <span>{{ props.row.price }}</span>
+                </el-form-item>
+                <el-form-item label="商品单位">
+                  <span>{{ props.row.unitName }}</span>
+                </el-form-item>
+              </el-form>
+            </template>
+          </el-table-column>
+          <el-table-column label="商品名称" prop="name"></el-table-column>
+          <el-table-column label="商品数量" prop="number"></el-table-column>
+          <el-table-column label="商品价格" prop="price"></el-table-column>
+        </el-table>
+      </el-tab-pane>
+    </el-tabs>
+    <div class="button__bottom">
+      <el-button type="info" size="small">退回</el-button>
+      <el-button type="primary" size="small">接收</el-button>
     </div>
   </div>
 </template>
@@ -77,18 +115,20 @@ export default {
   data() {
     return {
       detailsInfo: {},
-      baseUrl: ""
+      activeName: "orderInfo"
     };
   },
   mounted() {
     this.$api.orderManageAPI
-      .getOrderInfo({
-        materialId: this.parentData.materialId
+      .getOrderDetail({
+        orderId: this.parentData.orderId
       })
       .then(res => {
         if (lodash.isEqual(res.code, "success")) {
-          res.data.coverFigurePath =
-            base.defaultBaseUrl + res.data.coverFigurePath;
+          Array.prototype.forEach.call(res.data.orderMaterialList, item => {
+            item.coverFigurePath = base.defaultBaseUrl + item.coverFigurePath;
+          });
+          console.log(res.data);
           this.detailsInfo = res.data;
         } else {
           this.$vb.plugin.message.error(`获取订单信息失败:${res.code}`);
@@ -120,5 +160,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/detail-page.scss";
+@import "~@/assets/scss/order-list-details-page.scss";
 </style>
