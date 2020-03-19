@@ -1,8 +1,12 @@
 <!--商品分类列表-->
 <template>
   <div class="table-panel">
-    <div class="search-bar">
-      <el-input v-model="searchParam" placeholder="请输入昵称" size="small" />
+    <div class="search-bar" @keydown.enter="search">
+      <el-input
+        v-model="searchForm.name"
+        placeholder="请输入昵称"
+        size="small"
+      />
       <el-button
         type="primary"
         icon="el-icon-search"
@@ -10,7 +14,7 @@
         @click="search"
         >查询</el-button
       >
-      <el-button type="primary" plain size="small" @click="handleClick(0, '')"
+      <el-button type="primary" plain size="small" @click="handleClick(0)"
         >增加</el-button
       >
     </div>
@@ -41,9 +45,9 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage"
+      :current-page="searchForm.pageNum"
       :page-sizes="[10, 20, 30, 40]"
-      :page-size="10"
+      :page-size="searchForm.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
       class="page"
@@ -54,14 +58,19 @@
 <script>
 import lodash from "lodash";
 import base from "@/api/base";
+import commodityClassifyEditPage from "@/views/commodity-classify-edit-page";
 
 export default {
   name: "commodity-classify-list-page",
   data() {
     return {
-      searchParam: "",
       tabActiveName: "all",
       tableData: [],
+      searchForm: {
+        name: "",
+        pageNum: 1,
+        pageSize: 10
+      },
       currentPage: 1,
       isLoading: false,
       total: 0,
@@ -71,7 +80,6 @@ export default {
   mounted() {
     this.$api.commodityClassifyMangeAPI.getCommodityClassifyList().then(res => {
       if (lodash.isEqual(res.code, "success")) {
-        console.log(res);
         this.total = res.total;
         this.tableData = res.data;
         this.baseUrl = base.defaultBaseUrl;
@@ -83,34 +91,54 @@ export default {
   methods: {
     search() {
       this.isLoading = true;
-      this.$api.supplierManageAPI
-        .getSupplierList({
-          name: this.searchParam
-        })
+      this.$api.commodityClassifyMangeAPI
+        .getCommodityClassifyList(this.searchForm)
         .then(res => {
           if (lodash.isEqual(res.code, "success")) {
             this.tableData = res.data;
+            this.total = res.total;
             this.isLoading = false;
           } else {
             this.$vb.plugin.message.error(res.msg);
           }
         });
     },
-    // eslint-disable-next-line no-unused-vars
-    handleClick(status, ...val) {
+    handleClick(status, val) {
       switch (status) {
         case 0:
           // 增加
+          this.$vb.plugin.openLayer(
+            commodityClassifyEditPage,
+            this,
+            { state: "add" },
+            "新增商品类别",
+            900,
+            400
+          );
           break;
         case 1:
           // 变动
+          this.$vb.plugin.openLayer(
+            commodityClassifyEditPage,
+            this,
+            { state: "update", name: val.name },
+            "变动商品类别",
+            900,
+            400
+          );
           break;
       }
     },
-    handleSizeChange() {},
-    handleCurrentChange() {},
+    handleSizeChange(size) {
+      this.searchForm.pageSize = size;
+      this.search();
+    },
+    handleCurrentChange(page) {
+      this.searchForm.pageNum = page;
+      this.search();
+    },
     openDetails(row) {
-      this.handleClick(0, row);
+      this.handleClick(2, row);
     }
   }
 };
