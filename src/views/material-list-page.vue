@@ -43,6 +43,7 @@
         size="small"
         placeholder="请选择商品状态"
         clearable
+        @click.native.once="getSelect('status')"
       >
         <el-option
           v-for="(item, index) in statuses"
@@ -55,7 +56,7 @@
         v-model="searchForm.classifyId"
         value=""
         size="small"
-        @visible-change="categoryChange"
+        @change="categoryChange"
         placeholder="请选择大类"
         ref="classify"
         @click.native.once="getSelect('classify')"
@@ -128,7 +129,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="searchForm.pageNum"
-      :page-sizes="[5, 10, 15, 20]"
+      :page-sizes="[10, 20, 30, 40]"
       :page-size="searchForm.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
@@ -156,7 +157,7 @@ export default {
         categoryId: "",
         statusCode: "",
         pageNum: 1,
-        pageSize: 5
+        pageSize: 10
       },
       currentPage: 1,
       tableData: [],
@@ -187,7 +188,7 @@ export default {
             materialDetailPage,
             this,
             { colNum: "two-col", materialId: val[0].materialId },
-            "订单详情",
+            "商品详情",
             800,
             "80%"
           );
@@ -225,11 +226,11 @@ export default {
     openDetails(row) {
       this.handleClick("detail", row);
     },
-    categoryChange() {
+    categoryChange(val) {
       this.searchForm.categoryId = "";
       // 获取二级分类集合
       this.$api.materialManageAPI
-        .getMaterialCategory({ classifyId: this.searchForm.classifyId })
+        .getMaterialCategory({ classifyId: val })
         .then(res => {
           this.secondCategorys = res.data;
         });

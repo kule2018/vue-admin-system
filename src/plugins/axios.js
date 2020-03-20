@@ -23,6 +23,9 @@ let config = {
   }
 };
 
+// 创建实例
+const _axios = axios.create(config);
+
 /**
  * 请求失败后的错误统一处理，当然还有更多状态码判断，根据自己业务需求去扩展即可
  * @param {Number} status 请求失败的状态码
@@ -34,6 +37,15 @@ const errorHandle = (status, other) => {
     // 401: 未登录状态，跳转登录页
     case 401:
       // 跳转登录页
+      if (vueObj.$store.state.errorTimes >= 3) {
+        vueObj.$router.push("/login");
+        return;
+      }
+      vueObj.$store.commit("reduceErrorTimes");
+
+      vueObj.$api.systemManageAPI
+        .getMenuList({ headers: { tieck: vueObj.$store.state.userInfo.tieck } })
+        .then(() => {});
       break;
     // 403 token过期
     case 403:
@@ -49,8 +61,6 @@ const errorHandle = (status, other) => {
   }
 };
 
-// 创建实例
-const _axios = axios.create(config);
 // 请求拦截器
 _axios.interceptors.request.use(
   function(config) {
@@ -75,12 +85,13 @@ _axios.interceptors.response.use(
   function(response) {
     // 判断token是否过期，如果过期则获取新的token
     // 返回token中的data数据
+    response.status === 200 && vueObj.$store.commit("resetErrorTimes");
     return response.data;
   },
   function(error) {
     if (error) {
       // 请求已发出，但不在2xx范围内
-      errorHandle(error.status, error.data);
+      errorHandle(error.response.status, error.response.data);
       return Promise.reject(error);
     } else {
       // 断网

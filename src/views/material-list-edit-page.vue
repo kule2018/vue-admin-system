@@ -115,11 +115,13 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="价格" prop="price">
-                <el-input
+                <el-input-number
                   v-model="form.price"
                   size="small"
+                  :precision="2"
+                  :controls="false"
                   placeholder="请输入商品价格"
-                ></el-input>
+                ></el-input-number>
               </el-form-item>
             </el-col>
           </el-row>
@@ -155,20 +157,23 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="起售数" prop="saleNum">
-                <el-input
+                <el-input-number
                   v-model="form.saleNum"
                   size="small"
+                  :controls="false"
                   placeholder="请输入商品起售数"
-                ></el-input>
+                  :style="{ 'text-align': 'left' }"
+                ></el-input-number>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="库存数" prop="inventoryNum">
-                <el-input
+                <el-input-number
                   v-model="form.inventoryNum"
                   size="small"
+                  :controls="false"
                   placeholder="请输入商品库存数"
-                ></el-input>
+                ></el-input-number>
               </el-form-item>
             </el-col>
           </el-row>
@@ -279,7 +284,8 @@ export default {
       secondCategorys: [], // 二级分类集合
       units: [], // 单位集合
       brands: [], // 品牌集合
-      submissionStatus: false // 提交状态
+      submissionStatus: false, // 提交状态
+      echoStatus: 0
     };
   },
   computed: {
@@ -330,18 +336,23 @@ export default {
       this.form.coverFigurePath = res.data.path;
     },
     beforeUpload(file) {
-      const isJPG = file.type === "image/jpeg";
+      const isJPGorPNG =
+        file.type === "image/jpeg" || file.type === "image/png";
       const isLt2M = file.size / 1024 / 1024 < 2;
 
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
+      if (!isJPGorPNG) {
+        this.$message.error("上传的图片只能是 JPG 或 PNG 格式!");
       }
       if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
+        this.$message.error("上传的图片大小不能超过 2MB!");
       }
-      return isJPG && isLt2M;
+      return isJPGorPNG && isLt2M;
     },
     categoryChange(val) {
+      if (this.echoStatus === 0) {
+        this.echoStatus++;
+        return false;
+      }
       this.form.categoryName = "";
       // 获取二级分类集合
       this.$api.materialManageAPI
