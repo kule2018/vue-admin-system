@@ -4,13 +4,26 @@
     <div class="content-panel">
       <div class="main-content">
         <el-form ref="form" :model="form" :rules="rules" label-width="130px">
-          <el-form-item label="类别名" prop="name">
-            <el-input
-              v-model="form.name"
-              size="small"
-              placeholder="请输入类别名"
-            />
-          </el-form-item>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="类别名" prop="name">
+                <el-input
+                  v-model="form.name"
+                  size="small"
+                  placeholder="请输入类别名"
+                />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="排序号" prop="sortNumber">
+                <el-input
+                  v-model="form.sortNumber"
+                  size="small"
+                  placeholder="请输入排序号"
+                />
+              </el-form-item>
+            </el-col>
+          </el-row>
           <el-row>
             <el-col :span="24">
               <el-form-item label="类别图" prop="icon">
@@ -75,6 +88,9 @@ export default {
       },
       rules: {
         name: [{ required: true, message: "请输入类别名", trigger: "blur" }],
+        sortNumber: [
+          { required: true, message: "请输入排序号", trigger: "blur" }
+        ],
         icon: [{ required: true, message: "请上传类别图" }]
       },
       // 提交状态

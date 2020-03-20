@@ -4,7 +4,7 @@
     <div class="search-bar" @keydown.enter="search">
       <el-input
         v-model="searchForm.name"
-        placeholder="请输入昵称"
+        placeholder="请输入类别名"
         size="small"
       />
       <el-button
@@ -24,12 +24,13 @@
       @row-click="openDetails"
       v-loading.fullscreen="isLoading"
     >
-      <el-table-column label="分类图">
+      <el-table-column label="类别图">
         <template slot-scope="scope">
           <el-avatar :src="baseUrl + scope.row.icon" />
         </template>
       </el-table-column>
       <el-table-column prop="sortNumber" label="排序号" />
+      <el-table-column prop="classifyName" label="分类名" />
       <el-table-column prop="name" label="类别名" />
       <el-table-column fixed="right" width="360" label="操作">
         <template slot-scope="scope">
@@ -111,9 +112,9 @@ export default {
             commodityCategoryEditPage,
             this,
             { state: "add" },
-            "新增商品类别",
+            "新增类别",
             900,
-            400
+            560
           );
           break;
         case 1:
@@ -121,10 +122,18 @@ export default {
           this.$vb.plugin.openLayer(
             commodityCategoryEditPage,
             this,
-            { state: "update", classifyId: val.classifyId },
-            "变动商品类别",
+            {
+              state: "update",
+              classifyId: val.classifyId,
+              name: val.name,
+              classifyName: val.classifyName,
+              sortNumber: val.sortNumber,
+              categoryId: val.categoryId,
+              icon: val.icon
+            },
+            "变动类别",
             900,
-            400
+            560
           );
           break;
       }
