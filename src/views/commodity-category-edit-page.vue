@@ -4,22 +4,8 @@
     <div class="content-panel">
       <div class="main-content">
         <el-form ref="form" :model="form" :rules="rules" label-width="130px">
-          <el-form-item label="类别名" prop="name">
-            <el-input
-              v-model="form.name"
-              size="small"
-              placeholder="请输入类别名"
-            />
-          </el-form-item>
-          <el-form-item label="商品分类id" prop="classifyId">
-            <el-input
-              v-model="form.classifyId"
-              size="small"
-              placeholder="请输入分类id"
-            />
-          </el-form-item>
           <el-row>
-            <el-col :span="24">
+            <el-col :span="12">
               <el-form-item label="类别图" prop="icon">
                 <el-image
                   :class="{ hide: !form.icon }"
@@ -44,6 +30,43 @@
                 <el-button size="mini" plain @click="$refs.uploadFile.click()"
                   >上传</el-button
                 >
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="排序号" prop="sortNumber">
+                <el-input
+                  v-model="form.sortNumber"
+                  size="small"
+                  placeholder="排序号"
+                />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="分类" prop="classifyName">
+                <el-select
+                  v-model="form.classifyName"
+                  placeholder="请选择"
+                  @change="dropDownReply(0)"
+                >
+                  <el-option
+                    v-for="(item, index) in productCategoryDropDownList"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.classifyId"
+                  >
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="类别名" prop="name">
+                <el-input
+                  v-model="form.name"
+                  size="small"
+                  placeholder="请输入类别名"
+                />
               </el-form-item>
             </el-col>
           </el-row>
@@ -74,19 +97,26 @@ export default {
   data() {
     return {
       form: {
+        // 商品分类id
+        classifyId: "",
+        // 商品分类名
+        classifyName: "",
+        // 类别id
+        categoryId: "",
         // 类别名
         name: "",
-        // 类别图
-        icon: "",
-        classifyId: "",
         // 排序号
-        sortNumber: ""
+        sortNumber: "",
+        // 类别图
+        icon: ""
       },
+      // 商品分类下拉列表
+      productCategoryDropDownList: [],
+      // 类别下拉列表
+      categoryDropDownList: [],
       rules: {
+        classifyName: [{ required: true, message: "请选择分类" }],
         name: [{ required: true, message: "请输入类别名", trigger: "blur" }],
-        classifyId: [
-          { required: true, message: "请输入分类id", trigger: "blur" }
-        ],
         icon: [{ required: true, message: "请上传类别图" }]
       },
       // 提交状态
@@ -143,6 +173,23 @@ export default {
         }
       });
     },
+    // 下拉响应
+    dropDownReply(status) {
+      switch (status) {
+        case 0:
+          this.productCategoryDropDownList.find(item => {
+            if (lodash.isEqual(this.form.classifyName, item.classifyId)) {
+              this.form.classifyName = item.name;
+              this.form.classifyId = item.classifyId;
+            }
+          });
+          break;
+        case 1:
+          break;
+        default:
+          break;
+      }
+    },
     cancel() {
       this.$layer.close(this.layerid);
     },
@@ -176,13 +223,32 @@ export default {
         })
         .then(res => {
           if (lodash.isEqual(res.code, "success")) {
-            // console.log(res.data);
-            this.form = res.data[0];
+            // 类别默认值
+            this.form.name = this.parentData.name;
+            // 类别id
+            this.form.categoryId = this.parentData.categoryId;
+            // 排序号
+            this.form.sortNumber = this.parentData.sortNumber;
+            // 类别名图
+            this.form.icon = this.parentData.icon;
           } else {
             this.$vb.plugin.message.error("获取商品类别失败");
           }
         });
     }
+    // 获取商品分类列表
+    this.$api.commodityClassifyMangeAPI
+      .getCommodityClassifyList({ classifyId: this.parentData.classifyId })
+      .then(res => {
+        if (lodash.isEqual(res.code, "success")) {
+          this.productCategoryDropDownList = res.data;
+          // 商品分类默认值
+          this.form.classifyName = this.parentData.classifyName;
+          this.form.classifyId = this.parentData.classifyId;
+        } else {
+          this.$message.error(`商品分类类表获取失败:${res.code}`);
+        }
+      });
   },
   props: {
     // 父组件传的数据
