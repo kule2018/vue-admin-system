@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     resultFlag: "",
     resultShow: false,
-    userInfo: {}
+    userInfo: {},
+    errorTimes: 0
   },
   mutations: {
     changeResultState(state, val) {
@@ -19,6 +20,12 @@ export default new Vuex.Store({
     },
     setUserInfo(state, val) {
       state.userInfo = val;
+    },
+    reduceErrorTimes(state) {
+      state.errorTimes++;
+    },
+    resetErrorTimes(state) {
+      state.errorTimes = 0;
     }
   },
   actions: {},

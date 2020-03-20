@@ -186,3 +186,8 @@ $layer-main-width: 90%;
   justify-content: flex-end;
   align-items: center;
 }
+.el-input-number {
+  .el-input__inner {
+    text-align: left;
+  }
+}

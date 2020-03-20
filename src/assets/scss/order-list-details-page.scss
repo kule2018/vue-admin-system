@@ -1,9 +1,12 @@
 .order-detail {
   width: 100%;
+  overflow: hidden;
 }
 
-.orderDetailTab {
+.order-detail-tab {
   width: 100%;
+  height: calc(100% - 52px);
+  overflow-y: auto;
 
   .el-form-item {
     display: block;
