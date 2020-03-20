@@ -1,6 +1,6 @@
 <template>
   <div class="order-detail">
-    <el-tabs v-model="activeName" type="card" class="orderDetailTab">
+    <el-tabs v-model="activeName" type="card" class="order-detail-tab">
       <el-tab-pane label="订单信息" name="orderInfo">
         <div class="detail-box" :class="parentData.colNum">
           <div class="fill">
@@ -101,8 +101,12 @@
       </el-tab-pane>
     </el-tabs>
     <div class="button__bottom">
-      <el-button type="info" size="small">退回</el-button>
-      <el-button type="primary" size="small">接收</el-button>
+      <el-button type="info" size="small" @click="handleClick('reject')"
+        >退回</el-button
+      >
+      <el-button type="primary" size="small" @click="handleClick('resolve')"
+        >接收</el-button
+      >
     </div>
   </div>
 </template>
@@ -117,6 +121,56 @@ export default {
       detailsInfo: {},
       activeName: "orderInfo"
     };
+  },
+  methods: {
+    handleClick(state) {
+      switch (state) {
+        case "resolve":
+          // 接收
+          this.$confirm("确认接收吗?", "提示", {
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+            type: "warning"
+          })
+            .then(() => {
+              /*this.$api.weChatUserInfoAPI
+                .unblockUser({ personId: val[0].personId })
+                .then(res => {
+                  if (_.isEqual(res.code, "success")) {
+                    this.$vb.plugin.message.success(res.msg);
+                    this.search();
+                  } else {
+                    this.$vb.plugin.message.error(res.msg);
+                  }
+                });*/
+            })
+            .catch(() => {});
+          break;
+        case "reject":
+          // 退回
+          this.$confirm("确认退回吗?", "提示", {
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+            type: "warning"
+          })
+            .then(() => {
+              /*this.$api.weChatUserInfoAPI
+                .unblockUser({ personId: val[0].personId })
+                .then(res => {
+                  if (_.isEqual(res.code, "success")) {
+                    this.$vb.plugin.message.success(res.msg);
+                    this.search();
+                  } else {
+                    this.$vb.plugin.message.error(res.msg);
+                  }
+                });*/
+            })
+            .catch(() => {});
+          break;
+        default:
+          break;
+      }
+    }
   },
   mounted() {
     this.$api.orderManageAPI

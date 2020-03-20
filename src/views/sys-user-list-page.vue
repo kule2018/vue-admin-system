@@ -79,7 +79,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="searchForm.pageNum"
-      :page-sizes="[5, 10, 15, 20]"
+      :page-sizes="[10, 20, 30, 40]"
       :page-size="searchForm.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
@@ -101,7 +101,7 @@ export default {
       searchForm: {
         name: "",
         pageNum: 1,
-        pageSize: 5
+        pageSize: 10
       },
       tabActiveName: "all",
       tableData: [],
