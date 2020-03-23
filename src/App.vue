@@ -13,10 +13,18 @@ export default {
     mainContent
   },
   created() {
+    const self = this;
     // 给vuex中的userInfo赋值
     if (!lodash.isUndefined(localStorage.getItem("userInfo"))) {
       this.$store.state.userInfo = JSON.parse(localStorage.getItem("userInfo"));
     }
+    setInterval(() => {
+      self.$api.systemManageAPI.getMenuList({
+        headers: {
+          tieck: self.$store.state.userInfo.tieck
+        }
+      });
+    }, 1200000);
   },
   data() {
     return {};

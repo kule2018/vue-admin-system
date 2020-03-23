@@ -198,6 +198,21 @@ export default {
             "80%"
           );
           break;
+        case "todo":
+          this.$vb.plugin.openLayer(
+            orderDetailPage,
+            this,
+            {
+              colNum: "two-col",
+              orderId: val[0].orderId,
+              activeName: this.activeName,
+              state: "todo"
+            },
+            "订单详情",
+            800,
+            "80%"
+          );
+          break;
         case "allot":
           this.$vb.plugin.openLayer(
             orderAllotPage,
@@ -212,11 +227,11 @@ export default {
           this.$confirm("确认发货吗?", "提示", {
             confirmButtonText: "确认",
             cancelButtonText: "取消",
-            type: "info"
+            type: "warning"
           })
             .then(() => {
-              /*this.$api.weChatUserInfoAPI
-                .unblockUser({ personId: val[0].personId })
+              this.$api.orderManageAPI
+                .deliveryOrder({ orderId: val[0].orderId })
                 .then(res => {
                   if (_.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
@@ -224,7 +239,7 @@ export default {
                   } else {
                     this.$vb.plugin.message.error(res.msg);
                   }
-                });*/
+                });
             })
             .catch(() => {});
           break;

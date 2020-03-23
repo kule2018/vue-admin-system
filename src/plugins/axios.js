@@ -11,7 +11,7 @@ let config = {
 
   // 请求超时时间
   timeout: 60 * 1000,
-  heards: {
+  headers: {
     get: {
       "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
       // 将普适性的请求头作为基础配置。当需要特殊请求头时，将特殊请求头作为参数传入，覆盖基础配置
@@ -37,14 +37,14 @@ const errorHandle = (status, other) => {
     // 401: 未登录状态，跳转登录页
     case 401:
       // 跳转登录页
-      if (vueObj.$store.state.errorTimes >= 3) {
+      if (store.state.errorTimes >= 3) {
         vueObj.$router.push("/login");
         return;
       }
-      vueObj.$store.commit("reduceErrorTimes");
+      store.commit("reduceErrorTimes");
 
       vueObj.$api.systemManageAPI
-        .getMenuList({ headers: { tieck: vueObj.$store.state.userInfo.tieck } })
+        .getMenuList({ tieck: store.state.userInfo.tieck })
         .then(() => {});
       break;
     // 403 token过期
@@ -70,6 +70,7 @@ _axios.interceptors.request.use(
       token = store.state.userInfo.token;
     }
     token && (config.headers.token = token);
+    config.headers.tieck = store.state.userInfo.tieck;
     return config;
   },
   function(error) {
@@ -85,13 +86,15 @@ _axios.interceptors.response.use(
   function(response) {
     // 判断token是否过期，如果过期则获取新的token
     // 返回token中的data数据
-    response.status === 200 && vueObj.$store.commit("resetErrorTimes");
+    response.status === 200 && store.commit("resetErrorTimes");
     return response.data;
   },
   function(error) {
     if (error) {
       // 请求已发出，但不在2xx范围内
-      errorHandle(error.response.status, error.response.data);
+      if (error) {
+        errorHandle(error.response.status, error.response.data);
+      }
       return Promise.reject(error);
     } else {
       // 断网

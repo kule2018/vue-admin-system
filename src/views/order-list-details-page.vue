@@ -100,7 +100,7 @@
         </el-table>
       </el-tab-pane>
     </el-tabs>
-    <div class="button__bottom">
+    <div class="button__bottom" v-if="showButton">
       <el-button type="info" size="small" @click="handleClick('reject')"
         >退回</el-button
       >
@@ -112,18 +112,20 @@
 </template>
 
 <script>
-import lodash from "lodash";
+import _ from "lodash";
 import base from "@/api/base";
 export default {
   name: "order-list-details-page",
   data() {
     return {
       detailsInfo: {},
-      activeName: "orderInfo"
+      activeName: "orderInfo",
+      showButton: false
     };
   },
   methods: {
     handleClick(state) {
+      console.log(this.detailsInfo.supplierId);
       switch (state) {
         case "resolve":
           // 接收
@@ -133,16 +135,22 @@ export default {
             type: "warning"
           })
             .then(() => {
-              /*this.$api.weChatUserInfoAPI
-                .unblockUser({ personId: val[0].personId })
+              this.$api.orderManageAPI
+                .agreeReceiveOrder({
+                  orderId: this.detailsInfo.orderId,
+                  orderSupplierId: this.detailsInfo.orderSupplierId
+                })
                 .then(res => {
                   if (_.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
-                    this.search();
+                    // 刷新父页面
+                    this.$parent.search();
+                    // 关闭弹层
+                    this.$layer.close(this.layerid);
                   } else {
                     this.$vb.plugin.message.error(res.msg);
                   }
-                });*/
+                });
             })
             .catch(() => {});
           break;
@@ -154,16 +162,22 @@ export default {
             type: "warning"
           })
             .then(() => {
-              /*this.$api.weChatUserInfoAPI
-                .unblockUser({ personId: val[0].personId })
+              this.$api.orderManageAPI
+                .rejectReceiveOrder({
+                  orderId: this.detailsInfo.orderId,
+                  orderSupplierId: this.detailsInfo.orderSupplierId
+                })
                 .then(res => {
                   if (_.isEqual(res.code, "success")) {
                     this.$vb.plugin.message.success(res.msg);
-                    this.search();
+                    // 刷新父页面
+                    this.$parent.search();
+                    // 关闭弹层
+                    this.$layer.close(this.layerid);
                   } else {
                     this.$vb.plugin.message.error(res.msg);
                   }
-                });*/
+                });
             })
             .catch(() => {});
           break;
@@ -173,12 +187,13 @@ export default {
     }
   },
   mounted() {
+    this.showButton = this.parentData.state === "todo";
     this.$api.orderManageAPI
       .getOrderDetail({
         orderId: this.parentData.orderId
       })
       .then(res => {
-        if (lodash.isEqual(res.code, "success")) {
+        if (_.isEqual(res.code, "success")) {
           Array.prototype.forEach.call(res.data.orderMaterialList, item => {
             item.coverFigurePath = base.defaultBaseUrl + item.coverFigurePath;
           });

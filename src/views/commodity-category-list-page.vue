@@ -104,7 +104,7 @@ export default {
           }
         });
     },
-    handleClick(status, val) {
+    handleClick(status, row) {
       switch (status) {
         case 0:
           // 增加
@@ -122,15 +122,7 @@ export default {
           this.$vb.plugin.openLayer(
             commodityCategoryEditPage,
             this,
-            {
-              state: "update",
-              classifyId: val.classifyId,
-              name: val.name,
-              classifyName: val.classifyName,
-              sortNumber: val.sortNumber,
-              categoryId: val.categoryId,
-              icon: val.icon
-            },
+            Object.assign({ state: "update" }, row),
             "变动类别",
             900,
             560

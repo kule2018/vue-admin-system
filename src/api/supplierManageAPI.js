@@ -33,6 +33,15 @@ const supplierManageAPI = {
       params
     });
   },
+  // 获取证件类型
+  getCertificateType(params) {
+    return services._axios.get(
+      `${base.defaultBaseUrl}/common/certificateType/list`,
+      {
+        params
+      }
+    );
+  },
   // 更新供应商信息 {}
   updateSupplierInfo(params) {
     return services._axios.post(

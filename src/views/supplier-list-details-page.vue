@@ -1,12 +1,48 @@
 <template>
   <div class="detail-box" :class="parentData.colNum">
     <div>
-      <div>供应商id</div>
-      <div>{{ detailsInfo.supplierId }}</div>
+      <div>供应商状态名称</div>
+      <div>{{ detailsInfo.supplierStatusName }}</div>
+    </div>
+    <div>
+      <div>建立时间</div>
+      <div>{{ detailsInfo.establTime }}</div>
+    </div>
+    <div>
+      <div>法人</div>
+      <div>{{ detailsInfo.legalPerson }}</div>
+    </div>
+    <div>
+      <div>注册资金</div>
+      <div>{{ detailsInfo.registerCapital }}</div>
+    </div>
+    <div>
+      <div>固定电话</div>
+      <div>{{ detailsInfo.phone }}</div>
+    </div>
+    <div>
+      <div>手机</div>
+      <div>{{ detailsInfo.mobilePhone }}</div>
+    </div>
+    <div>
+      <div>证件类型名称</div>
+      <div>{{ detailsInfo.certificateName }}</div>
+    </div>
+    <div>
+      <div>证件号</div>
+      <div>{{ detailsInfo.certificateNumber }}</div>
     </div>
     <div>
       <div>企业性质</div>
       <div>{{ detailsInfo.enterprisNature }}</div>
+    </div>
+    <div>
+      <div>经营范围</div>
+      <div>{{ detailsInfo.scopeBusine }}</div>
+    </div>
+    <div>
+      <div>公司地址</div>
+      <div>{{ detailsInfo.companyAddress }}</div>
     </div>
     <div>
       <div>营业执照号</div>
@@ -44,30 +80,6 @@
         </el-image>
       </div>
     </div>
-    <div>
-      <div>法人</div>
-      <div>{{ detailsInfo.legalPerson }}</div>
-    </div>
-    <div>
-      <div>证件类型</div>
-      <div>{{ detailsInfo.certificateType }}</div>
-    </div>
-    <div>
-      <div>证件类型名称</div>
-      <div>{{ detailsInfo.certificateName }}</div>
-    </div>
-    <div>
-      <div>证件号</div>
-      <div>{{ detailsInfo.certificateNumber }}</div>
-    </div>
-    <div>
-      <div>固定电话</div>
-      <div>{{ detailsInfo.phone }}</div>
-    </div>
-    <div>
-      <div>供应商状态名称</div>
-      <div>{{ detailsInfo.supplierStatusName }}</div>
-    </div>
   </div>
 </template>
 
@@ -94,6 +106,11 @@ export default {
             baseUrl.defaultBaseUrl + res.data.businessLicenseElecChart;
           res.data.sanitaryPermitElecChart =
             baseUrl.defaultBaseUrl + res.data.sanitaryPermitElecChart;
+          res.data.registerCapital = this.$vb.format.formatMoney(
+            res.data.registerCapital,
+            2,
+            "￥"
+          );
           this.detailsInfo = res.data;
           this.detailsInfo = Object.assign({}, this.detailsInfo);
         } else {
