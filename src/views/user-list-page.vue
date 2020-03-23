@@ -36,38 +36,34 @@
         <el-table-column prop="province" label="省" />
         <el-table-column fixed="right" width="350" label="操作">
           <template slot-scope="scope">
-            <template v-if="tabActiveName === 'all'">
-              <el-button
-                @click.stop="handleClick(1, scope.row)"
-                type="primary"
-                size="mini"
-                >冻结</el-button
-              >
-              <el-button
-                @click.stop="handleClick(2, scope.row)"
-                type="primary"
-                size="mini"
-                >拉黑</el-button
-              >
-            </template>
-            <template v-else-if="tabActiveName === 'freeze'">
-              <el-button
-                @click.stop="handleClick(3, scope.row)"
-                type="primary"
-                size="mini"
-                v-if="tabActiveName === 'freeze'"
-                >解冻</el-button
-              >
-            </template>
-            <template v-else-if="tabActiveName === 'block'">
-              <el-button
-                @click.stop="handleClick(4, scope.row)"
-                type="primary"
-                size="mini"
-                v-if="tabActiveName === 'block'"
-                >移出黑名单</el-button
-              >
-            </template>
+            <el-button
+              v-if="+scope.row.statusCode === 61"
+              @click.stop="handleClick(1, scope.row)"
+              type="primary"
+              size="mini"
+              >冻结</el-button
+            >
+            <el-button
+              v-if="+scope.row.statusCode === 61"
+              @click.stop="handleClick(2, scope.row)"
+              type="primary"
+              size="mini"
+              >拉黑</el-button
+            >
+            <el-button
+              v-if="+scope.row.statusCode === 71"
+              @click.stop="handleClick(3, scope.row)"
+              type="primary"
+              size="mini"
+              >解除冻结</el-button
+            >
+            <el-button
+              v-if="+scope.row.statusCode === 81"
+              @click.stop="handleClick(4, scope.row)"
+              type="primary"
+              size="mini"
+              >移出黑名单</el-button
+            >
           </template>
         </el-table-column>
       </el-table>

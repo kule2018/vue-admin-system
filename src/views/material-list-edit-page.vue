@@ -179,12 +179,12 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="是否新产品">
+              <el-form-item label="新产品">
                 <el-select
                   v-model="form.newProductName"
                   value=""
                   size="small"
-                  placeholder="是否新产品"
+                  placeholder="新产品"
                 >
                   <el-option label="是" :value="true"></el-option>
                   <el-option label="否" :value="false"></el-option>
@@ -355,6 +355,10 @@ export default {
       }
       this.form.categoryName = "";
       // 获取二级分类集合
+      this.getSecondCategorys(val);
+    },
+    getSecondCategorys(val) {
+      // 获取二级分类集合
       this.$api.materialManageAPI
         .getMaterialCategory({ classifyId: val })
         .then(res => {
@@ -401,7 +405,7 @@ export default {
         .then(res => {
           if (_.isEqual(res.code, "success")) {
             Object.assign(this.form, res.data);
-            this.categoryChange(this.form.classifyId);
+            this.getSecondCategorys(this.form.classifyId);
           } else {
             this.$vb.plugin.message.error(`获取订单信息失败:${res.code}`);
           }

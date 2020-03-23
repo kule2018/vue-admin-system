@@ -2,7 +2,9 @@
 
 // 弹层工具类
 import plugin from "./layerUtil";
+import format from "./format";
 
 export default {
-  plugin
+  plugin,
+  format
 };

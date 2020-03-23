@@ -5,7 +5,7 @@
         <div class="search-bar">
           <el-input
             v-model="searchForm.name"
-            placeholder="请输入昵称"
+            placeholder="请输入名称"
             size="small"
           />
           <el-button
@@ -35,8 +35,16 @@
           v-loading.fullscreen="isLoading"
         >
           <el-table-column prop="name" label="名称" />
-          <el-table-column prop="establTime" label="建立时间" />
-          <el-table-column prop="registerCapital" label="注册资金" />
+          <el-table-column label="建立时间">
+            <template slot-scope="scope">
+              {{ scope.row.establTime | formatDate }}
+            </template>
+          </el-table-column>
+          <el-table-column label="注册资金">
+            <template slot-scope="scope">
+              {{ scope.row.registerCapital | formatMoney }}
+            </template>
+          </el-table-column>
           <el-table-column prop="scopeBusine" label="经营范围" />
           <el-table-column prop="companyAddress" label="公司地址" />
           <el-table-column prop="mobilePhone" label="手机" />
@@ -99,6 +107,7 @@
 import lodash from "lodash";
 import supplierListDetails from "@/views/supplier-list-details-page";
 import supplierListEditPage from "@/views/supplier-list-edit-page";
+import format from "@/utils/format";
 
 export default {
   name: "supplier-list-page",
@@ -114,6 +123,14 @@ export default {
       isLoading: false,
       total: 0
     };
+  },
+  filters: {
+    formatDate(date) {
+      return format.formatDate(date, "yyyy-MM-dd");
+    },
+    formatMoney(money) {
+      return format.formatMoney(money, 2, "￥");
+    }
   },
   mounted() {
     this.search();

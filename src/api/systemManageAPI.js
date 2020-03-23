@@ -3,10 +3,9 @@ import services from "../plugins/axios";
 import base from "./base"; // 导入接口域名列表
 
 const systemManageAPI = {
-  getMenuList(params, headers) {
+  getMenuList(params) {
     return services._axios.get(`${base.defaultBaseUrl}/sys/home/menu`, {
-      params,
-      headers
+      params: params
     });
   }
 };
