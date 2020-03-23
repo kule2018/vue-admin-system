@@ -2,15 +2,20 @@
   <div id="layerContent" class="sys-user-edit">
     <div class="content-panel">
       <div class="main-content">
-        <el-form ref="form" :model="form" label-width="130px">
+        <el-form
+          ref="form"
+          :model="form"
+          label-width="130px"
+          :rules="formRules"
+        >
           <el-row>
             <el-col :span="12">
-              <el-form-item label="供应商名称">
+              <el-form-item label="供应商名称" prop="name">
                 <el-input v-model="form.name" />
               </el-form-item>
             </el-col>
             <el-col :span="12"
-              ><el-form-item label="建立时间">
+              ><el-form-item label="建立时间" prop="establTime">
                 <el-date-picker
                   v-model="form.establTime"
                   type="date"
@@ -21,78 +26,89 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="法人">
+              <el-form-item label="法人" prop="legalPerson">
                 <el-input v-model="form.legalPerson"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="注册资金">
-                <el-input v-model="form.registerCapital"></el-input>
+              <el-form-item label="注册资金" prop="registerCapital">
+                <el-input-number
+                  v-model="form.registerCapital"
+                  :precision="2"
+                  :controls="false"
+                ></el-input-number>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="固定电话">
+              <el-form-item label="固定电话" prop="phone">
                 <el-input v-model="form.phone"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="手机">
-                <el-input v-model="form.mobilePhone"></el-input>
+              <el-form-item label="手机" prop="mobilePhone">
+                <el-input v-model="form.mobilePhone" maxlength="11"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="证件类型">
-                <el-select v-model="form.certificateType" placeholder="请选择">
+              <el-form-item label="证件类型" prop="certificateName">
+                <el-select
+                  v-model="form.certificateName"
+                  placeholder="请选择"
+                  value=""
+                >
                   <el-option
                     v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                    :key="item.certificateType"
+                    :label="item.certificateName"
+                    :value="item.certificateType"
                   >
                   </el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="证件号">
+              <el-form-item label="证件号" prop="certificateNumber">
                 <el-input v-model="form.certificateNumber"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="企业性质">
+              <el-form-item label="企业性质" prop="enterprisNature">
                 <el-input v-model="form.enterprisNature"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="经营范围">
+              <el-form-item label="经营范围" prop="scopeBusine">
                 <el-input v-model="form.scopeBusine"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
-          <el-form-item label="公司地址">
+          <el-form-item label="公司地址" prop="companyAddress">
             <el-input type="textarea" v-model="form.companyAddress"></el-input>
           </el-form-item>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="营业执照号">
+              <el-form-item label="营业执照号" prop="businessLicenseNumber">
                 <el-input v-model="form.businessLicenseNumber"> </el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="卫生许可证号">
+              <el-form-item label="卫生许可证号" prop="sanitaryPermitNumber">
                 <el-input v-model="form.sanitaryPermitNumber"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="营业执照电子图">
+              <el-form-item
+                label="营业执照电子图"
+                prop="businessLicenseElecChart"
+              >
                 <el-image
                   :class="{ hide: !businessLicense }"
                   :src="businessLicense"
@@ -119,7 +135,10 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="卫生许可证电子图">
+              <el-form-item
+                label="卫生许可证电子图"
+                prop="sanitaryPermitElecChart"
+              >
                 <el-image
                   :class="{ hide: !healthPermit }"
                   :src="healthPermit"
@@ -172,44 +191,78 @@ export default {
   data() {
     return {
       form: {
-        supplierId: "",
-        name: "",
-        establTime: "",
-        registerCapital: "",
-        scopeBusine: "",
-        enterprisNature: "",
-        businessLicenseNumber: "",
-        businessLicenseElecChart: "",
-        sanitaryPermitNumber: "",
-        sanitaryPermitElecChart: "",
-        companyAddress: "",
-        legalPerson: "",
-        certificateType: "0",
-        certificateNumber: "",
-        phone: "",
-        mobilePhone: ""
+        supplierId: "", // 供应商id
+        name: "", // 名称
+        establTime: "", // 建立时间
+        registerCapital: "", // 注册资金
+        scopeBusine: "", // 经营范围
+        enterprisNature: "", // 企业性质
+        businessLicenseNumber: "", // 营业执照号
+        businessLicenseElecChart: "", // 营业执照电子图
+        sanitaryPermitNumber: "", // 卫生许可证号
+        sanitaryPermitElecChart: "", // 卫生许可证电子图
+        companyAddress: "", // 公司地址
+        legalPerson: "", // 法人
+        certificateType: "0", // 证件类型
+        certificateName: "", // 证件类型名称
+        certificateNumber: "", // 证件号
+        phone: "", // 固定电话
+        mobilePhone: "" // 手机
+      },
+      formRules: {
+        name: [{ required: true, message: "请填入名称", trigger: "blur" }],
+        establTime: [
+          { required: true, message: "请填入建立时间", trigger: "blur" }
+        ],
+        registerCapital: [
+          { required: true, message: "请填入注册资金", trigger: "blur" }
+        ],
+        scopeBusine: [
+          { required: true, message: "请填入经营范围", trigger: "blur" }
+        ],
+        enterprisNature: [
+          { required: true, message: "请填入企业性质", trigger: "blur" }
+        ],
+        businessLicenseNumber: [
+          { required: true, message: "请填入营业执照号", trigger: "blur" }
+        ],
+        businessLicenseElecChart: [
+          { required: true, message: "请上传营业执照电子图" }
+        ],
+        sanitaryPermitNumber: [
+          { required: true, message: "请填入卫生许可证号", trigger: "blur" }
+        ],
+        sanitaryPermitElecChart: [
+          { required: true, message: "请上传卫生许可证电子图" }
+        ],
+        companyAddress: [
+          { required: true, message: "请填入公司地址", trigger: "blur" }
+        ],
+        legalPerson: [
+          { required: true, message: "请填入法人", trigger: "blur" }
+        ],
+        certificateName: [
+          { required: true, message: "请选择证件类型", trigger: "change" }
+        ],
+        certificateNumber: [
+          { required: true, message: "请填入证件号", trigger: "blur" }
+        ],
+        phone: [{ required: true, message: "请填入固定电话", trigger: "blur" }],
+        mobilePhone: [
+          { required: true, message: "请填入手机", trigger: "blur" }
+        ]
       },
       submissionStatus: false,
       imageUrl: "",
       businessLicense: "",
       healthPermit: "",
-      options: [
-        {
-          value: "0",
-          label: "身份证"
-        },
-        {
-          value: "1",
-          label: "护照"
-        },
-        {
-          value: "2",
-          label: "其他"
-        }
-      ]
+      options: []
     };
   },
   mounted() {
+    this.$api.supplierManageAPI.getCertificateType({}).then(res => {
+      this.options = res.data;
+    });
     if (lodash.isEqual(this.parentData.state, "update")) {
       this.$api.supplierManageAPI
         .getSupplierInfo({ supplierId: this.parentData.supplierId })
@@ -224,24 +277,32 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.submissionStatus = true;
-      if (lodash.isEqual(this.parentData.state, "add")) {
-        this.$api.supplierManageAPI.addSupplierInfo(this.form).then(res => {
-          this.$layer.msg(res.msg);
-          // 刷新父页面数据
-          this.$parent.search();
-          this.$layer.close(this.layerid);
-        });
-      } else {
-        // 更新
-        this.form.supplierId = this.parentData.supplierId;
-        this.$api.supplierManageAPI.updateSupplierInfo(this.form).then(res => {
-          this.$layer.msg(res.msg);
-          // 刷新父页面数据
-          this.$parent.search();
-          this.$layer.close(this.layerid);
-        });
-      }
+      !lodash.isNaN(+this.form.certificateName) &&
+        (this.form.certificateType = this.form.certificateName);
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.submissionStatus = true;
+          if (lodash.isEqual(this.parentData.state, "add")) {
+            this.$api.supplierManageAPI.addSupplierInfo(this.form).then(res => {
+              this.$layer.msg(res.msg);
+              // 刷新父页面数据
+              this.$parent.search();
+              this.$layer.close(this.layerid);
+            });
+          } else {
+            // 更新
+            this.form.supplierId = this.parentData.supplierId;
+            this.$api.supplierManageAPI
+              .updateSupplierInfo(this.form)
+              .then(res => {
+                this.$layer.msg(res.msg);
+                // 刷新父页面数据
+                this.$parent.search();
+                this.$layer.close(this.layerid);
+              });
+          }
+        }
+      });
     },
     cancel() {
       this.$layer.close(this.layerid);

@@ -39,6 +39,27 @@ const orderManageAPI = {
       `${base.defaultBaseUrl}/sys/order/allocationSupplier`,
       params
     );
+  },
+  // 接收
+  agreeReceiveOrder(params) {
+    return services._axios.post(
+      `${base.defaultBaseUrl}/sys/order/agreeReceive`,
+      params
+    );
+  },
+  // 退回
+  rejectReceiveOrder(params) {
+    return services._axios.post(
+      `${base.defaultBaseUrl}/sys/order/rejectReceive`,
+      params
+    );
+  },
+  // 发货
+  deliveryOrder(params) {
+    return services._axios.post(
+      `${base.defaultBaseUrl}/sys/order/delivery`,
+      params
+    );
   }
 };
 

@@ -25,7 +25,7 @@
                   <i
                     class="el-icon-plus avatar-uploader-icon"
                     ref="uploadFile"
-                  />
+                  ></i>
                 </el-upload>
                 <el-button size="mini" plain @click="$refs.uploadFile.click()"
                   >上传</el-button
@@ -49,6 +49,7 @@
                   v-model="form.classifyName"
                   placeholder="请选择"
                   @change="dropDownReply(0)"
+                  value=""
                 >
                   <el-option
                     v-for="(item, index) in productCategoryDropDownList"
