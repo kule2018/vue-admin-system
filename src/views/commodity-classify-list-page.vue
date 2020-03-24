@@ -4,7 +4,7 @@
     <div class="search-bar" @keydown.enter="search">
       <el-input
         v-model="searchForm.name"
-        placeholder="请输入昵称"
+        placeholder="请输入类别名"
         size="small"
       />
       <el-button
