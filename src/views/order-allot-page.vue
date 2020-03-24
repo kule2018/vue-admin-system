@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import _ from "lodash";
+
 export default {
   data() {
     return {
@@ -49,9 +51,13 @@ export default {
       this.form.supplierId = this.form.supplierName;
       this.form.orderId = this.parentData.order.orderId;
       this.$api.orderManageAPI.allotSupplierToOrder(this.form).then(res => {
-        this.$layer.msg(res.msg);
-        this.$parent.search();
-        this.$layer.close(this.layerid);
+        if (_.isEqual(res.code, "success")) {
+          this.$layer.msg(res.msg);
+          this.$parent.search();
+          this.$layer.close(this.layerid);
+        } else {
+          self.$vb.plugin.message.error("失败", res.msg);
+        }
       });
     },
     cancel() {

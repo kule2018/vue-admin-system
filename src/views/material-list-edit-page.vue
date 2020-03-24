@@ -43,15 +43,14 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="分类" prop="secondCategoryName">
+              <el-form-item label="分类" prop="categoryId">
                 <el-select
-                  v-model="form.classifyName"
+                  v-model="defaultClassifyId"
                   value=""
                   size="small"
                   @change="categoryChange"
                   placeholder="请选择大类"
                   ref="classify"
-                  @click.native.once="getSelect('classify')"
                 >
                   <el-option
                     v-for="(item, index) in firstCategorys"
@@ -61,7 +60,7 @@
                   ></el-option>
                 </el-select>
                 <el-select
-                  v-model="form.categoryName"
+                  v-model="defaultCategoryId"
                   value=""
                   size="small"
                   placeholder="请选择小类"
@@ -78,11 +77,10 @@
             <el-col :span="12">
               <el-form-item label="品牌">
                 <el-select
-                  v-model="form.brandName"
+                  v-model="defaultBrandId"
                   value=""
                   size="small"
                   placeholder="请选择品牌"
-                  @click.native.once="getSelect('brand')"
                 >
                   <el-option
                     v-for="(item, index) in brands"
@@ -96,13 +94,12 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="单位" prop="unitName">
+              <el-form-item label="单位" prop="unitId">
                 <el-select
-                  v-model="form.unitName"
+                  v-model="defaultUnitId"
                   value=""
                   size="small"
                   placeholder="请选择单位"
-                  @click.native.once="getSelect('unit')"
                 >
                   <el-option
                     v-for="(item, index) in units"
@@ -136,13 +133,12 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="状态" prop="statusName">
+              <el-form-item label="状态" prop="statusCode">
                 <el-select
-                  v-model="form.statusName"
+                  v-model="defaultStatusCode"
                   value=""
                   size="small"
                   placeholder="请选择商品状态"
-                  @click.native.once="getSelect('status')"
                 >
                   <el-option
                     v-for="(item, index) in statuses"
@@ -181,10 +177,10 @@
             <el-col :span="12">
               <el-form-item label="新产品">
                 <el-select
-                  v-model="form.newProductName"
+                  v-model="defaultNewProduct"
                   value=""
                   size="small"
-                  placeholder="是否新产品"
+                  placeholder="新产品"
                 >
                   <el-option label="是" :value="true"></el-option>
                   <el-option label="否" :value="false"></el-option>
@@ -194,10 +190,10 @@
             <el-col :span="12">
               <el-form-item label="特价">
                 <el-select
-                  v-model="form.specialName"
+                  v-model="defaultSpecial"
                   value=""
                   size="small"
-                  placeholder="是否特价"
+                  placeholder="特价"
                 >
                   <el-option label="是" :value="true"></el-option>
                   <el-option label="否" :value="false"></el-option>
@@ -213,6 +209,20 @@
               resize="none"
               placeholder="请输入商品描述"
             ></el-input>
+          </el-form-item>
+          <el-form-item label="轮播图">
+            <el-upload
+              action="http://172.16.0.110/common/upload"
+              list-type="picture-card"
+              :on-remove="picRemove"
+              :on-success="picUploadSuccess"
+              :file-list="form.pictureList"
+            >
+              <i class="el-icon-plus"></i>
+            </el-upload>
+            <el-dialog :visible.sync="dialogVisible">
+              <img width="100%" :src="dialogImageUrl" alt="" />
+            </el-dialog>
           </el-form-item>
         </el-form>
       </div>
@@ -235,6 +245,7 @@
 <script>
 import _ from "lodash";
 import base from "@/api/base";
+
 export default {
   name: "order-list-edit-page",
   data() {
@@ -242,40 +253,39 @@ export default {
       form: {
         name: "", // 商品名
         categoryId: "", // 分类id
-        classifyName: "", // 一级分类名
-        categoryName: "", // 二级分类名
         coverFigurePath: "", // 商品图地址
         unitId: "", // 单位id
-        unitName: "", // 单位名
         brandId: "", // 品牌id
-        brandName: "", // 品牌名
         inventoryNum: 0, // 库存数
         statusCode: "", // 数据状态
-        statusName: "", // 数据状态名
         special: false, // 是否特价
-        specialName: "否", // 是否特价选项名
         specs: "", // 规格
         describe: "", // 描述
         newProduct: false, // 是否新产品
-        newProductName: "否", // 是否新产品选项名
         price: "", // 价格
-        saleNum: 1 //起售数
+        saleNum: 1, //起售数
+        pictureList: []
       },
+      defaultStatusCode: "",
+      defaultClassifyId: "",
+      defaultCategoryId: "",
+      defaultUnitId: "",
+      defaultBrandId: "",
+      defaultSpecial: "",
+      defaultNewProduct: "",
       rules: {
         name: [{ required: true, message: "请输入商品名称", trigger: "blur" }],
         coverFigurePath: [{ required: true, message: "请上传商品图" }],
-        categoryName: [
+        categoryId: [
           { required: true, message: "请选择分类", trigger: "change" }
         ],
         price: [{ required: true, message: "请输入价格", trigger: "blur" }],
         saleNum: [{ required: true, message: "请输入起售数", trigger: "blur" }],
-        unitName: [
-          { required: true, message: "请选择单位", trigger: "change" }
-        ],
+        unitId: [{ required: true, message: "请选择单位", trigger: "change" }],
         inventoryNum: [
           { required: true, message: "请输入库存数", trigger: "blur" }
         ],
-        statusName: [
+        statusCode: [
           { required: true, message: "请选择商品状态", trigger: "change" }
         ]
       },
@@ -285,45 +295,65 @@ export default {
       units: [], // 单位集合
       brands: [], // 品牌集合
       submissionStatus: false, // 提交状态
-      echoStatus: 0
+      baseUrl: "",
+      dialogImageUrl: "",
+      dialogVisible: false
     };
   },
   computed: {
     coverFigurePathAndBase() {
-      return base.defaultBaseUrl + this.form.coverFigurePath;
+      return this.baseUrl + this.form.coverFigurePath;
+    }
+  },
+  watch: {
+    defaultCategoryId() {
+      this.form.categoryId = this.defaultCategoryId;
+    },
+    defaultUnitId() {
+      this.form.unitId = this.defaultUnitId;
+    },
+    defaultBrandId() {
+      this.form.brandId = this.defaultBrandId;
+    },
+    defaultStatusCode() {
+      this.form.statusCode = this.defaultStatusCode;
+    },
+    defaultSpecial() {
+      this.form.special = this.defaultSpecial;
+    },
+    defaultNewProduct() {
+      this.form.newProduct = this.defaultNewProduct;
     }
   },
   methods: {
     onSubmit() {
-      !_.isNaN(+this.form.categoryName) &&
-        (this.form.categoryId = this.form.categoryName);
-      !_.isNaN(+this.form.unitName) && (this.form.unitId = this.form.unitName);
-      !_.isNaN(+this.form.brandName) &&
-        (this.form.brandId = this.form.brandName);
-      !_.isNaN(+this.form.statusName) &&
-        (this.form.statusCode = this.form.statusName);
-      !_.isNaN(+this.form.specialName) &&
-        (this.form.special = this.form.specialName);
-      !_.isNaN(+this.form.newProductName) &&
-        (this.form.newProduct = this.form.newProductName);
       this.$refs.form.validate(valid => {
         if (valid) {
-          if (this.parentData.state === "add") {
+          console.log(this.form);
+          /*if (this.parentData.state === "add") {
             this.$api.materialManageAPI.addMaterialInfo(this.form).then(res => {
-              this.$layer.msg(res.msg);
-              this.$parent.search();
-              this.$layer.close(this.layerid);
+              if (_.isEqual(res.code, "success")) {
+                this.$layer.msg(res.msg);
+                this.$parent.search();
+                this.$layer.close(this.layerid);
+              } else {
+                self.$vb.plugin.message.error("失败", res.msg);
+              }
             });
           } else {
             this.form.materialId = this.parentData.materialId;
             this.$api.materialManageAPI
               .updateMaterialInfo(this.form)
               .then(res => {
-                this.$layer.msg(res.msg);
-                this.$parent.search();
-                this.$layer.close(this.layerid);
+                if (_.isEqual(res.code, "success")) {
+                  this.$layer.msg(res.msg);
+                  this.$parent.search();
+                  this.$layer.close(this.layerid);
+                } else {
+                  self.$vb.plugin.message.error("失败", res.msg);
+                }
               });
-          }
+          }*/
         } else {
           return false;
         }
@@ -349,11 +379,7 @@ export default {
       return isJPGorPNG && isLt2M;
     },
     categoryChange(val) {
-      if (this.echoStatus === 0) {
-        this.echoStatus++;
-        return false;
-      }
-      this.form.categoryName = "";
+      this.defaultCategoryId = "";
       // 获取二级分类集合
       this.getSecondCategorys(val);
     },
@@ -365,38 +391,39 @@ export default {
           this.secondCategorys = res.data;
         });
     },
-    getSelect(status) {
-      switch (status) {
-        case "status":
-          // 获取商品状态集合
-          this.$api.materialManageAPI.getMaterialStatus({}).then(res => {
-            this.statuses = res.data;
-          });
-          break;
-        case "unit":
-          // 获取商品单位集合
-          this.$api.materialManageAPI.getMaterialUnit({}).then(res => {
-            this.units = res.data;
-          });
-          break;
-        case "brand":
-          // 获取商品品牌集合
-          this.$api.materialManageAPI.getMaterialBrand({}).then(res => {
-            this.brands = res.data;
-          });
-          break;
-        case "classify":
-          // 获取一级分类集合
-          this.$api.materialManageAPI.getClassify({}).then(res => {
-            this.firstCategorys = res.data;
-          });
-          break;
-        default:
-          break;
+    getSelect() {
+      // 获取商品状态集合
+      this.$api.materialManageAPI.getMaterialStatus({}).then(res => {
+        this.statuses = res.data;
+      });
+      // 获取商品单位集合
+      this.$api.materialManageAPI.getMaterialUnit({}).then(res => {
+        this.units = res.data;
+      });
+      // 获取商品品牌集合
+      this.$api.materialManageAPI.getMaterialBrand({}).then(res => {
+        this.brands = res.data;
+      });
+      // 获取一级分类集合
+      this.$api.materialManageAPI.getClassify({}).then(res => {
+        this.firstCategorys = res.data;
+      });
+    },
+    picRemove(file, fileList) {
+      this.form.pictureList = [];
+      if (fileList && fileList.length > 0) {
+        fileList.forEach(item => {
+          this.form.pictureList.push(item.response.data);
+        });
       }
+    },
+    picUploadSuccess(res) {
+      this.form.pictureList.push(res.data);
     }
   },
   mounted() {
+    this.baseUrl = base.defaultBaseUrl;
+    this.getSelect();
     if (this.parentData.state === "update") {
       this.$api.materialManageAPI
         .getMaterialInfo({
@@ -404,9 +431,17 @@ export default {
         })
         .then(res => {
           if (_.isEqual(res.code, "success")) {
+            Array.prototype.forEach.call(res.data.pictureList, item => {
+              item.path = this.baseUrl + item.path;
+            });
             Object.assign(this.form, res.data);
-            this.form.newProductName = this.form.newProduct ? "是" : "否";
-            this.form.specialName = this.form.special ? "是" : "否";
+            this.defaultClassifyId = res.data.classifyId;
+            this.defaultCategoryId = res.data.categoryId;
+            this.defaultUnitId = res.data.unitId;
+            this.defaultBrandId = res.data.brandId;
+            this.defaultStatusCode = res.data.statusCode;
+            this.defaultSpecial = res.data.special;
+            this.defaultNewProduct = res.data.newProduct;
             this.getSecondCategorys(this.form.classifyId);
           } else {
             this.$vb.plugin.message.error(`获取订单信息失败:${res.code}`);

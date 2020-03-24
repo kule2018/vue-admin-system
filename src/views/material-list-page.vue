@@ -19,7 +19,7 @@
       ></el-input>
       <el-select
         v-model="searchForm.special"
-        placeholder="是否特价"
+        placeholder="特价"
         value=""
         size="small"
         clearable
@@ -29,7 +29,7 @@
       </el-select>
       <el-select
         v-model="searchForm.newProduct"
-        placeholder="是否新产品"
+        placeholder="新产品"
         value=""
         size="small"
         clearable
@@ -107,14 +107,20 @@
       <el-table-column prop="price" label="价格"></el-table-column>
       <el-table-column prop="unitName" label="单位名称"></el-table-column>
       <el-table-column prop="inventoryNum" label="库存数"></el-table-column>
-      <el-table-column label="是否新产品">
+      <el-table-column label="新产品">
         <template slot-scope="scope">
           <template v-if="scope.row.newProduct">是</template>
           <template v-else>否</template>
         </template>
       </el-table-column>
+      <el-table-column label="特价">
+        <template slot-scope="scope">
+          <template v-if="scope.row.special">是</template>
+          <template v-else>否</template>
+        </template>
+      </el-table-column>
       <el-table-column prop="statusName" label="状态"></el-table-column>
-      <el-table-column label="操作" width="300">
+      <el-table-column label="操作" width="150">
         <template slot-scope="scope">
           <el-button
             @click.stop="handleClick('update', scope.row)"
