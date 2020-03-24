@@ -34,6 +34,7 @@
         <el-table-column prop="nickName" label="昵称" />
         <el-table-column prop="gender" label="性别" />
         <el-table-column prop="province" label="省" />
+        <el-table-column prop="statusName" label="状态" />
         <el-table-column fixed="right" width="350" label="操作">
           <template slot-scope="scope">
             <el-button
@@ -62,7 +63,7 @@
               @click.stop="handleClick(4, scope.row)"
               type="primary"
               size="mini"
-              >移出黑名单</el-button
+              >解除拉黑</el-button
             >
           </template>
         </el-table-column>
