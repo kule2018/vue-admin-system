@@ -215,7 +215,11 @@
               action="http://172.16.0.110/common/upload"
               list-type="picture-card"
               :on-remove="picRemove"
-              :on-success="picUploadSuccess"
+              :on-success="
+                (response, file, fileList) => {
+                  return onSuccess(response, file, fileList);
+                }
+              "
               :file-list="form.pictureList"
             >
               <i class="el-icon-plus"></i>
@@ -417,8 +421,12 @@ export default {
         });
       }
     },
-    picUploadSuccess(res) {
-      this.form.pictureList.push(res.data);
+    // 照片墙上传成功的回调
+    onSuccess(response, file, fileList) {
+      // 照片墙文件列表
+      console.log(fileList);
+      // 用于el的照片墙图片显示，后台要的数据格式需要重新弄个数组
+      this.form.pictureList.push({ path: file.name, url: file.url });
     }
   },
   mounted() {
@@ -432,7 +440,11 @@ export default {
         .then(res => {
           if (_.isEqual(res.code, "success")) {
             Array.prototype.forEach.call(res.data.pictureList, item => {
-              item.path = this.baseUrl + item.path;
+              // 用于渲染照片墙,必要的4个参数
+              item.name = item.path;
+              item.url = this.baseUrl + "/" + item.path;
+              item.uid = this.uid;
+              item.status = this.status;
             });
             Object.assign(this.form, res.data);
             this.defaultClassifyId = res.data.classifyId;
