@@ -142,13 +142,11 @@ export default {
                 })
                 .then(res => {
                   if (_.isEqual(res.code, "success")) {
-                    this.$vb.plugin.message.success(res.msg);
-                    // 刷新父页面
+                    this.$layer.msg(res.msg);
                     this.$parent.search();
-                    // 关闭弹层
                     this.$layer.close(this.layerid);
                   } else {
-                    this.$vb.plugin.message.error(res.msg);
+                    self.$vb.plugin.message.error("失败", res.msg);
                   }
                 });
             })
@@ -169,13 +167,11 @@ export default {
                 })
                 .then(res => {
                   if (_.isEqual(res.code, "success")) {
-                    this.$vb.plugin.message.success(res.msg);
-                    // 刷新父页面
+                    this.$layer.msg(res.msg);
                     this.$parent.search();
-                    // 关闭弹层
                     this.$layer.close(this.layerid);
                   } else {
-                    this.$vb.plugin.message.error(res.msg);
+                    self.$vb.plugin.message.error("失败", res.msg);
                   }
                 });
             })

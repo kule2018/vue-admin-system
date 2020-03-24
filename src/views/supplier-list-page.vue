@@ -49,7 +49,7 @@
           <el-table-column prop="companyAddress" label="公司地址" />
           <el-table-column prop="mobilePhone" label="手机" />
           <el-table-column prop="supplierStatusName" label="状态" />
-          <el-table-column fixed="right" width="360" label="操作">
+          <el-table-column fixed="right" width="210" label="操作">
             <template slot-scope="scope">
               <el-button
                 v-if="+scope.row.statusCode === 61"

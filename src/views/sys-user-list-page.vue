@@ -37,7 +37,7 @@
       <el-table-column prop="nickName" label="昵称"></el-table-column>
       <el-table-column prop="loginName" label="用户名"></el-table-column>
       <el-table-column prop="roleName" label="用户类型"></el-table-column>
-      <el-table-column label="操作" width="350">
+      <el-table-column label="操作" width="150">
         <template slot-scope="scope">
           <el-button
             @click.stop="handleClick('update', scope.row.userid)"
@@ -56,7 +56,7 @@
       </el-table-column>
       <el-table-column prop="nickName" label="昵称"></el-table-column>
       <el-table-column prop="name" label="用户名"></el-table-column>
-      <el-table-column label="操作" width="350">
+      <el-table-column label="操作" width="150">
         <template slot-scope="scope">
           <el-button
             v-if="tabActiveName === 'freeze'"

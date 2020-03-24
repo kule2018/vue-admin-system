@@ -49,14 +49,14 @@
       <div>{{ detailsInfo.inventoryNum }}</div>
     </div>
     <div>
-      <div>是否新产品</div>
+      <div>新产品</div>
       <div>
         <template v-if="detailsInfo.newProduct">是</template>
         <template v-else>否</template>
       </div>
     </div>
     <div>
-      <div>是否特价</div>
+      <div>特价</div>
       <div>
         <template v-if="detailsInfo.special">是</template>
         <template v-else>否</template>
