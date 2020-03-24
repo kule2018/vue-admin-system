@@ -44,9 +44,9 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="分类" prop="classifyName">
+              <el-form-item label="分类" prop="classifyId">
                 <el-select
-                  v-model="form.classifyName"
+                  v-model="form.classifyId"
                   placeholder="请选择"
                   @change="dropDownReply(0)"
                   value=""
@@ -100,8 +100,6 @@ export default {
       form: {
         // 商品分类id
         classifyId: "",
-        // 商品分类名
-        classifyName: "",
         // 类别id
         categoryId: "",
         // 类别名
@@ -111,18 +109,24 @@ export default {
         // 类别图
         icon: ""
       },
+      defaultClassifyId: "",
       // 商品分类下拉列表
       productCategoryDropDownList: [],
       // 类别下拉列表
       categoryDropDownList: [],
       rules: {
-        classifyName: [{ required: true, message: "请选择分类" }],
+        classifyId: [{ required: true, message: "请选择分类" }],
         name: [{ required: true, message: "请输入类别名", trigger: "blur" }],
         icon: [{ required: true, message: "请上传类别图" }]
       },
       // 提交状态
       submissionStatus: false
     };
+  },
+  watch: {
+    classifyId() {
+      this.form.classifyId = this.defaultClassifyId;
+    }
   },
   methods: {
     onSubmit() {
@@ -174,23 +178,6 @@ export default {
         }
       });
     },
-    // 下拉响应
-    dropDownReply(status) {
-      switch (status) {
-        case 0:
-          this.productCategoryDropDownList.find(item => {
-            if (lodash.isEqual(this.form.classifyName, item.classifyId)) {
-              this.form.classifyName = item.name;
-              this.form.classifyId = item.classifyId;
-            }
-          });
-          break;
-        case 1:
-          break;
-        default:
-          break;
-      }
-    },
     cancel() {
       this.$layer.close(this.layerid);
     },
@@ -227,7 +214,7 @@ export default {
             // 类别默认值
             this.form.name = this.parentData.name;
             // 类别id
-            this.form.categoryId = this.parentData.categoryId;
+            this.defaultClassifyId = this.parentData.categoryId;
             // 排序号
             this.form.sortNumber = this.parentData.sortNumber;
             // 类别名图
