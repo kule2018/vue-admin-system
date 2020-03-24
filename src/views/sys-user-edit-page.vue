@@ -10,7 +10,11 @@
                 class="avatar-box"
                 @click="$refs.uploadFile.click()"
               >
-                <el-avatar :src="form.iconPath" class="avatar"></el-avatar>
+                <el-avatar
+                  v-if="form.iconPath"
+                  :src="baseUrl + form.iconPath"
+                  class="avatar"
+                ></el-avatar>
               </span>
               <input
                 type="file"
@@ -61,7 +65,7 @@
           </el-form-item>
           <el-form-item label="角色类型" prop="roleName">
             <el-select
-              v-model="form.roleName"
+              v-model="defaultRole"
               placeholder="请选择角色类型"
               value=""
             >
@@ -100,8 +104,7 @@ export default {
         nickName: "",
         loginName: "",
         loginPwd: "",
-        roleTypeid: "",
-        roleName: ""
+        roleTypeId: ""
       },
       rules: {
         iconPath: [{ required: true, message: "请上传头像" }],
@@ -124,6 +127,9 @@ export default {
   watch: {
     showPwd() {
       this.showPwdType = this.showPwd ? "text" : "password";
+    },
+    defaultRole() {
+      this.form.roleTypeId = this.defaultRole;
     }
   },
   computed: {
@@ -134,26 +140,26 @@ export default {
   methods: {
     onSubmit() {
       const self = this;
-      if (!_.isNaN(+this.form.roleName)) {
-        this.form.roleTypeId = this.form.roleName;
-      }
       this.$refs.form.validate(valid => {
         if (valid) {
           if (this.parentData.state === "add") {
             this.$api.sysUserInfoAPI.addUserInfo(this.form).then(res => {
-              if (res.code === "success") {
-                self.$vb.plugin.message.success("成功", "增加成功");
+              if (_.isEqual(res.code, "success")) {
+                this.$layer.msg(res.msg);
                 this.$parent.search();
                 this.$layer.close(this.layerid);
+              } else {
+                self.$vb.plugin.message.error("失败", res.msg);
               }
             });
           } else {
             this.$api.sysUserInfoAPI.updateUserInfo(this.form).then(res => {
-              if (res.code === "success") {
-                self.$vb.plugin.message.success("成功", "修改成功");
-                this.updateLocal(this.form);
+              if (_.isEqual(res.code, "success")) {
+                this.$layer.msg(res.msg);
                 this.$parent.search();
                 this.$layer.close(this.layerid);
+              } else {
+                self.$vb.plugin.message.error("失败", res.msg);
               }
             });
           }
@@ -179,12 +185,13 @@ export default {
       formData.append("file", file, file.name);
       this.$nextTick(() => {
         this.$api.fileManageAPI.singleFileUpload(formData).then(res => {
-          self.form.iconPath = baseUrl.defaultBaseUrl + res.data.path;
+          self.form.iconPath = res.data.path;
           self.form = Object.assign({}, self.form);
         });
       });
     },
     updateLocal(obj) {
+      this.baseUrl = baseUrl.defaultBaseUrl;
       let localData = JSON.parse(localStorage.getItem("userInfo"));
       if (obj.userid === localData.userid) {
         localStorage.setItem(
@@ -230,7 +237,7 @@ export default {
       this.$api.sysUserInfoAPI
         .getUserInfo({ userid: this.parentData.userid[0] })
         .then(res => {
-          res.data.iconPath = baseUrl.defaultBaseUrl + res.data.iconPath;
+          this.defaultRole = res.data.roleTypeId;
           self.form = Object.assign({}, res.data);
         });
     }

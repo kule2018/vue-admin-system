@@ -35,7 +35,7 @@
         <el-table-column prop="gender" label="性别" />
         <el-table-column prop="province" label="省" />
         <el-table-column prop="statusName" label="状态" />
-        <el-table-column fixed="right" width="350" label="操作">
+        <el-table-column fixed="right" width="150" label="操作">
           <template slot-scope="scope">
             <el-button
               v-if="+scope.row.statusCode === 61"

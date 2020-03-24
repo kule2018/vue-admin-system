@@ -54,9 +54,9 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="证件类型" prop="certificateName">
+              <el-form-item label="证件类型" prop="certificateType">
                 <el-select
-                  v-model="form.certificateName"
+                  v-model="defaultCertificateType"
                   placeholder="请选择"
                   value=""
                 >
@@ -184,7 +184,7 @@
 </template>
 
 <script>
-import lodash from "lodash";
+import _ from "lodash";
 import base from "@/api/base";
 export default {
   name: "supplier-list-edit-page",
@@ -203,12 +203,12 @@ export default {
         sanitaryPermitElecChart: "", // 卫生许可证电子图
         companyAddress: "", // 公司地址
         legalPerson: "", // 法人
-        certificateType: "0", // 证件类型
-        certificateName: "", // 证件类型名称
+        certificateType: "", // 证件类型
         certificateNumber: "", // 证件号
         phone: "", // 固定电话
         mobilePhone: "" // 手机
       },
+      defaultCertificateType: "",
       formRules: {
         name: [{ required: true, message: "请填入名称", trigger: "blur" }],
         establTime: [
@@ -241,7 +241,7 @@ export default {
         legalPerson: [
           { required: true, message: "请填入法人", trigger: "blur" }
         ],
-        certificateName: [
+        certificateType: [
           { required: true, message: "请选择证件类型", trigger: "change" }
         ],
         certificateNumber: [
@@ -263,7 +263,7 @@ export default {
     this.$api.supplierManageAPI.getCertificateType({}).then(res => {
       this.options = res.data;
     });
-    if (lodash.isEqual(this.parentData.state, "update")) {
+    if (_.isEqual(this.parentData.state, "update")) {
       this.$api.supplierManageAPI
         .getSupplierInfo({ supplierId: this.parentData.supplierId })
         .then(res => {
@@ -272,22 +272,29 @@ export default {
             base.defaultBaseUrl + res.data.businessLicenseElecChart;
           this.healthPermit =
             base.defaultBaseUrl + res.data.sanitaryPermitElecChart;
+          this.defaultCertificateType = res.data.certificateType;
         });
+    }
+  },
+  watch: {
+    defaultCertificateType() {
+      this.form.certificateType = this.defaultCertificateType;
     }
   },
   methods: {
     onSubmit() {
-      !lodash.isNaN(+this.form.certificateName) &&
-        (this.form.certificateType = this.form.certificateName);
       this.$refs.form.validate(valid => {
         if (valid) {
           this.submissionStatus = true;
-          if (lodash.isEqual(this.parentData.state, "add")) {
+          if (_.isEqual(this.parentData.state, "add")) {
             this.$api.supplierManageAPI.addSupplierInfo(this.form).then(res => {
-              this.$layer.msg(res.msg);
-              // 刷新父页面数据
-              this.$parent.search();
-              this.$layer.close(this.layerid);
+              if (_.isEqual(res.code, "success")) {
+                this.$layer.msg(res.msg);
+                this.$parent.search();
+                this.$layer.close(this.layerid);
+              } else {
+                self.$vb.plugin.message.error("失败", res.msg);
+              }
             });
           } else {
             // 更新
@@ -295,10 +302,13 @@ export default {
             this.$api.supplierManageAPI
               .updateSupplierInfo(this.form)
               .then(res => {
-                this.$layer.msg(res.msg);
-                // 刷新父页面数据
-                this.$parent.search();
-                this.$layer.close(this.layerid);
+                if (_.isEqual(res.code, "success")) {
+                  this.$layer.msg(res.msg);
+                  this.$parent.search();
+                  this.$layer.close(this.layerid);
+                } else {
+                  self.$vb.plugin.message.error("失败", res.msg);
+                }
               });
           }
         }
