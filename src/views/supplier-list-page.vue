@@ -48,41 +48,43 @@
           <el-table-column prop="scopeBusine" label="经营范围" />
           <el-table-column prop="companyAddress" label="公司地址" />
           <el-table-column prop="mobilePhone" label="手机" />
+          <el-table-column prop="supplierStatusName" label="状态" />
           <el-table-column fixed="right" width="360" label="操作">
             <template slot-scope="scope">
               <el-button
+                v-if="+scope.row.statusCode === 61"
                 @click.stop="handleClick(4, scope.row)"
                 type="primary"
                 size="mini"
                 >编辑</el-button
               >
               <el-button
-                v-if="scope.row.statusCode === 71"
-                @click.stop="handleClick(5, scope.row)"
-                type="primary"
-                size="mini"
-                >解除冻结</el-button
-              >
-              <el-button
-                v-if="scope.row.statusCode !== 71"
+                v-if="+scope.row.statusCode === 61"
                 @click.stop="handleClick(1, scope.row)"
                 type="primary"
                 size="mini"
                 >冻结</el-button
               >
               <el-button
-                v-if="scope.row.statusCode === 81"
-                @click.stop="handleClick(6, scope.row)"
-                type="primary"
-                size="mini"
-                >解除拉黑</el-button
-              >
-              <el-button
-                v-if="scope.row.statusCode !== 81"
+                v-if="+scope.row.statusCode === 61"
                 @click.stop="handleClick(2, scope.row)"
                 type="primary"
                 size="mini"
                 >拉黑</el-button
+              >
+              <el-button
+                v-if="+scope.row.statusCode === 71"
+                @click.stop="handleClick(5, scope.row)"
+                type="primary"
+                size="mini"
+                >解除冻结</el-button
+              >
+              <el-button
+                v-if="+scope.row.statusCode === 81"
+                @click.stop="handleClick(6, scope.row)"
+                type="primary"
+                size="mini"
+                >解除拉黑</el-button
               >
             </template>
           </el-table-column>
@@ -155,7 +157,7 @@ export default {
           this.$vb.plugin.openLayer(
             supplierListDetails,
             this,
-            { supplierId: val[0].supplierId, colNum: "one-col" },
+            { supplierId: val[0].supplierId, colNum: "two-col" },
             "查看供应商信息",
             "800",
             "80%",

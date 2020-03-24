@@ -44,7 +44,7 @@ const errorHandle = (status, other) => {
       store.commit("reduceErrorTimes");
 
       vueObj.$api.systemManageAPI
-        .getMenuList({ tieck: store.state.userInfo.tieck })
+        .getMenuList({ headers: { tieck: store.state.userInfo.tieck } })
         .then(() => {});
       break;
     // 403 token过期
@@ -70,7 +70,6 @@ _axios.interceptors.request.use(
       token = store.state.userInfo.token;
     }
     token && (config.headers.token = token);
-    config.headers.tieck = store.state.userInfo.tieck;
     return config;
   },
   function(error) {

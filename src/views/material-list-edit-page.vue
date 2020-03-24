@@ -184,7 +184,7 @@
                   v-model="form.newProductName"
                   value=""
                   size="small"
-                  placeholder="新产品"
+                  placeholder="是否新产品"
                 >
                   <el-option label="是" :value="true"></el-option>
                   <el-option label="否" :value="false"></el-option>
@@ -192,7 +192,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="是否特价">
+              <el-form-item label="特价">
                 <el-select
                   v-model="form.specialName"
                   value=""
@@ -405,6 +405,8 @@ export default {
         .then(res => {
           if (_.isEqual(res.code, "success")) {
             Object.assign(this.form, res.data);
+            this.form.newProductName = this.form.newProduct ? "是" : "否";
+            this.form.specialName = this.form.special ? "是" : "否";
             this.getSecondCategorys(this.form.classifyId);
           } else {
             this.$vb.plugin.message.error(`获取订单信息失败:${res.code}`);

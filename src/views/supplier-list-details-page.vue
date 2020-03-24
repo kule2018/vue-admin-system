@@ -1,8 +1,8 @@
 <template>
   <div class="detail-box" :class="parentData.colNum">
     <div>
-      <div>供应商状态名称</div>
-      <div>{{ detailsInfo.supplierStatusName }}</div>
+      <div>供应商名称</div>
+      <div>{{ detailsInfo.name }}</div>
     </div>
     <div>
       <div>建立时间</div>
@@ -41,12 +41,20 @@
       <div>{{ detailsInfo.scopeBusine }}</div>
     </div>
     <div>
+      <div>供应商状态</div>
+      <div>{{ detailsInfo.supplierStatusName }}</div>
+    </div>
+    <div class="fill">
       <div>公司地址</div>
       <div>{{ detailsInfo.companyAddress }}</div>
     </div>
     <div>
       <div>营业执照号</div>
       <div>{{ detailsInfo.businessLicenseNumber }}</div>
+    </div>
+    <div>
+      <div>卫生许可证号</div>
+      <div>{{ detailsInfo.sanitaryPermitNumber }}</div>
     </div>
     <div>
       <div>营业执照电子图</div>
@@ -58,14 +66,6 @@
           :preview-src-list="[detailsInfo.businessLicenseElecChart]"
         >
         </el-image>
-      </div>
-    </div>
-    <div>
-      <div>
-        卫生许可证号
-      </div>
-      <div>
-        {{ detailsInfo.sanitaryPermitNumber }}
       </div>
     </div>
     <div>
@@ -91,8 +91,7 @@ export default {
   name: "supplier-list-details-page",
   data() {
     return {
-      detailsInfo: {},
-      baseUrl: ""
+      detailsInfo: {}
     };
   },
   mounted() {
@@ -102,10 +101,17 @@ export default {
       })
       .then(res => {
         if (lodash.isEqual(res.code, "success")) {
+          // 给相对路径加上baseUrl
           res.data.businessLicenseElecChart =
             baseUrl.defaultBaseUrl + res.data.businessLicenseElecChart;
           res.data.sanitaryPermitElecChart =
             baseUrl.defaultBaseUrl + res.data.sanitaryPermitElecChart;
+          // 格式化时间
+          res.data.establTime = this.$vb.format.formatDate(
+            res.data.establTime,
+            "yyyy-MM-dd"
+          );
+          // 格式化金额
           res.data.registerCapital = this.$vb.format.formatMoney(
             res.data.registerCapital,
             2,
