@@ -421,8 +421,7 @@ export default {
       });
     },
     // eslint-disable-next-line no-unused-vars
-    handleRemove(file, fileList) {
-      console.log(file);
+    handleRemove(file) {
       let Pics = this.form.pictureList;
       Pics.forEach((item, index) => {
         if (file.uid === item.uid) {
@@ -435,6 +434,7 @@ export default {
       // 照片墙文件列表
       console.log(fileList);
       // 用于el的照片墙图片显示，后台要的数据格式需要重新弄个数组
+      file.path = response.data.path;
       this.form.pictureList.push(file);
     }
   },
@@ -448,10 +448,10 @@ export default {
         })
         .then(res => {
           if (_.isEqual(res.code, "success")) {
-            Array.prototype.forEach.call(res.data.pictureList, item => {
+            res.data.pictureList.forEach(item => {
               // 用于渲染照片墙,必要的4个参数
               item.name = item.path;
-              item.url = this.baseUrl + "/" + item.path;
+              item.url = this.baseUrl + item.path;
             });
             Object.assign(this.form, res.data);
             this.defaultClassifyId = res.data.classifyId;
