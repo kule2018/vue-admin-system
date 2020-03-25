@@ -25,6 +25,15 @@ const commodityCategoryMangeAPI = {
       `${base.defaultBaseUrl}/common/materialCategory/update`,
       params
     );
+  },
+  // 商品类别详情
+  getCommodityCategoryInfo(params) {
+    return services._axios.get(
+      `${base.defaultBaseUrl}/common/materialCategory/info`,
+      {
+        params
+      }
+    );
   }
 };
 

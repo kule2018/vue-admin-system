@@ -25,7 +25,7 @@
       v-loading.fullscreen="isLoading"
     >
       <el-table-column prop="brandName" label="品牌名" />
-      <el-table-column fixed="right" width="360" label="操作">
+      <el-table-column fixed="right" width="150" label="操作">
         <template slot-scope="scope">
           <el-button
             @click.stop="handleClick(1, scope.row)"
@@ -52,6 +52,7 @@
 <script>
 import lodash from "lodash";
 import commodityBrandEditPage from "@/views/commodity-brand-edit-page";
+import commodityBrandDetailsPage from "@/views/commodity-brand-details-page";
 
 export default {
   name: "commodity-classify-list-page",
@@ -108,6 +109,17 @@ export default {
             "变动品牌",
             900,
             400
+          );
+          break;
+        case 2:
+          // 详情
+          this.$vb.plugin.openLayer(
+            commodityBrandDetailsPage,
+            this,
+            { brandId: row.brandId, colNum: "one-col" },
+            "品牌详情",
+            800,
+            "80%"
           );
           break;
       }
