@@ -1,0 +1,7 @@
+.detail-box {
+  & > div {
+    & > div:first-of-type {
+      width: 90px;
+    }
+  }
+}

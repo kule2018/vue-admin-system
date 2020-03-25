@@ -181,7 +181,8 @@ export default {
                 .freezeUserInfo({ personId: val[0].personId })
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
-                    this.$vb.plugin.message.success(res.msg);
+                    this.$layer.msg(res.msg);
+                    this.search();
                   } else {
                     this.$vb.plugin.message.error(res.msg);
                   }
@@ -201,7 +202,8 @@ export default {
                 .defriendUserInfo({ personId: val[0].personId })
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
-                    this.$vb.plugin.message.success(res.msg);
+                    this.$layer.msg(res.msg);
+                    this.search();
                   } else {
                     this.$vb.plugin.message.error(res.msg);
                   }
@@ -221,7 +223,7 @@ export default {
                 .unfreezeUser({ personId: val[0].personId })
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
-                    this.$vb.plugin.message.success(res.msg);
+                    this.$layer.msg(res.msg);
                     this.search();
                   } else {
                     this.$vb.plugin.message.error(res.msg);
@@ -242,7 +244,7 @@ export default {
                 .unblockUser({ personId: val[0].personId })
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
-                    this.$vb.plugin.message.success(res.msg);
+                    this.$layer.msg(res.msg);
                     this.search();
                   } else {
                     this.$vb.plugin.message.error(res.msg);

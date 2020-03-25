@@ -17,15 +17,14 @@
         >增加</el-button
       >
     </div>
-    <!--<el-tabs v-model="tabActiveName" @tab-click="handleTabClick">
+    <el-tabs v-model="tabActiveName" @tab-click="handleTabClick">
       <el-tab-pane label="全部" name="all"></el-tab-pane>
       <el-tab-pane label="冻结" name="freeze"></el-tab-pane>
       <el-tab-pane label="黑名单" name="block"></el-tab-pane>
-    </el-tabs>-->
+    </el-tabs>
     <el-table
       :data="tableData"
       style="width: 100%"
-      v-if="tabActiveName === 'all'"
       @row-click="openDetails"
       v-loading.fullscreen="isLoading"
     >
@@ -37,40 +36,43 @@
       <el-table-column prop="nickName" label="昵称"></el-table-column>
       <el-table-column prop="loginName" label="用户名"></el-table-column>
       <el-table-column prop="roleName" label="用户类型"></el-table-column>
-      <el-table-column label="操作" width="150">
+      <el-table-column prop="statusName" label="状态"></el-table-column>
+      <el-table-column label="操作" width="210">
         <template slot-scope="scope">
           <el-button
+            v-if="+scope.row.statusCode === 61"
             @click.stop="handleClick('update', scope.row.userid)"
             type="primary"
             size="mini"
             >编辑</el-button
           >
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-table :data="tableData" style="width: 100%" v-else>
-      <el-table-column label="头像" width="120" align="center">
-        <template slot-scope="scope">
-          <el-avatar :src="scope.row.avatarUrl" />
-        </template>
-      </el-table-column>
-      <el-table-column prop="nickName" label="昵称"></el-table-column>
-      <el-table-column prop="name" label="用户名"></el-table-column>
-      <el-table-column label="操作" width="150">
-        <template slot-scope="scope">
           <el-button
-            v-if="tabActiveName === 'freeze'"
-            @click.stop="handleClick('unfreeze', scope.row.personId)"
+            v-if="+scope.row.statusCode === 61"
+            @click.stop="handleClick('freeze', scope.row.userid)"
             type="primary"
             size="mini"
-            >解冻</el-button
+            >冻结</el-button
           >
           <el-button
-            v-else-if="tabActiveName === 'block'"
-            @click.stop="handleClick('unblock', scope.row.personId)"
-            type="warning"
+            v-if="+scope.row.statusCode === 61"
+            @click.stop="handleClick('block', scope.row.userid)"
+            type="primary"
             size="mini"
-            >移出黑名单</el-button
+            >拉黑</el-button
+          >
+          <el-button
+            v-if="+scope.row.statusCode === 71"
+            @click.stop="handleClick('unfreeze', scope.row.userid)"
+            type="primary"
+            size="mini"
+            >解除冻结</el-button
+          >
+          <el-button
+            v-if="+scope.row.statusCode === 81"
+            @click.stop="handleClick('unblock', scope.row.userid)"
+            type="primary"
+            size="mini"
+            >解除拉黑</el-button
           >
         </template>
       </el-table-column>
@@ -112,52 +114,53 @@ export default {
   },
   methods: {
     search() {
-      const self = this;
+      console.log(this.tableData);
       this.isLoading = true;
-      if (this.tabActiveName === "all") {
-        this.$api.sysUserInfoAPI
-          .getUserInfoList({ name: this.searchParam })
-          .then(res => {
-            if (lodash.isEqual(res.code, "success")) {
-              self.tableData = res.data;
-              self.total = res.total;
-              this.isLoading = false;
-            } else {
-              self.$vb.plugin.message.error(res.msg);
-            }
-          });
-      }
-      if (this.tabActiveName === "freeze") {
-        this.$api.sysUserInfoAPI
-          .queryFreezeUserInfo({
-            name: this.searchParam,
-            nickName: this.searchParam
-          })
-          .then(res => {
-            if (lodash.isEqual(res.code, "success")) {
-              self.tableData = res.data;
-              self.total = res.total;
-              this.isLoading = false;
-            } else {
-              self.$vb.plugin.message.error(res.msg);
-            }
-          });
-      }
-      if (this.tabActiveName === "block") {
-        this.$api.sysUserInfoAPI
-          .queryDefriendUserInfo({
-            name: this.searchParam,
-            nickName: this.searchParam
-          })
-          .then(res => {
-            if (lodash.isEqual(res.code, "success")) {
-              self.tableData = res.data;
-              self.total = res.total;
-              this.isLoading = false;
-            } else {
-              self.$vb.plugin.message.error(res.msg);
-            }
-          });
+      switch (this.tabActiveName) {
+        case "all":
+          this.$api.sysUserInfoAPI
+            .getUserInfoList({ name: this.searchParam })
+            .then(res => {
+              if (lodash.isEqual(res.code, "success")) {
+                this.tableData = res.data;
+                this.total = res.total;
+                this.isLoading = false;
+              } else {
+                this.isLoading = false;
+                this.$vb.plugin.message.error(res.msg);
+              }
+            });
+          break;
+        case "freeze":
+          this.$api.sysUserInfoAPI
+            .queryFreezeUserInfo({ name: this.searchParam })
+            .then(res => {
+              if (lodash.isEqual(res.code, "success")) {
+                this.tableData = res.data;
+                this.total = res.total;
+                this.isLoading = false;
+              } else {
+                this.isLoading = false;
+                this.$vb.plugin.message.error(res.msg);
+              }
+            });
+          break;
+        case "block":
+          this.$api.sysUserInfoAPI
+            .queryDefriendUserInfo({ name: this.searchParam })
+            .then(res => {
+              if (lodash.isEqual(res.code, "success")) {
+                this.tableData = res.data;
+                this.total = res.total;
+                this.isLoading = false;
+              } else {
+                this.isLoading = false;
+                this.$vb.plugin.message.error(res.msg);
+              }
+            });
+          break;
+        default:
+          break;
       }
     },
     handleClick(state, ...userid) {
@@ -167,7 +170,7 @@ export default {
           this.$vb.plugin.openLayer(
             sysUserDetail,
             this,
-            { colNum: "one-col", userid: userid },
+            { colNum: "one-col", userid: userid[0] },
             "系统用户详情",
             800,
             "80%"
@@ -177,7 +180,7 @@ export default {
           this.$vb.plugin.openLayer(
             sysUserEdit,
             this,
-            { state: state, userid: userid },
+            { state: state, userid: userid[0] },
             "新增系统用户",
             620,
             "80%"
@@ -187,7 +190,7 @@ export default {
           this.$vb.plugin.openLayer(
             sysUserEdit,
             this,
-            { state: state, userid: userid },
+            { state: state, userid: userid[0] },
             "修改系统用户",
             620,
             "80%"
@@ -201,10 +204,11 @@ export default {
           })
             .then(() => {
               self.$api.sysUserInfoAPI
-                .relieveFreezeUserInfo({ personId: userid })
+                .relieveFreezeUserInfo({ userid: userid[0] })
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
-                    this.$vb.plugin.message.success(res.msg);
+                    this.$layer.msg(res.msg);
+                    this.search();
                   } else {
                     this.$vb.plugin.message.error(res.msg);
                   }
@@ -220,10 +224,51 @@ export default {
           })
             .then(() => {
               self.$api.sysUserInfoAPI
-                .relieveDefriendUserInfo({ personId: userid })
+                .relieveDeFriendUserInfo({ userid: userid[0] })
                 .then(res => {
                   if (lodash.isEqual(res.code, "success")) {
-                    this.$vb.plugin.message.success(res.msg);
+                    this.$layer.msg(res.msg);
+                    this.search();
+                  } else {
+                    this.$vb.plugin.message.error(res.msg);
+                  }
+                });
+            })
+            .catch(() => {});
+          break;
+        case "freeze":
+          this.$confirm("此操作将冻结该用户, 是否继续?", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "primary"
+          })
+            .then(() => {
+              self.$api.sysUserInfoAPI
+                .freezeUserInfo({ userid: userid[0] })
+                .then(res => {
+                  if (lodash.isEqual(res.code, "success")) {
+                    this.$layer.msg(res.msg);
+                    this.search();
+                  } else {
+                    this.$vb.plugin.message.error(res.msg);
+                  }
+                });
+            })
+            .catch(() => {});
+          break;
+        case "block":
+          this.$confirm("此操作将拉黑该用户, 是否继续?", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "primary"
+          })
+            .then(() => {
+              self.$api.sysUserInfoAPI
+                .deFriendUserInfo({ userid: userid[0] })
+                .then(res => {
+                  if (lodash.isEqual(res.code, "success")) {
+                    this.$layer.msg(res.msg);
+                    this.search();
                   } else {
                     this.$vb.plugin.message.error(res.msg);
                   }

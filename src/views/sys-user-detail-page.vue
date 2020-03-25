@@ -54,7 +54,7 @@ export default {
   mounted() {
     const self = this;
     this.$api.sysUserInfoAPI
-      .getUserInfo({ userid: this.parentData.userid[0] })
+      .getUserInfo({ userid: this.parentData.userid })
       .then(res => {
         res.data.iconPath = baseUrl.defaultBaseUrl + res.data.iconPath;
         self.sysUserInfo = res.data;
@@ -64,5 +64,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/detail-page.scss";
+@import "~@/assets/scss/user-list-details-page.scss";
 </style>
