@@ -119,6 +119,7 @@ export default {
           break;
         case 1:
           // 变动
+          console.log(row);
           this.$vb.plugin.openLayer(
             commodityCategoryEditPage,
             this,

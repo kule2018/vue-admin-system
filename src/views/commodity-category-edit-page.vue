@@ -211,6 +211,7 @@ export default {
             this.form.name = this.parentData.name;
             // 类别id
             this.defaultClassifyId = this.parentData.categoryId;
+            this.form.categoryId = this.parentData.categoryId;
             // 排序号
             this.form.sortNumber = this.parentData.sortNumber;
             // 类别名图
