@@ -73,8 +73,6 @@ export default {
                   // 关闭弹层
                   this.$layer.close(this.layerid);
                 } else {
-                  // 关闭弹层
-                  this.$layer.close(this.layerid);
                   this.$vb.plugin.message.error("商品品牌新增失败");
                 }
               });
@@ -90,8 +88,6 @@ export default {
                   // 关闭弹层
                   this.$layer.close(this.layerid);
                 } else {
-                  // 关闭弹层
-                  this.$layer.close(this.layerid);
                   this.$vb.plugin.message.error("商品品牌变动失败");
                 }
               });

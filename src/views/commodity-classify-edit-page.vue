@@ -45,7 +45,7 @@
                   <i
                     class="el-icon-plus avatar-uploader-icon"
                     ref="uploadFile"
-                  />
+                  ></i>
                 </el-upload>
                 <el-button size="mini" plain @click="$refs.uploadFile.click()"
                   >上传</el-button
@@ -116,8 +116,6 @@ export default {
                   // 关闭弹层
                   this.$layer.close(this.layerid);
                 } else {
-                  // 关闭弹层
-                  this.$layer.close(this.layerid);
                   this.$vb.plugin.message.error("商品分类新增失败");
                 }
               });
@@ -133,8 +131,6 @@ export default {
                   // 关闭弹层
                   this.$layer.close(this.layerid);
                 } else {
-                  // 关闭弹层
-                  this.$layer.close(this.layerid);
                   this.$vb.plugin.message.error("商品分类变动失败");
                 }
               });

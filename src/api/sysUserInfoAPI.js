@@ -53,9 +53,23 @@ const sysUserInfoAPI = {
     );
   },
   // 解除拉黑 {personId：“”}
-  relieveDefriendUserInfo(params) {
+  relieveDeFriendUserInfo(params) {
     return services._axios.post(
       `${base.defaultBaseUrl}/sys/user/relieve`,
+      params
+    );
+  },
+  // 冻结 {personId：“”}
+  freezeUserInfo(params) {
+    return services._axios.post(
+      `${base.defaultBaseUrl}/sys/user/freeze`,
+      params
+    );
+  },
+  // 拉黑 {personId：“”}
+  deFriendUserInfo(params) {
+    return services._axios.post(
+      `${base.defaultBaseUrl}/sys/user/defriend`,
       params
     );
   }

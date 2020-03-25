@@ -63,7 +63,7 @@
               ></i>
             </el-input>
           </el-form-item>
-          <el-form-item label="角色类型" prop="roleName">
+          <el-form-item label="角色类型" prop="roleTypeId">
             <el-select
               v-model="defaultRole"
               placeholder="请选择角色类型"
@@ -113,8 +113,8 @@ export default {
           { required: true, message: "请输入用户名", trigger: "blur" }
         ],
         loginPwd: [{ required: true, message: "请输入密码", trigger: "blur" }],
-        roleName: [
-          { required: true, message: "请选择角色类型", trigger: "blur" }
+        roleTypeId: [
+          { required: true, message: "请选择角色类型", trigger: "change" }
         ]
       },
       roleList: [],
@@ -235,7 +235,7 @@ export default {
     this.baseUrl = baseUrl.defaultBaseUrl;
     if (this.parentData.state === "update") {
       this.$api.sysUserInfoAPI
-        .getUserInfo({ userid: this.parentData.userid[0] })
+        .getUserInfo({ userid: this.parentData.userid })
         .then(res => {
           this.defaultRole = res.data.roleTypeId;
           self.form = Object.assign({}, res.data);
