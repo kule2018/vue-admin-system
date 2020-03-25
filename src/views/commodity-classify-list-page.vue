@@ -30,8 +30,8 @@
         </template>
       </el-table-column>
       <el-table-column prop="sortNumber" label="排序号" />
-      <el-table-column prop="name" label="类别名" />
-      <el-table-column fixed="right" width="360" label="操作">
+      <el-table-column prop="name" label="分类名" />
+      <el-table-column fixed="right" width="150" label="操作">
         <template slot-scope="scope">
           <el-button
             @click.stop="handleClick(1, scope.row)"
@@ -59,6 +59,7 @@
 import lodash from "lodash";
 import base from "@/api/base";
 import commodityClassifyEditPage from "@/views/commodity-classify-edit-page";
+import commodityClassifyDetailsPage from "@/views/commodity-classify-details-page";
 
 export default {
   name: "commodity-classify-list-page",
@@ -103,7 +104,7 @@ export default {
           }
         });
     },
-    handleClick(status, val) {
+    handleClick(status, row) {
       switch (status) {
         case 0:
           // 增加
@@ -111,7 +112,7 @@ export default {
             commodityClassifyEditPage,
             this,
             { state: "add" },
-            "新增商品类别",
+            "新增商品分类",
             900,
             400
           );
@@ -121,10 +122,21 @@ export default {
           this.$vb.plugin.openLayer(
             commodityClassifyEditPage,
             this,
-            { state: "update", name: val.name },
-            "变动类别",
+            { state: "update", name: row.name },
+            "变动分类",
             900,
             400
+          );
+          break;
+        case 2:
+          // 详情
+          this.$vb.plugin.openLayer(
+            commodityClassifyDetailsPage,
+            this,
+            { classifyId: row.classifyId, colNum: "one-col" },
+            "分类详情",
+            800,
+            "80%"
           );
           break;
       }

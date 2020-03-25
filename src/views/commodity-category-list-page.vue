@@ -32,7 +32,7 @@
       <el-table-column prop="sortNumber" label="排序号" />
       <el-table-column prop="classifyName" label="分类名" />
       <el-table-column prop="name" label="类别名" />
-      <el-table-column fixed="right" width="360" label="操作">
+      <el-table-column fixed="right" width="150" label="操作">
         <template slot-scope="scope">
           <el-button
             @click.stop="handleClick(1, scope.row)"
@@ -61,6 +61,8 @@
 import lodash from "lodash";
 import base from "@/api/base";
 import commodityCategoryEditPage from "@/views/commodity-category-edit-page.vue";
+import commodityCategoryDetailsPage from "@/views/commodity-category-details-page.vue";
+
 export default {
   name: "commodity-category-list-page",
   data() {
@@ -127,6 +129,17 @@ export default {
             "变动类别",
             900,
             560
+          );
+          break;
+        case 2:
+          // 详情
+          this.$vb.plugin.openLayer(
+            commodityCategoryDetailsPage,
+            this,
+            { categoryId: row.categoryId, colNum: "one-col" },
+            "类别详情",
+            800,
+            "80%"
           );
           break;
       }
