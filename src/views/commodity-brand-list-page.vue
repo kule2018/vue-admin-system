@@ -105,7 +105,7 @@ export default {
             commodityBrandEditPage,
             this,
             Object.assign({ state: "update" }, row),
-            "变动商品品牌",
+            "变动品牌",
             900,
             400
           );
