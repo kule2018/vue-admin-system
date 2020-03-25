@@ -122,7 +122,7 @@ export default {
             commodityClassifyEditPage,
             this,
             { state: "update", name: val.name },
-            "变动商品类别",
+            "变动类别",
             900,
             400
           );

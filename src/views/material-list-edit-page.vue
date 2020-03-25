@@ -113,6 +113,7 @@
             <el-col :span="12">
               <el-form-item label="价格" prop="price">
                 <el-input-number
+                  :min="0"
                   v-model="form.price"
                   size="small"
                   :precision="2"
@@ -154,6 +155,7 @@
             <el-col :span="12">
               <el-form-item label="起售数" prop="saleNum">
                 <el-input-number
+                  :min="0"
                   v-model="form.saleNum"
                   size="small"
                   :controls="false"
@@ -165,6 +167,7 @@
             <el-col :span="12">
               <el-form-item label="库存数" prop="inventoryNum">
                 <el-input-number
+                  :min="0"
                   v-model="form.inventoryNum"
                   size="small"
                   :controls="false"
@@ -214,7 +217,11 @@
             <el-upload
               action="http://172.16.0.110/common/upload"
               list-type="picture-card"
-              :on-remove="picRemove"
+              :on-remove="
+                (file, fileList) => {
+                  return handleRemove(file, fileList);
+                }
+              "
               :on-success="
                 (response, file, fileList) => {
                   return onSuccess(response, file, fileList);
@@ -334,7 +341,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           console.log(this.form);
-          /*if (this.parentData.state === "add") {
+          if (this.parentData.state === "add") {
             this.$api.materialManageAPI.addMaterialInfo(this.form).then(res => {
               if (_.isEqual(res.code, "success")) {
                 this.$layer.msg(res.msg);
@@ -354,10 +361,10 @@ export default {
                   this.$parent.search();
                   this.$layer.close(this.layerid);
                 } else {
-                  self.$vb.plugin.message.error("失败", res.msg);
+                  this.$vb.plugin.message.error("失败", res.msg);
                 }
               });
-          }*/
+          }
         } else {
           return false;
         }
@@ -413,20 +420,22 @@ export default {
         this.firstCategorys = res.data;
       });
     },
-    picRemove(file, fileList) {
-      this.form.pictureList = [];
-      if (fileList && fileList.length > 0) {
-        fileList.forEach(item => {
-          this.form.pictureList.push(item.response.data);
-        });
-      }
+    // eslint-disable-next-line no-unused-vars
+    handleRemove(file, fileList) {
+      console.log(file);
+      let Pics = this.form.pictureList;
+      Pics.forEach((item, index) => {
+        if (file.uid === item.uid) {
+          Pics.splice(index, 1);
+        }
+      });
     },
     // 照片墙上传成功的回调
     onSuccess(response, file, fileList) {
       // 照片墙文件列表
       console.log(fileList);
       // 用于el的照片墙图片显示，后台要的数据格式需要重新弄个数组
-      this.form.pictureList.push({ path: file.name, url: file.url });
+      this.form.pictureList.push(file);
     }
   },
   mounted() {
@@ -443,8 +452,6 @@ export default {
               // 用于渲染照片墙,必要的4个参数
               item.name = item.path;
               item.url = this.baseUrl + "/" + item.path;
-              item.uid = this.uid;
-              item.status = this.status;
             });
             Object.assign(this.form, res.data);
             this.defaultClassifyId = res.data.classifyId;
