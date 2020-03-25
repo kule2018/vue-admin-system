@@ -25,6 +25,12 @@ const commodityClassifyMangeAPI = {
       `${base.defaultBaseUrl}/common/classify/update`,
       params
     );
+  },
+  // 商品分类详情
+  getCommodityClassifyInfo(params) {
+    return services._axios.get(`${base.defaultBaseUrl}/common/classify/info`, {
+      params
+    });
   }
 };
 

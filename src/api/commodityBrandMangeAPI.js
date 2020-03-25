@@ -25,6 +25,15 @@ const commodityBrandMangeAPI = {
       `${base.defaultBaseUrl}/common/materialBrand/update`,
       params
     );
+  },
+  // 商品品牌详情
+  getCommodityBrandInfo(params) {
+    return services._axios.get(
+      `${base.defaultBaseUrl}/common/materialBrand/info`,
+      {
+        params
+      }
+    );
   }
 };
 export default commodityBrandMangeAPI;

@@ -45,7 +45,11 @@
         >查询</el-button
       >
     </div>
-    <el-tabs v-model="activeName" @tab-click="handleTabClick">
+    <el-tabs
+      v-model="activeName"
+      @tab-click="handleTabClick"
+      v-if="+$store.state.userInfo.roleTypeId === 150"
+    >
       <el-tab-pane label="未分配" name="waitAllot"></el-tab-pane>
       <el-tab-pane label="已分配" name="endAllot"></el-tab-pane>
     </el-tabs>
@@ -81,7 +85,10 @@
         <template slot-scope="scope">
           <template v-if="+scope.row.state === 200">
             <el-button
-              v-if="activeName === 'waitAllot'"
+              v-if="
+                activeName === 'waitAllot' &&
+                  +$store.state.userInfo.roleTypeId === 150
+              "
               @click.stop="handleClick('allot', scope.row)"
               type="primary"
               size="mini"
@@ -111,6 +118,13 @@
               type="primary"
               size="mini"
               >处理</el-button
+            >
+            <el-button
+              v-if="activeName === 'endAllot'"
+              @click.stop=""
+              type="primary"
+              size="mini"
+              >收回</el-button
             >
           </template>
         </template>
