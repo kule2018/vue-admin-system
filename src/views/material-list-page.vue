@@ -93,7 +93,7 @@
         >查询</el-button
       >
       <el-button type="primary" plain size="mini" @click="handleClick('add')"
-        >增加</el-button
+        >新增</el-button
       >
     </div>
     <el-table

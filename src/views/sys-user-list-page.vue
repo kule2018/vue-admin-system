@@ -173,8 +173,8 @@ export default {
             this,
             { colNum: "one-col", userid: userid[0] },
             "系统用户详情",
-            670,
-            500
+            420,
+            310
           );
           break;
         case "add":
@@ -184,7 +184,7 @@ export default {
             { state: state, userid: userid[0] },
             "系统用户增加",
             670,
-            500
+            460
           );
           break;
         case "update":
@@ -194,7 +194,7 @@ export default {
             { state: state, userid: userid[0] },
             "系统用户变动",
             670,
-            500
+            460
           );
           break;
         case "unfreeze":

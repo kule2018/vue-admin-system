@@ -20,7 +20,7 @@
             plain
             size="small"
             @click="handleClick(3, '')"
-            >增加</el-button
+            >新增</el-button
           >
         </div>
         <el-tabs v-model="tabActiveName" @tab-click="tabsClick(tabActiveName)">
@@ -164,7 +164,7 @@ export default {
             function() {}
           );
           break;
-        // 增加
+        // 新增
         case 3:
           this.$vb.plugin.openLayer(
             supplierListEditPage,
