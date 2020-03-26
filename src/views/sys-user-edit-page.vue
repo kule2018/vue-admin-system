@@ -81,23 +81,24 @@
                 :value="item.roleTypeId"
               ></el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item
+            label="供应商"
+            prop="supplierName"
+            v-if="+defaultRole === 450"
+          >
+            <el-input
+              :readonly="true"
+              v-model="supplierName"
+              size="small"
+              style="width: 215px"
+            ></el-input>
             <el-button
               size="small"
               style="margin-left: 10px;"
               @click="allot"
               type="primary"
-              v-if="+defaultRole === 450"
               >分配</el-button
-            >
-            <span
-              style="margin-left: 10px;"
-              v-if="+defaultRole === 450 && defaultSupplierId"
-              >供应商: {{ supplierName }}</span
-            >
-            <span
-              style="margin-left: 10px;"
-              v-if="+defaultRole === 450 && !defaultSupplierId"
-              >未分配供应商</span
             >
           </el-form-item>
         </el-form>
@@ -140,6 +141,9 @@ export default {
         loginPwd: [{ required: true, message: "请输入密码", trigger: "blur" }],
         roleTypeId: [
           { required: true, message: "请选择角色类型", trigger: "change" }
+        ],
+        supplierName: [
+          { required: true, message: "请选择供应商", trigger: "none" }
         ]
       },
       roleList: [],

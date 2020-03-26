@@ -45,18 +45,18 @@ export default {
       default: () => {
         return {};
       }
-    }
-  },
-  layerid: {
-    // 当前弹层id，用于关闭弹层
-    type: String,
-    default: ""
-  },
-  lydata: {
-    // 该值为父组件data的浅拷贝,更改父窗口传递的数据的时候，可以直接使用lydata来修改
-    type: Object,
-    default: () => {
-      return {};
+    },
+    layerid: {
+      // 当前弹层id，用于关闭弹层
+      type: String,
+      default: ""
+    },
+    lydata: {
+      // 该值为父组件data的浅拷贝,更改父窗口传递的数据的时候，可以直接使用lydata来修改
+      type: Object,
+      default: () => {
+        return {};
+      }
     }
   },
   mounted() {
