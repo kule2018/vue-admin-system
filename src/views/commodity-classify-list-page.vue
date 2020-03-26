@@ -112,7 +112,7 @@ export default {
             commodityClassifyEditPage,
             this,
             { state: "add" },
-            "商品分类新增",
+            "商品分类增加",
             600,
             350
           );

@@ -204,7 +204,7 @@ export default {
             materialEditPage,
             this,
             { state: state },
-            "商品新增",
+            "商品增加",
             800,
             "80%"
           );

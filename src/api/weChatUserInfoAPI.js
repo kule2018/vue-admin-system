@@ -60,6 +60,20 @@ const weChatUserInfoAPI = {
       `${base.defaultBaseUrl}/sys/person/relieve`,
       params
     );
+  },
+  // 清空用户余额 {personId:""}
+  clearBalance(params) {
+    return services._axios.post(
+      `${base.defaultBaseUrl}/sys/person/clearBalance`,
+      params
+    );
+  },
+  // 清空用户积分 {personId:""}
+  clearIntegral(params) {
+    return services._axios.post(
+      `${base.defaultBaseUrl}/sys/person/clearIntegral`,
+      params
+    );
   }
 };
 

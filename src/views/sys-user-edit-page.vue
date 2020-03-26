@@ -36,12 +36,14 @@
             <el-input
               v-model="form.nickName"
               placeholder="请输入昵称"
+              size="small"
             ></el-input>
           </el-form-item>
           <el-form-item label="用户名" prop="loginName">
             <el-input
               v-model="form.loginName"
               placeholder="请输入用户名"
+              size="small"
             ></el-input>
           </el-form-item>
           <el-form-item
@@ -53,6 +55,7 @@
               :type="showPwdType"
               placeholder="请输入密码"
               v-model="form.loginPwd"
+              size="small"
             >
               <i
                 slot="suffix"
@@ -68,6 +71,8 @@
               v-model="defaultRole"
               placeholder="请选择角色类型"
               value=""
+              size="small"
+              @change="roleChange"
             >
               <el-option
                 v-for="(item, index) in roleList"
@@ -76,6 +81,24 @@
                 :value="item.roleTypeId"
               ></el-option>
             </el-select>
+            <el-button
+              size="small"
+              style="margin-left: 10px;"
+              @click="allot"
+              type="primary"
+              v-if="+defaultRole === 450"
+              >分配</el-button
+            >
+            <span
+              style="margin-left: 10px;"
+              v-if="+defaultRole === 450 && defaultSupplierId"
+              >供应商: {{ supplierName }}</span
+            >
+            <span
+              style="margin-left: 10px;"
+              v-if="+defaultRole === 450 && !defaultSupplierId"
+              >未分配供应商</span
+            >
           </el-form-item>
         </el-form>
       </div>
@@ -94,6 +117,7 @@
 <script>
 import baseUrl from "@/api/base";
 import _ from "lodash";
+import allotSupplierPage from "@/views/allot-supplier-page";
 
 export default {
   name: "sys-user-edit",
@@ -104,7 +128,8 @@ export default {
         nickName: "",
         loginName: "",
         loginPwd: "",
-        roleTypeId: ""
+        roleTypeId: "",
+        supplierId: ""
       },
       rules: {
         iconPath: [{ required: true, message: "请上传头像" }],
@@ -121,7 +146,10 @@ export default {
       defaultRole: "",
       showPwd: false,
       showPwdType: "password",
-      baseUrl: ""
+      baseUrl: "",
+      defaultSupplierId: "",
+      supplierName: "",
+      roleChangeFlag: 0
     };
   },
   watch: {
@@ -130,6 +158,9 @@ export default {
     },
     defaultRole() {
       this.form.roleTypeId = this.defaultRole;
+    },
+    defaultSupplierId(val) {
+      this.form.supplierId = val;
     }
   },
   computed: {
@@ -139,7 +170,6 @@ export default {
   },
   methods: {
     onSubmit() {
-      const self = this;
       this.$refs.form.validate(valid => {
         if (valid) {
           if (this.parentData.state === "add") {
@@ -149,17 +179,18 @@ export default {
                 this.$parent.search();
                 this.$layer.close(this.layerid);
               } else {
-                self.$vb.plugin.message.error("失败", res.msg);
+                this.$vb.plugin.message.error("失败", res.msg);
               }
             });
           } else {
             this.$api.sysUserInfoAPI.updateUserInfo(this.form).then(res => {
               if (_.isEqual(res.code, "success")) {
                 this.$layer.msg(res.msg);
+                this.updateLocal(this.form);
                 this.$parent.search();
                 this.$layer.close(this.layerid);
               } else {
-                self.$vb.plugin.message.error("失败", res.msg);
+                this.$vb.plugin.message.error("失败", res.msg);
               }
             });
           }
@@ -203,6 +234,25 @@ export default {
           JSON.parse(localStorage.getItem("userInfo"))
         );
       }
+    },
+    allot() {
+      this.$vb.plugin.openLayer(
+        allotSupplierPage,
+        this,
+        { state: "user" },
+        "分配供应商",
+        1200,
+        "80%"
+      );
+    },
+    roleChange() {
+      if (this.roleChangeFlag === 0) {
+        this.roleChangeFlag++;
+        return;
+      }
+      this.defaultSupplierId = "";
+      this.form.supplierId = "";
+      this.supplierName = "";
     }
   },
   props: {
@@ -238,6 +288,8 @@ export default {
         .getUserInfo({ userid: this.parentData.userid })
         .then(res => {
           this.defaultRole = res.data.roleTypeId;
+          this.defaultSupplierId = res.data.supplierId;
+          this.supplierName = res.data.supplierName;
           self.form = Object.assign({}, res.data);
         });
     }

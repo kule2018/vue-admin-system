@@ -34,6 +34,8 @@
         <el-table-column prop="nickName" label="昵称" />
         <el-table-column prop="gender" label="性别" />
         <el-table-column prop="province" label="省" />
+        <el-table-column prop="balance" label="余额" />
+        <el-table-column prop="integral" label="积分" />
         <el-table-column prop="statusName" label="状态" />
         <el-table-column fixed="right" width="150" label="操作">
           <template slot-scope="scope">
@@ -164,8 +166,8 @@ export default {
             this,
             { personId: val[0].personId, colNum: "one-col" },
             "用户信息详情",
-            "800",
-            "80%",
+            400,
+            400,
             function() {}
           );
           break;

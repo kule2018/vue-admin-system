@@ -12,7 +12,7 @@ const commodityClassifyMangeAPI = {
       }
     );
   },
-  // 新增商品分类
+  // 增加商品分类
   addCommodityClassifyInfo(params) {
     return services._axios.post(
       `${base.defaultBaseUrl}/common/classify/add`,

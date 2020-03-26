@@ -12,7 +12,7 @@ const commodityCategoryMangeAPI = {
       }
     );
   },
-  // 新增商品类别
+  // 增加商品类别
   addCommodityCategory(params) {
     return services._axios.post(
       `${base.defaultBaseUrl}/common/materialCategory/add`,
