@@ -17,12 +17,31 @@
         <div>单位</div>
         <div>{{ userInfo.unit }}</div>
       </div>
+      <div>
+        <div>余额</div>
+        <div>{{ userInfo.balance }}</div>
+      </div>
+      <div>
+        <div>积分</div>
+        <div>{{ userInfo.integral }}</div>
+      </div>
+    </div>
+    <div class="button__bottom">
+      <el-button
+        type="danger"
+        size="small"
+        @click="handleClick('clearIntegral')"
+        >清空积分</el-button
+      >
+      <el-button type="danger" size="small" @click="handleClick('clearBalance')"
+        >清空余额</el-button
+      >
     </div>
   </div>
 </template>
 
 <script>
-import lodash from "lodash";
+import _ from "lodash";
 export default {
   name: "user-list-details-page",
   data() {
@@ -31,18 +50,72 @@ export default {
       baseUrl: ""
     };
   },
-  created() {
+  mounted() {
     this.$api.weChatUserInfoAPI
       .getUserInfo({
         personId: this.parentData.personId
       })
       .then(res => {
-        if (lodash.isEqual(res.code, "success")) {
+        if (_.isEqual(res.code, "success")) {
           this.userInfo = res.data;
         } else {
           this.$vb.plugin.message.error(`获取用户信息失败:${res.code}`);
         }
       });
+  },
+  methods: {
+    handleClick(state) {
+      switch (state) {
+        case "clearIntegral":
+          this.$confirm("确认清空用户积分吗?", "提示", {
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+            type: "warning"
+          })
+            .then(() => {
+              this.$api.weChatUserInfoAPI
+                .clearIntegral({
+                  personId: this.parentData.personId
+                })
+                .then(res => {
+                  if (_.isEqual(res.code, "success")) {
+                    this.$layer.msg(res.msg);
+                    this.$parent.search();
+                    this.$layer.close(this.layerid);
+                  } else {
+                    self.$vb.plugin.message.error("失败", res.msg);
+                  }
+                });
+            })
+            .catch(() => {});
+          break;
+        case "clearBalance":
+          this.$confirm("确认清空用户余额吗?", "提示", {
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+            type: "warning"
+          })
+            .then(() => {
+              this.$api.weChatUserInfoAPI
+                .clearBalance({
+                  personId: this.parentData.personId
+                })
+                .then(res => {
+                  if (_.isEqual(res.code, "success")) {
+                    this.$layer.msg(res.msg);
+                    this.$parent.search();
+                    this.$layer.close(this.layerid);
+                  } else {
+                    self.$vb.plugin.message.error("失败", res.msg);
+                  }
+                });
+            })
+            .catch(() => {});
+          break;
+        default:
+          break;
+      }
+    }
   },
   props: {
     // 父组件传的数据

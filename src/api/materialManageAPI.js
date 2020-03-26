@@ -15,7 +15,7 @@ const materialManageAPI = {
       params
     });
   },
-  // 新增商品
+  // 增加商品
   addMaterialInfo(params) {
     return services._axios.post(
       `${base.defaultBaseUrl}/sys/material/add`,

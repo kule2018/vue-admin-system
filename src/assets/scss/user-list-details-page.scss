@@ -1,4 +1,6 @@
 .detail-box {
+  height: calc(100% - 52px);
+
   & > div {
     & > div:first-of-type {
       width: 90px;

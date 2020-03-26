@@ -67,13 +67,13 @@ export default {
                 this.submissionStatus = false;
                 if (lodash.isEqual(res.code, "success")) {
                   this.submissionStatus = false;
-                  this.$vb.plugin.showMsg("新增成功");
+                  this.$vb.plugin.showMsg("增加成功");
                   // 刷新父页面
                   this.$parent.search();
                   // 关闭弹层
                   this.$layer.close(this.layerid);
                 } else {
-                  this.$vb.plugin.message.error("商品品牌新增失败");
+                  this.$vb.plugin.message.error("商品品牌增加失败");
                 }
               });
           } else {

@@ -12,7 +12,7 @@ const commodityBrandMangeAPI = {
       }
     );
   },
-  // 新增商品品牌
+  // 增加商品品牌
   addCommodityBrand(params) {
     return services._axios.post(
       `${base.defaultBaseUrl}/common/materialBrand/add`,

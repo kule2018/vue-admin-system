@@ -49,7 +49,7 @@ const supplierManageAPI = {
       params
     );
   },
-  // 新增供应商
+  // 增加供应商
   addSupplierInfo(params) {
     return services._axios.post(
       `${base.defaultBaseUrl}/sys/supplier/add`,

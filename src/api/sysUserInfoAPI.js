@@ -28,7 +28,7 @@ const sysUserInfoAPI = {
       params
     );
   },
-  // 新增用户 {roleTypeid:"",nickName:"",loginName:"",loginPwd:"",iconPath:""}
+  // 增加用户 {roleTypeid:"",nickName:"",loginName:"",loginPwd:"",iconPath:""}
   addUserInfo(params) {
     return services._axios.post(`${base.defaultBaseUrl}/sys/user/add`, params);
   },
