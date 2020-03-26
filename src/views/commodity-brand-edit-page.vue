@@ -3,7 +3,7 @@
   <div id="layerContent" class="sys-user-edit">
     <div class="content-panel">
       <div class="main-content">
-        <el-form ref="form" :model="form" :rules="rules" label-width="130px">
+        <el-form ref="form" :model="form" :rules="rules" label-width="70px">
           <el-form-item label="品牌名" prop="brandName">
             <el-input
               v-model="form.brandName"

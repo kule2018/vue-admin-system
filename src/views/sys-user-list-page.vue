@@ -44,7 +44,7 @@
             @click.stop="handleClick('update', scope.row.userid)"
             type="primary"
             size="mini"
-            >编辑</el-button
+            >变动</el-button
           >
           <el-button
             v-if="+scope.row.statusCode === 61"
@@ -172,8 +172,8 @@ export default {
             this,
             { colNum: "one-col", userid: userid[0] },
             "系统用户详情",
-            800,
-            "80%"
+            620,
+            440
           );
           break;
         case "add":
@@ -181,9 +181,9 @@ export default {
             sysUserEdit,
             this,
             { state: state, userid: userid[0] },
-            "新增系统用户",
+            "系统用户新增",
             620,
-            "80%"
+            440
           );
           break;
         case "update":
@@ -191,9 +191,9 @@ export default {
             sysUserEdit,
             this,
             { state: state, userid: userid[0] },
-            "修改系统用户",
+            "系统用户变动",
             620,
-            "80%"
+            440
           );
           break;
         case "unfreeze":

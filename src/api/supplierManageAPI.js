@@ -83,6 +83,12 @@ const supplierManageAPI = {
       `${base.defaultBaseUrl}/sys/supplier/relieve`,
       params
     );
+  },
+  allotSupplier(params) {
+    return services._axios.get(
+      `${base.defaultBaseUrl}/common/supplier/search`,
+      { params }
+    );
   }
 };
 

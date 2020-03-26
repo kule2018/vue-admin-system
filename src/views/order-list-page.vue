@@ -105,7 +105,8 @@
               v-if="
                 activeName === 'endAllot' &&
                   +scope.row.state === 200 &&
-                  +scope.row.osStatusId === 10100
+                  +scope.row.osStatusId === 10100 &&
+                  false
               "
               @click.stop="handleClick('shipment', scope.row)"
               type="primary"
@@ -147,7 +148,7 @@
 <script>
 import _ from "lodash";
 import orderDetailPage from "@/views/order-list-details-page";
-import orderAllotPage from "@/views/order-allot-page";
+import allotSupplierPage from "@/views/allot-supplier-page";
 export default {
   name: "order-list-page",
   data() {
@@ -229,9 +230,9 @@ export default {
           break;
         case "allot":
           this.$vb.plugin.openLayer(
-            orderAllotPage,
+            allotSupplierPage,
             this,
-            { order: val[0] },
+            { state: "order" },
             "分配供应商",
             350,
             200
