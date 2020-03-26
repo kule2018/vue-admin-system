@@ -25,17 +25,19 @@
           :value="item.stateId"
         ></el-option>
       </el-select>
-      <el-input
+      <el-date-picker
         v-model="searchForm.startOrderTime"
         placeholder="开始时间"
+        type="date"
         size="small"
-      ></el-input>
+      ></el-date-picker>
       <i style="margin: 0 9px 0 0; color: #bbb;">--</i>
-      <el-input
+      <el-date-picker
         v-model="searchForm.endOrderTime"
         placeholder="结束时间"
+        type="date"
         size="small"
-      ></el-input>
+      ></el-date-picker>
       <div></div>
       <el-button
         type="primary"
@@ -232,10 +234,10 @@ export default {
           this.$vb.plugin.openLayer(
             allotSupplierPage,
             this,
-            { state: "order" },
+            { state: "order", orderId: val[0].orderId },
             "分配供应商",
-            350,
-            200
+            1200,
+            "80%"
           );
           break;
         case "shipment":

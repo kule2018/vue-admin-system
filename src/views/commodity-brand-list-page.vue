@@ -95,7 +95,7 @@ export default {
             commodityBrandEditPage,
             this,
             { state: "add" },
-            "商品品牌新增",
+            "商品品牌增加",
             400,
             220
           );

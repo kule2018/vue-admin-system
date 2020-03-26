@@ -37,6 +37,7 @@
       <el-table-column prop="loginName" label="用户名"></el-table-column>
       <el-table-column prop="roleName" label="用户类型"></el-table-column>
       <el-table-column prop="statusName" label="状态"></el-table-column>
+      <el-table-column prop="supplierName" label="供应商"></el-table-column>
       <el-table-column label="操作" width="210">
         <template slot-scope="scope">
           <el-button
@@ -172,8 +173,8 @@ export default {
             this,
             { colNum: "one-col", userid: userid[0] },
             "系统用户详情",
-            620,
-            440
+            670,
+            460
           );
           break;
         case "add":
@@ -181,9 +182,9 @@ export default {
             sysUserEdit,
             this,
             { state: state, userid: userid[0] },
-            "系统用户新增",
-            620,
-            440
+            "系统用户增加",
+            670,
+            460
           );
           break;
         case "update":
@@ -192,8 +193,8 @@ export default {
             this,
             { state: state, userid: userid[0] },
             "系统用户变动",
-            620,
-            440
+            670,
+            460
           );
           break;
         case "unfreeze":

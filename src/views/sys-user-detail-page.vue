@@ -7,6 +7,10 @@
       </div>
     </div>
     <div>
+      <div>用户昵称</div>
+      <div>{{ sysUserInfo.nickName }}</div>
+    </div>
+    <div>
       <div>用户名</div>
       <div>{{ sysUserInfo.loginName }}</div>
     </div>
@@ -15,8 +19,12 @@
       <div>{{ sysUserInfo.roleName }}</div>
     </div>
     <div>
-      <div>用户昵称</div>
-      <div>{{ sysUserInfo.nickName }}</div>
+      <div>状态</div>
+      <div>{{ sysUserInfo.statusName }}</div>
+    </div>
+    <div v-if="+sysUserInfo.roleTypeId === 450">
+      <div>供应商</div>
+      <div>{{ sysUserInfo.supplierName }}</div>
     </div>
   </div>
 </template>

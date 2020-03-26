@@ -170,7 +170,7 @@ export default {
             supplierListEditPage,
             this,
             { state: "add" },
-            "供应商新增",
+            "供应商增加",
             800,
             "80%",
             function() {}
