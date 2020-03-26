@@ -3,7 +3,7 @@
   <div id="layerContent" class="sys-user-edit">
     <div class="content-panel">
       <div class="main-content">
-        <el-form ref="form" :model="form" :rules="rules" label-width="130px">
+        <el-form ref="form" :model="form" :rules="rules" label-width="80px">
           <el-row>
             <el-col :span="12">
               <el-form-item label="类别名" prop="name">

@@ -95,9 +95,9 @@ export default {
             commodityBrandEditPage,
             this,
             { state: "add" },
-            "新增商品品牌",
-            900,
-            400
+            "商品品牌新增",
+            400,
+            220
           );
           break;
         case 1:
@@ -106,9 +106,9 @@ export default {
             commodityBrandEditPage,
             this,
             Object.assign({ state: "update" }, row),
-            "变动品牌",
-            900,
-            400
+            "商品品牌变动",
+            400,
+            220
           );
           break;
         case 2:
@@ -117,9 +117,9 @@ export default {
             commodityBrandDetailsPage,
             this,
             { brandId: row.brandId, colNum: "one-col" },
-            "品牌详情",
-            800,
-            "80%"
+            "商品品牌详情",
+            400,
+            220
           );
           break;
       }

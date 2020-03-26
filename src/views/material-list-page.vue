@@ -126,7 +126,7 @@
             @click.stop="handleClick('update', scope.row)"
             type="primary"
             size="mini"
-            >编辑</el-button
+            >变动</el-button
           >
         </template>
       </el-table-column>
@@ -204,7 +204,7 @@ export default {
             materialEditPage,
             this,
             { state: state },
-            "商品增加",
+            "商品新增",
             800,
             "80%"
           );
@@ -214,7 +214,7 @@ export default {
             materialEditPage,
             this,
             { state: state, materialId: val[0].materialId },
-            "商品编辑",
+            "商品变动",
             800,
             "80%"
           );

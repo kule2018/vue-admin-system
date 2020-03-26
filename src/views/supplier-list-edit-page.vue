@@ -5,7 +5,7 @@
         <el-form
           ref="form"
           :model="form"
-          label-width="130px"
+          label-width="140px"
           :rules="formRules"
         >
           <el-row>
