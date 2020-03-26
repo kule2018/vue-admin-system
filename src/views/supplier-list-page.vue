@@ -56,7 +56,7 @@
                 @click.stop="handleClick(4, scope.row)"
                 type="primary"
                 size="mini"
-                >编辑</el-button
+                >变动</el-button
               >
               <el-button
                 v-if="+scope.row.statusCode === 61"
@@ -158,8 +158,32 @@ export default {
             supplierListDetails,
             this,
             { supplierId: val[0].supplierId, colNum: "two-col" },
-            "查看供应商信息",
-            "800",
+            "供应商详情",
+            800,
+            "80%",
+            function() {}
+          );
+          break;
+        // 增加
+        case 3:
+          this.$vb.plugin.openLayer(
+            supplierListEditPage,
+            this,
+            { state: "add" },
+            "供应商新增",
+            800,
+            "80%",
+            function() {}
+          );
+          break;
+        // 变动
+        case 4:
+          this.$vb.plugin.openLayer(
+            supplierListEditPage,
+            this,
+            { state: "update", supplierId: val[0].supplierId },
+            "供应商变动",
+            800,
             "80%",
             function() {}
           );
@@ -209,30 +233,6 @@ export default {
                 });
             })
             .catch(() => {});
-          break;
-        // 增加
-        case 3:
-          this.$vb.plugin.openLayer(
-            supplierListEditPage,
-            this,
-            { state: "add" },
-            "新增供应商",
-            960,
-            "80%",
-            function() {}
-          );
-          break;
-        // 编辑
-        case 4:
-          this.$vb.plugin.openLayer(
-            supplierListEditPage,
-            this,
-            { state: "update", supplierId: val[0].supplierId },
-            "编辑供应商",
-            960,
-            "80%",
-            function() {}
-          );
           break;
         // 解除冻结
         case 5:

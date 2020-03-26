@@ -114,9 +114,9 @@ export default {
             commodityCategoryEditPage,
             this,
             { state: "add" },
-            "新增类别",
-            900,
-            560
+            "商品类别新增",
+            650,
+            350
           );
           break;
         case 1:
@@ -126,9 +126,9 @@ export default {
             commodityCategoryEditPage,
             this,
             Object.assign({ state: "update" }, row),
-            "变动类别",
-            900,
-            560
+            "商品类别变动",
+            650,
+            350
           );
           break;
         case 2:
@@ -137,9 +137,9 @@ export default {
             commodityCategoryDetailsPage,
             this,
             { categoryId: row.categoryId, colNum: "one-col" },
-            "类别详情",
-            800,
-            "80%"
+            "商品类别详情",
+            650,
+            350
           );
           break;
       }

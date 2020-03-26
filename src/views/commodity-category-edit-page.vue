@@ -3,11 +3,12 @@
   <div id="layerContent" class="sys-user-edit">
     <div class="content-panel">
       <div class="main-content">
-        <el-form ref="form" :model="form" :rules="rules" label-width="130px">
+        <el-form ref="form" :model="form" :rules="rules" label-width="70px">
           <el-row>
             <el-col :span="12">
               <el-form-item label="类别图" prop="icon">
                 <el-image
+                  v-if="form.icon"
                   :class="{ hide: !form.icon }"
                   :src="iconPathAndBase"
                   :preview-src-list="[iconPathAndBase]"
@@ -46,10 +47,10 @@
             <el-col :span="12">
               <el-form-item label="分类" prop="classifyId">
                 <el-select
-                  v-model="form.classifyId"
+                  v-model="defaultClassifyId"
                   placeholder="请选择"
-                  @change="dropDownReply(0)"
                   value=""
+                  size="small"
                 >
                   <el-option
                     v-for="(item, index) in productCategoryDropDownList"
@@ -115,7 +116,9 @@ export default {
       // 类别下拉列表
       categoryDropDownList: [],
       rules: {
-        classifyId: [{ required: true, message: "请选择分类" }],
+        classifyId: [
+          { required: true, message: "请选择分类", trigger: "change" }
+        ],
         name: [{ required: true, message: "请输入类别名", trigger: "blur" }],
         icon: [{ required: true, message: "请上传类别图" }]
       },
@@ -124,7 +127,7 @@ export default {
     };
   },
   watch: {
-    classifyId() {
+    defaultClassifyId() {
       this.form.classifyId = this.defaultClassifyId;
     }
   },
@@ -200,6 +203,18 @@ export default {
     }
   },
   mounted() {
+    // 获取商品分类列表
+    this.$api.commodityClassifyMangeAPI
+      .getCommodityClassifyList({ classifyId: this.parentData.classifyId })
+      .then(res => {
+        if (lodash.isEqual(res.code, "success")) {
+          this.productCategoryDropDownList = res.data;
+          // 商品分类默认值
+          this.defaultClassifyId = this.parentData.classifyId;
+        } else {
+          this.$message.error(`商品分类类表获取失败:${res.code}`);
+        }
+      });
     if (this.parentData.state === "update") {
       this.$api.commodityCategoryMangeAPI
         .getCommodityCategoryList({
@@ -221,19 +236,6 @@ export default {
           }
         });
     }
-    // 获取商品分类列表
-    this.$api.commodityClassifyMangeAPI
-      .getCommodityClassifyList({ classifyId: this.parentData.classifyId })
-      .then(res => {
-        if (lodash.isEqual(res.code, "success")) {
-          this.productCategoryDropDownList = res.data;
-          // 商品分类默认值
-          this.form.classifyName = this.parentData.classifyName;
-          this.form.classifyId = this.parentData.classifyId;
-        } else {
-          this.$message.error(`商品分类类表获取失败:${res.code}`);
-        }
-      });
   },
   props: {
     // 父组件传的数据

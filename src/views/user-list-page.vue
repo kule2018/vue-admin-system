@@ -163,7 +163,7 @@ export default {
             userListDetails,
             this,
             { personId: val[0].personId, colNum: "one-col" },
-            "查看用户信息",
+            "用户信息详情",
             "800",
             "80%",
             function() {}

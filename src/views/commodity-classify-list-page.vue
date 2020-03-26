@@ -112,9 +112,9 @@ export default {
             commodityClassifyEditPage,
             this,
             { state: "add" },
-            "新增商品分类",
-            900,
-            400
+            "商品分类新增",
+            600,
+            350
           );
           break;
         case 1:
@@ -123,9 +123,9 @@ export default {
             commodityClassifyEditPage,
             this,
             { state: "update", name: row.name },
-            "变动分类",
-            900,
-            400
+            "商品分类变动",
+            600,
+            350
           );
           break;
         case 2:
@@ -134,9 +134,9 @@ export default {
             commodityClassifyDetailsPage,
             this,
             { classifyId: row.classifyId, colNum: "one-col" },
-            "分类详情",
-            800,
-            "80%"
+            "商品分类详情",
+            600,
+            350
           );
           break;
       }
