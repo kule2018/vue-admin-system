@@ -25,6 +25,10 @@
         <div>积分</div>
         <div>{{ userInfo.integral }}</div>
       </div>
+      <div>
+        <div>状态</div>
+        <div>{{ userInfo.statusName }}</div>
+      </div>
     </div>
     <div class="button__bottom">
       <el-button

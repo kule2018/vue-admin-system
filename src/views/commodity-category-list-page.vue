@@ -15,7 +15,7 @@
         >查询</el-button
       >
       <el-button type="primary" plain size="small" @click="handleClick(0)"
-        >增加</el-button
+        >新增</el-button
       >
     </div>
     <el-table
@@ -109,7 +109,7 @@ export default {
     handleClick(status, row) {
       switch (status) {
         case 0:
-          // 增加
+          // 新增
           this.$vb.plugin.openLayer(
             commodityCategoryEditPage,
             this,

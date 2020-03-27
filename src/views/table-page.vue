@@ -14,7 +14,7 @@
         >查询</el-button
       >
       <el-button type="primary" plain icon="el-icon-plus" size="small"
-        >增加</el-button
+        >新增</el-button
       >
       <el-button plain icon="el-icon-refresh-left" size="small">重置</el-button>
     </div>

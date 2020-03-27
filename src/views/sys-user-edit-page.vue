@@ -91,6 +91,7 @@
               :readonly="true"
               v-model="supplierName"
               size="small"
+              :disabled="true"
               style="width: 215px"
             ></el-input>
             <el-button
