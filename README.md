@@ -11,7 +11,7 @@
 * 使用el-data-table作为数据表格
 * 使用mocker作为接口生成工具
 ## 项目运行
-* 使用**yarn run service**命令运行
+* 使用**yarn run serve**命令运行
 * 使用**yarn run build**命令打包
 * 在vue.config.js中修改端口号，默认端口为8020
 
