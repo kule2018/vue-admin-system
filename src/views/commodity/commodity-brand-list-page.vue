@@ -4,7 +4,7 @@
     <div class="search-bar" @keydown.enter="search">
       <el-input
         v-model="searchForm.name"
-        placeholder="请输入类别名"
+        placeholder="请输入品牌名"
         size="small"
       />
       <el-button
@@ -24,13 +24,7 @@
       @row-click="openDetails"
       v-loading.fullscreen="isLoading"
     >
-      <el-table-column label="分类图">
-        <template slot-scope="scope">
-          <el-avatar :src="baseUrl + scope.row.icon" />
-        </template>
-      </el-table-column>
-      <el-table-column prop="sortNumber" label="排序号" />
-      <el-table-column prop="name" label="分类名" />
+      <el-table-column prop="brandName" label="品牌名" />
       <el-table-column fixed="right" width="150" label="操作">
         <template slot-scope="scope">
           <el-button
@@ -57,15 +51,13 @@
 </template>
 <script>
 import lodash from "lodash";
-import base from "@/api/base";
-import commodityClassifyEditPage from "@/views/commodity-classify-edit-page";
-import commodityClassifyDetailsPage from "@/views/commodity-classify-details-page";
+import commodityBrandEditPage from "@/views/commodity/commodity-brand-edit-page";
+import commodityBrandDetailsPage from "@/views/commodity/commodity-brand-details-page";
 
 export default {
   name: "commodity-classify-list-page",
   data() {
     return {
-      tabActiveName: "all",
       tableData: [],
       searchForm: {
         name: "",
@@ -74,26 +66,17 @@ export default {
       },
       currentPage: 1,
       isLoading: false,
-      total: 0,
-      baseUrl: ""
+      total: 0
     };
   },
   mounted() {
-    this.$api.commodityClassifyMangeAPI.getCommodityClassifyList().then(res => {
-      if (lodash.isEqual(res.code, "success")) {
-        this.total = res.total;
-        this.tableData = res.data;
-        this.baseUrl = base.defaultBaseUrl;
-      } else {
-        this.$vb.plugin.message.error(`获取商品分类列表失败,${res.code}`);
-      }
-    });
+    this.search();
   },
   methods: {
     search() {
       this.isLoading = true;
-      this.$api.commodityClassifyMangeAPI
-        .getCommodityClassifyList(this.searchForm)
+      this.$api.commodityBrandMangeAPI
+        .getCommodityBrandList(this.searchForm)
         .then(res => {
           if (lodash.isEqual(res.code, "success")) {
             this.tableData = res.data;
@@ -109,34 +92,34 @@ export default {
         case 0:
           // 新增
           this.$vb.plugin.openLayer(
-            commodityClassifyEditPage,
+            commodityBrandEditPage,
             this,
             { state: "add" },
-            "商品分类增加",
-            600,
-            350
+            "商品品牌增加",
+            400,
+            220
           );
           break;
         case 1:
           // 变动
           this.$vb.plugin.openLayer(
-            commodityClassifyEditPage,
+            commodityBrandEditPage,
             this,
-            { state: "update", name: row.name },
-            "商品分类变动",
-            600,
-            350
+            Object.assign({ state: "update" }, row),
+            "商品品牌变动",
+            400,
+            220
           );
           break;
         case 2:
           // 详情
           this.$vb.plugin.openLayer(
-            commodityClassifyDetailsPage,
+            commodityBrandDetailsPage,
             this,
-            { classifyId: row.classifyId, colNum: "one-col" },
-            "商品分类详情",
-            600,
-            350
+            { brandId: row.brandId, colNum: "one-col" },
+            "商品品牌详情",
+            400,
+            220
           );
           break;
       }
@@ -157,5 +140,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/commodity-classify-list";
+@import "~@/assets/scss/commodity-brand-list.scss";
 </style>

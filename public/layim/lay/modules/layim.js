@@ -587,7 +587,8 @@ layui
           maxmin: !0,
           offset: i.offset || "auto",
           anim: i.anim || 0,
-          closeBtn: !j.base.brief && 1,
+          // closeBtn: !j.base.brief && 1, // 客服模式不显示关闭按钮
+          closeBtn: 1,
           content: n(
             '<ul class="layui-unselect layim-chat-list">' +
               v +
@@ -661,7 +662,7 @@ layui
             shade: !1,
             closeBtn: !1,
             anim: a.anim || 2,
-            offset: "b",
+            offset: "lb",
             move: "#layui-layim-min",
             resize: !1,
             area: ["182px", "50px"],

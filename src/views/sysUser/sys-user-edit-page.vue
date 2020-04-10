@@ -119,7 +119,7 @@
 <script>
 import baseUrl from "@/api/base";
 import _ from "lodash";
-import allotSupplierPage from "@/views/allot-supplier-page";
+import allotSupplierPage from "@/views/supplier/allot-supplier-page";
 
 export default {
   name: "sys-user-edit",

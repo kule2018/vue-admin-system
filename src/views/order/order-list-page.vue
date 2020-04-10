@@ -149,8 +149,8 @@
 
 <script>
 import _ from "lodash";
-import orderDetailPage from "@/views/order-list-details-page";
-import allotSupplierPage from "@/views/allot-supplier-page";
+import orderDetailPage from "@/views/order/order-list-details-page";
+import allotSupplierPage from "@/views/supplier/allot-supplier-page";
 export default {
   name: "order-list-page",
   data() {

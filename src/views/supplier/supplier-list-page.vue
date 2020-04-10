@@ -107,8 +107,8 @@
 
 <script>
 import lodash from "lodash";
-import supplierListDetails from "@/views/supplier-list-details-page";
-import supplierListEditPage from "@/views/supplier-list-edit-page";
+import supplierListDetails from "@/views/supplier/supplier-list-details-page";
+import supplierListEditPage from "@/views/supplier/supplier-list-edit-page";
 import format from "@/utils/format";
 
 export default {
@@ -333,5 +333,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/supplier-list-page";
+@import "~@/assets/scss/supplier-list-page.scss";
 </style>

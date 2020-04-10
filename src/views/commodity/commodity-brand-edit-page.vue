@@ -130,5 +130,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/commodity-classify-edit-page";
+@import "~@/assets/scss/commodity-classify-edit-page.scss";
 </style>
