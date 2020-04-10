@@ -147,8 +147,8 @@
 
 <script>
 import _ from "lodash";
-import materialDetailPage from "@/views/material-list-details-page";
-import materialEditPage from "@/views/material-list-edit-page";
+import materialDetailPage from "@/views/material/material-list-details-page";
+import materialEditPage from "@/views/material/material-list-edit-page";
 export default {
   name: "order-list-page",
   data() {

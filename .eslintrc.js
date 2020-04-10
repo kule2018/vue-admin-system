@@ -4,7 +4,8 @@ module.exports = {
     node: true
   },
   globals: {
-    layui: true
+    layui: true,
+    layer: true,
   },
   extends: ["plugin:vue/essential", "eslint:recommended", "@vue/prettier"],
   parserOptions: {

@@ -46,42 +46,45 @@ const routes = [
           {
             name: "sysMaterialSearch",
             path: "sysMaterialSearch",
-            component: () => import("@/views/material-list-page")
+            component: () => import("@/views/material/material-list-page")
           },
           {
             name: "sysUserSearch",
             path: "sysUserSearch",
-            component: () => import("@/views/sys-user-list-page")
+            component: () => import("@/views/sysUser/sys-user-list-page")
           },
           {
             name: "sysPersonSearch",
             path: "sysPersonSearch",
-            component: () => import("@/views/user-list-page")
+            component: () => import("@/views/user/user-list-page")
           },
           {
             name: "sysSupplierSearch",
             path: "sysSupplierSearch",
-            component: () => import("@/views/supplier-list-page")
+            component: () => import("@/views/supplier/supplier-list-page")
           },
           {
             name: "commonClassifySearch",
             path: "commonClassifySearch",
-            component: () => import("@/views/commodity-classify-list-page")
+            component: () =>
+              import("@/views/commodity/commodity-classify-list-page")
           },
           {
             name: "commonMaterialCategorySearch",
             path: "commonMaterialCategorySearch",
-            component: () => import("@/views/commodity-category-list-page")
+            component: () =>
+              import("@/views/commodity/commodity-category-list-page")
           },
           {
             name: "commonMaterialBrandSearch",
             path: "commonMaterialBrandSearch",
-            component: () => import("@/views/commodity-brand-list-page")
+            component: () =>
+              import("@/views/commodity/commodity-brand-list-page")
           },
           {
             name: "sysOrderSearch",
             path: "sysOrderSearch",
-            component: () => import("@/views/order-list-page")
+            component: () => import("@/views/order/order-list-page")
           }
         ]
       }

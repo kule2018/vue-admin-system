@@ -367,5 +367,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/supplier-list-edit-page";
+@import "~@/assets/scss/supplier-list-edit-page.scss";
 </style>

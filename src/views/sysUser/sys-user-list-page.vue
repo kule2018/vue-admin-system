@@ -95,8 +95,8 @@
 <script>
 import lodash from "lodash";
 import baseUrl from "@/api/base";
-import sysUserDetail from "@/views/sys-user-detail-page";
-import sysUserEdit from "@/views/sys-user-edit-page";
+import sysUserDetail from "@/views/sysUser/sys-user-detail-page";
+import sysUserEdit from "@/views/sysUser/sys-user-edit-page";
 export default {
   name: "sys-user-list-page",
   data() {

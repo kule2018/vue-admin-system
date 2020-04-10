@@ -60,8 +60,8 @@
 <script>
 import lodash from "lodash";
 import base from "@/api/base";
-import commodityCategoryEditPage from "@/views/commodity-category-edit-page.vue";
-import commodityCategoryDetailsPage from "@/views/commodity-category-details-page.vue";
+import commodityCategoryEditPage from "@/views/commodity/commodity-category-edit-page.vue";
+import commodityCategoryDetailsPage from "@/views/commodity/commodity-category-details-page.vue";
 
 export default {
   name: "commodity-category-list-page",
@@ -160,5 +160,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/commodity-category-list";
+@import "~@/assets/scss/commodity-category-list.scss";
 </style>
