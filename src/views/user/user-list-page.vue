@@ -87,7 +87,7 @@
 
 <script>
 import lodash from "lodash";
-import userListDetails from "@/views/user-list-details-page";
+import userListDetails from "@/views/user/user-list-details-page";
 export default {
   name: "user-list-page",
   data() {

@@ -111,12 +111,12 @@
 <script>
 import { Icon } from "element-ui";
 import menu from "@/config/menu";
-import addDataPage from "@/views/add-data-page";
-import tablePage from "@/views/table-page";
+import addDataPage from "@/views/demo/add-data-page";
+import tablePage from "@/views/demo/table-page";
 import base from "@/api/base";
 import lodash from "lodash";
-import detailPage from "@/views/detail-page";
-import detailPageOne from "@/views/detail-page-one";
+import detailPage from "@/views/demo/detail-page";
+import detailPageOne from "@/views/demo/detail-page-one";
 
 export default {
   name: "index",

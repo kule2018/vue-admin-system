@@ -1,0 +1,20 @@
+.service_ol {
+  fill: #515151;
+  position: fixed;
+  bottom: 15%;
+  right: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #d3d3d3;
+  cursor: pointer;
+  transition: .25s box-shadow;
+
+  &:hover {
+    box-shadow: 0 0 10px #c1c1c1;
+  }
+}
