@@ -25,6 +25,12 @@ export default {
         }
       });
     }, 1200000);
+    console.log("layui集成成功");
+    console.log(layui);
+    layui.use("layim", layim => {
+      console.log("layim集成成功");
+      console.log(layim);
+    });
   },
   data() {
     return {};
