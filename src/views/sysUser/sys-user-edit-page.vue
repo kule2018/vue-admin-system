@@ -84,14 +84,13 @@
           </el-form-item>
           <el-form-item
             label="供应商"
-            prop="supplierName"
+            prop="supplierId"
             v-if="+defaultRole === 450"
           >
             <el-input
               :readonly="true"
               v-model="supplierName"
               size="small"
-              :disabled="true"
               style="width: 215px"
             ></el-input>
             <el-button
@@ -143,7 +142,7 @@ export default {
         roleTypeId: [
           { required: true, message: "请选择角色类型", trigger: "change" }
         ],
-        supplierName: [
+        supplierId: [
           { required: true, message: "请选择供应商", trigger: "none" }
         ]
       },
