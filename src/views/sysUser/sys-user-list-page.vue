@@ -174,7 +174,7 @@ export default {
             { colNum: "one-col", userid: userid[0] },
             "系统用户详情",
             420,
-            310
+            330
           );
           break;
         case "add":
