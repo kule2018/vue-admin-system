@@ -9,8 +9,10 @@ const imManageAPI = {
     });
   },
   sendMessage(params) {
-  	console.log('发送的参数：' + params)
-    return services._axios.post(`${base.defaultBaseUrl}/im/user/sendMessage`, params);
+    return services._axios.post(
+      `${base.defaultBaseUrl}/im/user/sendMessage`,
+      params
+    );
   }
 };
 

@@ -10,10 +10,7 @@
       <div class="left-banner"></div>
       <div class="right-panel">
         <div class="login-logo">
-          <img
-            src="http://v10.e-office.cn/eoffice10/server/public/login/logo/logo.png?123456"
-            alt=""
-          />
+          <img src="@/assets/img/login-logo.png" alt="" />
         </div>
         <div class="tools-bar">
           <svg

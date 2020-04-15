@@ -3,10 +3,7 @@
     <div class="header-panel">
       <div class="main-panel">
         <div class="logo-panel">
-          <img
-            src="https://static.oschina.net/new-osc/img/logo_new.svg"
-            alt=""
-          />
+          <img src="@/assets/img/logo.png" alt="" />
         </div>
         <div class="contracted-state-panel" ref="zoom" @click="zoom">
           <icon class="el-icon-s-fold" v-if="isCollapse === false" />
