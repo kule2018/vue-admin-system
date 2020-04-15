@@ -12,6 +12,24 @@ export default {
   components: {
     mainContent
   },
+  watch: {
+    $route() {
+      if (
+        document.getElementsByClassName("layui-layim").length > 0 &&
+        this.$route.path === "/login"
+      ) {
+        let layim = document.getElementsByClassName("layui-layim")[0];
+        layim.remove();
+      }
+      if (
+        document.getElementsByClassName("layui-layim-min").length > 0 &&
+        this.$route.path === "/login"
+      ) {
+        let layim = document.getElementsByClassName("layui-layim-min")[0];
+        layim.remove();
+      }
+    }
+  },
   created() {
     const self = this;
     // 给vuex中的userInfo赋值
@@ -25,12 +43,7 @@ export default {
         }
       });
     }, 1200000);
-    console.log("layui集成成功");
-    console.log(layui);
-    layui.use("layim", layim => {
-      console.log("layim集成成功");
-      console.log(layim);
-    });
+    layui.use("layim", () => {});
   },
   data() {
     return {};
