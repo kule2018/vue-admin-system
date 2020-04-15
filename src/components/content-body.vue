@@ -138,7 +138,7 @@
 
 						if (data.emit === 'chatMessage') {
 
-							// res.data即你发送消息传递的数据（阅读：监听发送的消息）
+							// res.data 即你发送消息传递的数据（阅读：监听发送的消息）
 							self.layim.getMessage({
 								// 消息来源用户名
 								username: data.username,
@@ -152,9 +152,9 @@
 								content: data.content,
 								// 消息id，可不传。除非你要对消息进行一些操作（如撤回）
 								cid: 0,
-								// 是否我发送的消息，如果为true，则会显示在右方
+								// 是否我发送的消息，如果为 true，则会显示在右方
 								mine: false,
-								// 消息的发送者id（比如群组中的某个消息发送者），可用于自动解决浏览器多窗口时的一些问题
+								// 消息的发送者 id（比如群组中的某个消息发送者），可用于自动解决浏览器多窗口时的一些问题
 								fromid: data.sendPersonId,
 								// 服务端时间戳毫秒数。注意：如果你返回的是标准的 unix 时间戳，记得要 *1000
 								// timestamp: 1467475443306
