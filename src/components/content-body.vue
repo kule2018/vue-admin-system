@@ -83,11 +83,11 @@
 					// 打开一个 web socket
 					if('WebSocket' in window) {
 						self.websocket = new WebSocket(self.baseWsAddress + "/chatHandler?id=" + self.info.data.data.mine.id);
-					} else if('MozWebSocket' in window) {
+//					} else if('MozWebSocket' in window) {
 //						self.websocket = new MozWebSocket(self.baseWsAddress + "/Bank/webSocketServer");
-					} else {
+//					} else {
 //						self.websocket = new SockJS(self.baseAddress + "/sockjs/webSocketServer");
-					}
+//					}
 
 					self.websocket.onopen = function() {
 						// Web Socket 已连接上，使用 send() 方法发送数据
