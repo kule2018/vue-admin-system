@@ -24,6 +24,8 @@ import commodityCategoryMangeAPI from "@/api/commodityCategoryMangeAPI";
 import commodityBrandMangeAPI from "@/api/commodityBrandMangeAPI";
 // 订单管理接口
 import orderManageAPI from "@/api/orderManageAPI";
+// 即时通讯管理接口
+import imManageAPI from "@/api/imManageAPI";
 
 // 导出接口
 export default {
@@ -37,5 +39,6 @@ export default {
   commodityClassifyMangeAPI,
   commodityCategoryMangeAPI,
   commodityBrandMangeAPI,
-  orderManageAPI
+  orderManageAPI,
+  imManageAPI
 };
