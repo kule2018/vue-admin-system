@@ -98,7 +98,7 @@
 //					self.websocket.onerror = function(evnt) {
 //						console.log('错误', evnt)
 //					};
-					
+//
 //					self.websocket.onclose = function(evnt) {
 //						console.log('关闭', evnt)
 //					};
