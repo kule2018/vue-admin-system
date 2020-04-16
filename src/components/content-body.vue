@@ -126,7 +126,8 @@ export default {
             avatar: mine.avatar,
             emit: "chatMessage",
             sendPersonId: mine.id, // 发送人
-            receivePersonId: to.id // 接收人
+            receivePersonId: to.id, // 接收人
+            temporary: to.temporary // true：临时的
           };
 
           // 保存消息
