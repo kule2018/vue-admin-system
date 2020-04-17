@@ -29,25 +29,6 @@
               <dd><icon class="el-icon-s-custom" /><span>个性设置</span></dd>
               <!--<dd><icon class="el-icon-s-open" /><span>主题修改</span></dd>-->
               <dd><icon class="el-icon-lock" /><span>密码修改</span></dd>
-              <dd @click="testAdd()">
-                <icon class="el-icon-plus" /><span>录入页面测试</span>
-              </dd>
-              <dd @click="testNotify()">
-                <icon class="el-icon-warning-outline" />
-                <span>测试通知气泡</span>
-              </dd>
-              <dd @click="testResult()">
-                <icon class="el-icon-bangzhu" /><span>操作结果测试</span>
-              </dd>
-              <dd @click="testDataTable()">
-                <icon class="el-icon-s-help" /><span>数据表格测试</span>
-              </dd>
-              <dd @click="testDetail()">
-                <icon class="el-icon-view" /><span>测试详情页</span>
-              </dd>
-              <dd @click="testDetailOne()">
-                <icon class="el-icon-view" /><span>测试详情页(单列)</span>
-              </dd>
               <dd @click="logout">
                 <icon class="el-icon-switch-button" /><span>退出登录</span>
               </dd>
