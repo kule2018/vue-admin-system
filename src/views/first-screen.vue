@@ -191,9 +191,9 @@
       <el-col :span="12">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>今日已收货</span>
+            <span>待审核供应商</span>
           </div>
-          <div ref="secondChart" :style="{ height: '400px' }"></div>
+          <div ref="fourthChart" :style="{ height: '400px' }"></div>
         </el-card>
       </el-col>
     </el-row>
@@ -209,9 +209,9 @@
       <el-col :span="12">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>待审核供应商</span>
+            <span>出货统计</span>
           </div>
-          <div ref="fourthChart" :style="{ height: '400px' }"></div>
+          <div ref="secondChart" :style="{ height: '400px' }"></div>
         </el-card>
       </el-col>
     </el-row>
