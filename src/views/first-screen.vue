@@ -26,7 +26,7 @@
             </svg>
             <div class="tips-info-panel">
               <div class="num">{{ tipsData.news }}</div>
-              <div class="title">新消息</div>
+              <div class="title">待处理订单</div>
             </div>
             <router-link to="" class="more-link">
               <span>查看更多</span>
@@ -69,7 +69,7 @@
             </svg>
             <div class="tips-info-panel">
               <div class="num">{{ tipsData.watch }}</div>
-              <div class="title">收视率</div>
+              <div class="title">今日已收货</div>
             </div>
             <router-link to="" class="more-link">
               <span>查看更多</span>
@@ -112,7 +112,7 @@
             </svg>
             <div class="tips-info-panel">
               <div class="num">{{ tipsData.apple }}</div>
-              <div class="title">苹果设备</div>
+              <div class="title">待收货订单</div>
             </div>
             <router-link to="" class="more-link">
               <span>查看更多</span>
@@ -155,7 +155,7 @@
             </svg>
             <div class="tips-info-panel">
               <div class="num">{{ tipsData.android }}</div>
-              <div class="title">安卓设备</div>
+              <div class="title">待审核供应商</div>
             </div>
             <router-link to="" class="more-link">
               <span>查看更多</span>
@@ -183,7 +183,7 @@
       <el-col :span="12">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>卡片名称</span>
+            <span>待处理订单</span>
           </div>
           <div ref="firstChart" :style="{ height: '400px' }"></div>
         </el-card>
@@ -191,7 +191,7 @@
       <el-col :span="12">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>卡片名称</span>
+            <span>今日已收货</span>
           </div>
           <div ref="secondChart" :style="{ height: '400px' }"></div>
         </el-card>
@@ -201,7 +201,7 @@
       <el-col :span="12">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>卡片名称</span>
+            <span>待收货订单</span>
           </div>
           <div ref="thirdChart" :style="{ height: '400px' }"></div>
         </el-card>
@@ -209,7 +209,7 @@
       <el-col :span="12">
         <el-card>
           <div slot="header" class="clearfix">
-            <span>卡片名称</span>
+            <span>待审核供应商</span>
           </div>
           <div class="table-panel" :style="{ height: '400px' }">
             <el-table :data="tableData" style="width: 100%">
@@ -232,10 +232,10 @@ export default {
   data() {
     return {
       tipsData: {
-        news: 1349,
-        watch: "62%",
-        apple: 653,
-        android: 786
+        news: 20,
+        watch: "10",
+        apple: 9,
+        android: 1
       },
       tableData: [
         {
