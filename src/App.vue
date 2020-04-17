@@ -13,7 +13,10 @@ export default {
     mainContent
   },
   watch: {
-    $route() {
+    $route(val) {
+      if (val.path === "/login") {
+        this.$store.state.websocket.close();
+      }
       if (
         document.getElementsByClassName("layui-layim").length > 0 &&
         this.$route.path === "/login"
@@ -43,7 +46,6 @@ export default {
         }
       });
     }, 1200000);
-    layui.use("layim", () => {});
   },
   data() {
     return {};

@@ -211,15 +211,7 @@
           <div slot="header" class="clearfix">
             <span>待审核供应商</span>
           </div>
-          <div class="table-panel" :style="{ height: '400px' }">
-            <el-table :data="tableData" style="width: 100%">
-              <el-table-column prop="date" label="日期" width="180">
-              </el-table-column>
-              <el-table-column prop="name" label="姓名" width="180">
-              </el-table-column>
-              <el-table-column prop="address" label="地址"> </el-table-column>
-            </el-table>
-          </div>
+          <div ref="fourthChart" :style="{ height: '400px' }"></div>
         </el-card>
       </el-col>
     </el-row>
@@ -236,49 +228,31 @@ export default {
         watch: "10",
         apple: 9,
         android: 1
-      },
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ]
+      }
     };
   },
   mounted() {
     this.firstChart();
     this.secondChart();
     this.thirdChart();
+    this.fourthChart();
   },
   methods: {
     firstChart() {
       const mycharts = this.$echarts.init(this.$refs.firstChart);
+      let chartData = {
+        xAxis: ["4/11", "4/12", "4/13", "4/14", "4/15", "4/16", "4/17"],
+        series: [
+          {
+            name: "待处理",
+            data: [20, 15, 24, 17, 29, 32, 36]
+          },
+          {
+            name: "已处理",
+            data: [19, 15, 17, 12, 19, 24, 31]
+          }
+        ]
+      };
       let option = {
         title: {
           text: ""
@@ -293,7 +267,7 @@ export default {
           }
         },
         legend: {
-          data: ["邮件营销", "联盟广告", "视频广告", "直接访问", "搜索引擎"],
+          data: chartData.series.map(item => item.name),
           top: "10%"
         },
         grid: {
@@ -303,7 +277,7 @@ export default {
           {
             type: "category",
             boundaryGap: false,
-            data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+            data: chartData.xAxis
           }
         ],
         yAxis: [
@@ -311,105 +285,95 @@ export default {
             type: "value"
           }
         ],
-        series: [
-          {
-            name: "邮件营销",
+        series: chartData.series.map(item => {
+          return {
+            name: item.name,
             type: "line",
-            stack: "总量",
+            stack: "数量",
             areaStyle: {},
-            data: [120, 132, 101, 134, 90, 230, 210]
-          },
-          {
-            name: "联盟广告",
-            type: "line",
-            stack: "总量",
-            areaStyle: {},
-            data: [220, 182, 191, 234, 290, 330, 310]
-          },
-          {
-            name: "视频广告",
-            type: "line",
-            stack: "总量",
-            areaStyle: {},
-            data: [150, 232, 201, 154, 190, 330, 410]
-          },
-          {
-            name: "直接访问",
-            type: "line",
-            stack: "总量",
-            areaStyle: {},
-            data: [320, 332, 301, 334, 390, 330, 320]
-          },
-          {
-            name: "搜索引擎",
-            type: "line",
-            stack: "总量",
-            label: {
-              normal: {
-                show: true,
-                position: "top"
-              }
-            },
-            areaStyle: {},
-            data: [820, 932, 901, 934, 1290, 1330, 1320]
-          }
-        ]
+            data: item.data
+          };
+        })
       };
       mycharts.setOption(option);
       window.addEventListener("resize", () => mycharts.resize());
     },
     secondChart() {
       const mycharts = this.$echarts.init(this.$refs.secondChart);
-      let option = {
-        tooltip: {
-          trigger: "item",
-          formatter: "{a} <br/>{b}: {c} ({d}%)"
-        },
-        legend: {
-          orient: "vertical",
-          left: 10,
-          data: ["直接访问", "邮件营销", "联盟广告", "视频广告", "搜索引擎"]
-        },
+      let chartData = {
+        xAxis: ["4/11", "4/12", "4/13", "4/14", "4/15", "4/16", "4/17"],
         series: [
           {
-            name: "访问来源",
-            type: "pie",
-            radius: ["50%", "70%"],
-            avoidLabelOverlap: false,
-            label: {
-              normal: {
-                show: false,
-                position: "center"
-              },
-              emphasis: {
-                show: true,
-                textStyle: {
-                  fontSize: "30"
-                }
-              }
-            },
-            labelLine: {
-              normal: {
-                show: false
-              }
-            },
-            data: [
-              { value: 335, name: "直接访问" },
-              { value: 310, name: "邮件营销" },
-              { value: 234, name: "联盟广告" },
-              { value: 135, name: "视频广告" },
-              { value: 1548, name: "搜索引擎" }
-            ]
+            name: "待处理",
+            data: [1, 4, 0, 0, 2, 3, 2]
+          },
+          {
+            name: "已发货",
+            data: [19, 15, 17, 12, 19, 16, 14]
           }
         ]
+      };
+      let option = {
+        title: {
+          text: ""
+        },
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "cross",
+            label: {
+              backgroundColor: "#6a7985"
+            }
+          }
+        },
+        legend: {
+          data: chartData.series.map(item => item.name),
+          top: "10%"
+        },
+        grid: {
+          y: "25%"
+        },
+        xAxis: [
+          {
+            type: "category",
+            boundaryGap: false,
+            data: chartData.xAxis
+          }
+        ],
+        yAxis: [
+          {
+            type: "value"
+          }
+        ],
+        series: chartData.series.map(item => {
+          return {
+            name: item.name,
+            type: "line",
+            stack: "数量",
+            areaStyle: {},
+            data: item.data
+          };
+        })
       };
       mycharts.setOption(option);
       window.addEventListener("resize", () => mycharts.resize());
     },
     thirdChart() {
       const mycharts = this.$echarts.init(this.$refs.thirdChart);
+      let chartData = {
+        xAxis: ["4/11", "4/12", "4/13", "4/14", "4/15", "4/16", "4/17"],
+        series: [
+          {
+            name: "未收货",
+            data: [11, 14, 10, 10, 12, 13, 12]
+          },
+          {
+            name: "已收货",
+            data: [19, 15, 17, 12, 19, 16, 14]
+          }
+        ]
+      };
       let option = {
-        color: ["#3398DB"],
         tooltip: {
           trigger: "axis",
           axisPointer: {
@@ -423,10 +387,14 @@ export default {
           bottom: "3%",
           containLabel: true
         },
+        legend: {
+          data: chartData.series.map(item => item.name),
+          top: "2%"
+        },
         xAxis: [
           {
             type: "category",
-            data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            data: chartData.xAxis,
             axisTick: {
               alignWithLabel: true
             }
@@ -437,14 +405,71 @@ export default {
             type: "value"
           }
         ],
+        series: chartData.series.map(item => {
+          return {
+            name: item.name,
+            type: "bar",
+            data: item.data
+          };
+        })
+      };
+      mycharts.setOption(option);
+      window.addEventListener("resize", () => mycharts.resize());
+    },
+    fourthChart() {
+      const mycharts = this.$echarts.init(this.$refs.fourthChart);
+      let chartData = {
+        xAxis: ["4/11", "4/12", "4/13", "4/14", "4/15", "4/16", "4/17"],
         series: [
           {
-            name: "直接访问",
-            type: "bar",
-            barWidth: "60%",
-            data: [10, 52, 200, 334, 390, 330, 220]
+            name: "待处理",
+            data: [1, 0, 1, 1, 2, 1, 0]
+          },
+          {
+            name: "已处理",
+            data: [10, 11, 9, 11, 8, 10, 12]
           }
         ]
+      };
+      let option = {
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            // 坐标轴指示器，坐标轴触发有效
+            type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+          }
+        },
+        grid: {
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true
+        },
+        legend: {
+          data: chartData.series.map(item => item.name),
+          top: "2%"
+        },
+        xAxis: [
+          {
+            type: "category",
+            data: chartData.xAxis,
+            axisTick: {
+              alignWithLabel: true
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: "value"
+          }
+        ],
+        series: chartData.series.map(item => {
+          return {
+            name: item.name,
+            type: "bar",
+            data: item.data
+          };
+        })
       };
       mycharts.setOption(option);
       window.addEventListener("resize", () => mycharts.resize());

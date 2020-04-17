@@ -8,7 +8,8 @@ export default new Vuex.Store({
     resultFlag: "",
     resultShow: false,
     userInfo: {},
-    errorTimes: 0
+    errorTimes: 0,
+    websocket: null
   },
   mutations: {
     changeResultState(state, val) {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     resetErrorTimes(state) {
       state.errorTimes = 0;
+    },
+    wsData(state, val) {
+      state.websocket = val;
     }
   },
   actions: {},
