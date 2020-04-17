@@ -28,8 +28,7 @@ export default {
         param: {
           userid: this.$store.state.userInfo.userid
         }
-      },
-      websocket: null
+      }
     };
   },
   watch: {
@@ -88,11 +87,12 @@ export default {
 
         // 打开一个 web socket
         if ("WebSocket" in window) {
-          self.websocket = new WebSocket(
+          let websocket = new WebSocket(
             self.baseWsAddress +
               "/chatHandler?id=" +
               self.info.data.data.mine.id
           );
+          self.$store.commit("wsData", websocket);
         }
         //					else if('MozWebSocket' in window) {
         //						self.websocket = new MozWebSocket(self.baseWsAddress + "/Bank/webSocketServer");
@@ -100,19 +100,20 @@ export default {
         //						self.websocket = new SockJS(self.baseAddress + "/sockjs/webSocketServer");
         //					}
 
-        self.websocket.onopen = function() {
+        self.$store.state.websocket.onopen = function() {
           // Web Socket 已连接上，使用 send() 方法发送数据
           // self.websocket.send("发送数据");
           // alert("数据发送中...");
         };
 
-        //					self.websocket.onerror = function(evnt) {
-        //						console.log('错误', evnt)
-        //					};
+        // self.websocket.onerror = function(evnt) {
+        // 	console.log('错误', evnt)
+        // };
         //
-        //					self.websocket.onclose = function(evnt) {
-        //						console.log('关闭', evnt)
-        //					};
+        self.$store.state.websocket.onclose = function(ev) {
+          console.log("关闭", ev);
+          self.$store.commit("wsData", null);
+        };
 
         // 监听发送消息
         self.layim.on("sendMessage", function(data) {
@@ -132,15 +133,15 @@ export default {
 
           // 保存消息
           self.$api.imManageAPI.sendMessage(paramMap);
-          //							.then(res => {
-          //								if(lodash.isEqual(res.code, "success")) {
-          //									console.log('发送成功');
-          //								}
-          //							});
+          // .then(res => {
+          //    if(lodash.isEqual(res.code, "success")) {
+          //    	console.log('发送成功');
+          //    }
+          // });
         });
 
         // 接收消息
-        self.websocket.onmessage = function(res) {
+        self.$store.state.websocket.onmessage = function(res) {
           var data = res.data;
           data = JSON.parse(data);
 
