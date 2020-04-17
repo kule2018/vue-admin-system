@@ -245,10 +245,12 @@ export default {
         series: [
           {
             name: "待处理",
+            color: "#009688",
             data: [20, 15, 24, 17, 29, 32, 36]
           },
           {
             name: "已处理",
+            color: "#1e9fff",
             data: [19, 15, 17, 12, 19, 24, 31]
           }
         ]
@@ -290,8 +292,16 @@ export default {
             name: item.name,
             type: "line",
             stack: "数量",
-            areaStyle: {},
-            data: item.data
+            itemStyle: {
+              normal: {
+                color: item.color,
+                lineStyle: {
+                  color: item.color
+                }
+              }
+            },
+            data: item.data,
+            smooth: true
           };
         })
       };
@@ -305,10 +315,12 @@ export default {
         series: [
           {
             name: "待处理",
+            color: "#009688",
             data: [1, 4, 0, 0, 2, 3, 2]
           },
           {
             name: "已发货",
+            color: "#1e9fff",
             data: [19, 15, 17, 12, 19, 16, 14]
           }
         ]
@@ -350,8 +362,17 @@ export default {
             name: item.name,
             type: "line",
             stack: "数量",
-            areaStyle: {},
-            data: item.data
+            itemStyle: {
+              normal: {
+                color: item.color,
+                lineStyle: {
+                  color: item.color
+                }
+              }
+            },
+            // areaStyle: {},
+            data: item.data,
+            smooth: true
           };
         })
       };
@@ -365,10 +386,12 @@ export default {
         series: [
           {
             name: "未收货",
+            color: "#009688",
             data: [11, 14, 10, 10, 12, 13, 12]
           },
           {
             name: "已收货",
+            color: "#1e9fff",
             data: [19, 15, 17, 12, 19, 16, 14]
           }
         ]
@@ -409,6 +432,11 @@ export default {
           return {
             name: item.name,
             type: "bar",
+            itemStyle: {
+              normal: {
+                color: item.color
+              }
+            },
             data: item.data
           };
         })
@@ -423,10 +451,12 @@ export default {
         series: [
           {
             name: "待处理",
+            color: "#009688",
             data: [1, 0, 1, 1, 2, 1, 0]
           },
           {
             name: "已处理",
+            color: "#1e9fff",
             data: [10, 11, 9, 11, 8, 10, 12]
           }
         ]
@@ -467,6 +497,11 @@ export default {
           return {
             name: item.name,
             type: "bar",
+            itemStyle: {
+              normal: {
+                color: item.color
+              }
+            },
             data: item.data
           };
         })
