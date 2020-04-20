@@ -14,7 +14,7 @@ export default {
   },
   watch: {
     $route(val) {
-      if (val.path === "/login") {
+      if (val.path === "/login" && this.$store.state.websocket) {
         this.$store.state.websocket.close();
       }
       if (

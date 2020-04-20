@@ -31,13 +31,6 @@ export default {
       }
     };
   },
-  watch: {
-    $route: function() {
-      if (this.$store.state.userInfo && this.$route.path !== "/login") {
-        this.createLayim();
-      }
-    }
-  },
   mounted() {
     if (
       this.$store.state.userInfo &&
@@ -111,7 +104,7 @@ export default {
         // };
         //
         self.$store.state.websocket.onclose = function(ev) {
-          console.log("关闭", ev);
+          console.log("关闭 WebSocket 连接", ev);
           self.$store.commit("wsData", null);
         };
 
