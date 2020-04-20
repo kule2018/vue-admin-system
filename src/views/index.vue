@@ -130,7 +130,8 @@ export default {
     logout() {
       localStorage.removeItem("userInfo");
       this.$store.state.userInfo = {};
-      this.$router.push("/login");
+      this.$router.replace("/login");
+      history.pushState(null, null, document.URL);
     },
     testAdd() {
       this.$vb.plugin.openLayer(
