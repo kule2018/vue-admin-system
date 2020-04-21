@@ -65,7 +65,6 @@
           </label>
           <div class="key-code"></div>
           <button @click="login">登录</button>
-          <button @click="testLogin">后台测试</button>
         </div>
         <div class="scan-code-panel">
           <div ref="scanQrCode"></div>
@@ -112,13 +111,6 @@ export default {
     }
   },
   methods: {
-    testLogin() {
-      this.userInfo = {
-        userName: "hdtest",
-        password: "123456"
-      };
-      this.login();
-    },
     login: function() {
       this.loading = true;
       if (
