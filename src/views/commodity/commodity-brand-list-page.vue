@@ -1,17 +1,18 @@
 <!--商品分类列表-->
 <template>
   <div class="table-panel">
-    <div class="search-bar" @keydown.enter="search">
+    <div class="search-bar" @keydown.enter="search(1)">
       <el-input
         v-model="searchForm.name"
         placeholder="请输入品牌名"
         size="small"
+        clearable
       />
       <el-button
         type="primary"
         icon="el-icon-search"
         size="small"
-        @click="search"
+        @click="search(1)"
         >查询</el-button
       >
       <el-button type="primary" plain size="small" @click="handleClick(0)"
@@ -73,7 +74,10 @@ export default {
     this.search();
   },
   methods: {
-    search() {
+    search(...state) {
+      if (state[0] === 1) {
+        this.searchForm.pageNum = 1;
+      }
       this.isLoading = true;
       this.$api.commodityBrandMangeAPI
         .getCommodityBrandList(this.searchForm)

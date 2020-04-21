@@ -1,15 +1,17 @@
 <template>
   <div class="table-panel">
-    <div class="search-bar" @keydown.enter="search">
+    <div class="search-bar" @keydown.enter="search(1)">
       <el-input
         v-model="searchForm.nickName"
         placeholder="请输入用户名"
         size="small"
+        clearable
       ></el-input>
       <el-input
         v-model="searchForm.orderNo"
         placeholder="请输入订单号"
         size="small"
+        clearable
       ></el-input>
       <el-select
         v-model="searchForm.state"
@@ -30,6 +32,7 @@
         placeholder="开始时间"
         type="date"
         size="small"
+        clearable
       ></el-date-picker>
       <i style="margin: 0 9px 0 0; color: #bbb;">--</i>
       <el-date-picker
@@ -37,13 +40,14 @@
         placeholder="结束时间"
         type="date"
         size="small"
+        clearable
       ></el-date-picker>
       <div></div>
       <el-button
         type="primary"
         icon="el-icon-search"
         size="mini"
-        @click="search"
+        @click="search(1)"
         >查询</el-button
       >
     </div>
@@ -173,7 +177,10 @@ export default {
     };
   },
   methods: {
-    search() {
+    search(...state) {
+      if (state[0] === 1) {
+        this.searchForm.pageNum = 1;
+      }
       this.isLoading = true;
       if (this.activeName === "waitAllot") {
         this.$api.orderManageAPI.getOrderList(this.searchForm).then(res => {

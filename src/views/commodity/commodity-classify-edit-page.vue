@@ -11,6 +11,7 @@
                   v-model="form.name"
                   size="small"
                   placeholder="请输入类别名"
+                  clearable
                 />
               </el-form-item>
             </el-col>
@@ -20,6 +21,7 @@
                   v-model="form.sortNumber"
                   size="small"
                   placeholder="请输入排序号"
+                  clearable
                 />
               </el-form-item>
             </el-col>
