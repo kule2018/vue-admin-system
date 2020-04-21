@@ -9,6 +9,7 @@
               v-model="form.brandName"
               size="small"
               placeholder="请输入品牌名"
+              clearable
             />
           </el-form-item>
         </el-form>

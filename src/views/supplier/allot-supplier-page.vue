@@ -1,7 +1,7 @@
 <template>
   <div id="layerContent">
     <div class="table-panel">
-      <div class="search-bar">
+      <div class="search-bar" @keydown.enter="search(1)">
         <el-input
           v-model="searchForm.name"
           placeholder="请输入名称"
@@ -12,7 +12,7 @@
           type="primary"
           icon="el-icon-search"
           size="small"
-          @click="search"
+          @click="search(1)"
           >查询</el-button
         >
       </div>
@@ -95,7 +95,10 @@ export default {
     this.search();
   },
   methods: {
-    search() {
+    search(...state) {
+      if (state[0] === 1) {
+        this.searchForm.pageNum = 1;
+      }
       this.isLoading = true;
       this.$api.supplierManageAPI.allotSupplier(this.searchForm).then(res => {
         this.isLoading = false;

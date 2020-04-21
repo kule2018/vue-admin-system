@@ -1,17 +1,18 @@
 <!--商品分类列表-->
 <template>
   <div class="table-panel">
-    <div class="search-bar" @keydown.enter="search">
+    <div class="search-bar" @keydown.enter="search(1)">
       <el-input
         v-model="searchForm.name"
         placeholder="请输入类别名"
         size="small"
+        clearable
       />
       <el-button
         type="primary"
         icon="el-icon-search"
         size="small"
-        @click="search"
+        @click="search(1)"
         >查询</el-button
       >
       <el-button type="primary" plain size="small" @click="handleClick(0)"
@@ -79,18 +80,14 @@ export default {
     };
   },
   mounted() {
-    this.$api.commodityClassifyMangeAPI.getCommodityClassifyList().then(res => {
-      if (lodash.isEqual(res.code, "success")) {
-        this.total = res.total;
-        this.tableData = res.data;
-        this.baseUrl = base.defaultBaseUrl;
-      } else {
-        this.$vb.plugin.message.error(`获取商品分类列表失败,${res.code}`);
-      }
-    });
+    this.baseUrl = base.defaultBaseUrl;
+    this.search();
   },
   methods: {
-    search() {
+    search(...state) {
+      if (state[0] === 1) {
+        this.searchForm.pageNum = 1;
+      }
       this.isLoading = true;
       this.$api.commodityClassifyMangeAPI
         .getCommodityClassifyList(this.searchForm)

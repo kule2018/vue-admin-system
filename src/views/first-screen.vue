@@ -2,7 +2,7 @@
 <template>
   <div class="first-screen" ref="firstScreen">
     <el-row :gutter="15">
-      <el-col :span="6">
+      <el-col :span="8">
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
           <div class="tips-card msg-tips">
             <svg
@@ -25,7 +25,7 @@
               />
             </svg>
             <div class="tips-info-panel">
-              <div class="num">{{ tipsData.news }}</div>
+              <div class="num">{{ stayProcessedOrderNumber }}</div>
               <div class="title">待处理订单</div>
             </div>
             <router-link to="" class="more-link">
@@ -49,7 +49,7 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="8">
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
           <div class="tips-card watch-tips">
             <svg
@@ -68,8 +68,8 @@
               />
             </svg>
             <div class="tips-info-panel">
-              <div class="num">{{ tipsData.watch }}</div>
-              <div class="title">今日已收货</div>
+              <div class="num">{{ todayDeliveryOrderNumber }}</div>
+              <div class="title">今日已发货</div>
             </div>
             <router-link to="" class="more-link">
               <span>查看更多</span>
@@ -92,7 +92,7 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="8">
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
           <div class="tips-card apple-tips">
             <svg
@@ -111,51 +111,8 @@
               ></path>
             </svg>
             <div class="tips-info-panel">
-              <div class="num">{{ tipsData.apple }}</div>
+              <div class="num">{{ stayReceivedCargoOrderNumber }}</div>
               <div class="title">待收货订单</div>
-            </div>
-            <router-link to="" class="more-link">
-              <span>查看更多</span>
-              <svg
-                t="1583464423226"
-                class="icon"
-                viewBox="0 0 1024 1024"
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                p-id="2235"
-                width="16"
-                height="16"
-              >
-                <path
-                  d="M512 149.333333c200.298667 0 362.666667 162.368 362.666667 362.666667s-162.368 362.666667-362.666667 362.666667S149.333333 712.298667 149.333333 512 311.701333 149.333333 512 149.333333z m0 64c-164.949333 0-298.666667 133.717333-298.666667 298.666667s133.717333 298.666667 298.666667 298.666667 298.666667-133.717333 298.666667-298.666667-133.717333-298.666667-298.666667-298.666667z m-42.666667 104.085334L663.914667 512 469.333333 706.581333 424.085333 661.333333l149.333334-149.333333-149.333334-149.333333L469.333333 317.418667z"
-                  p-id="2236"
-                ></path>
-              </svg>
-            </router-link>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card :body-style="{ padding: '0px' }" shadow="hover">
-          <div class="tips-card android-tips">
-            <svg
-              t="1583465479045"
-              class="icon"
-              viewBox="0 0 1024 1024"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              p-id="12931"
-              width="120"
-              height="120"
-            >
-              <path
-                d="M256.01088 768.01088c0 23.465669 19.199184 42.664853 42.664853 42.664853h42.664853v149.326987c0 35.411828 28.585452 63.99728 63.99728 63.99728s63.99728-28.585452 63.997281-63.99728v-149.326987h85.329706v149.326987c0 35.411828 28.585452 63.99728 63.997281 63.99728s63.99728-28.585452 63.99728-63.99728v-149.326987h42.664853c23.465669 0 42.664853-19.199184 42.664853-42.664853V341.362345H256.01088v426.648535zM149.348746 341.362345c-35.411828 0-63.99728 28.585452-63.99728 63.997281v298.653973c0 35.411828 28.585452 63.99728 63.99728 63.997281s63.99728-28.585452 63.99728-63.997281V405.359626c0-35.411828-28.585452-63.99728-63.99728-63.997281z m725.302508 0c-35.411828 0-63.99728 28.585452-63.99728 63.997281v298.653973c0 35.411828 28.585452 63.99728 63.99728 63.997281s63.99728-28.585452 63.99728-63.997281V405.359626c0-35.411828-28.585452-63.99728-63.99728-63.997281zM662.606933 92.199602l55.677633-55.677634A21.247097 21.247097 0 1 0 688.205845 6.443246L625.061862 69.373905A254.282526 254.282526 0 0 0 512 42.708372c-40.958259 0-79.356627 9.812916-113.701834 26.878857L334.940858 6.229922a21.247097 21.247097 0 1 0-30.078721 30.078722l55.890958 55.890958C297.395787 138.917616 256.01088 214.007758 256.01088 298.697492h511.97824c0-84.903058-41.598232-159.9932-105.382187-206.49789zM426.670293 213.367785h-42.664853V170.702932h42.664853v42.664853z m213.324267 0h-42.664853V170.702932h42.664853v42.664853z"
-                p-id="12932"
-              ></path>
-            </svg>
-            <div class="tips-info-panel">
-              <div class="num">{{ tipsData.android }}</div>
-              <div class="title">待审核供应商</div>
             </div>
             <router-link to="" class="more-link">
               <span>查看更多</span>
@@ -223,89 +180,103 @@ export default {
   name: "first-screen",
   data() {
     return {
-      tipsData: {
-        news: 20,
-        watch: "10",
-        apple: 9,
-        android: 1
-      }
+      stayProcessedOrderNumber: 0,
+      todayDeliveryOrderNumber: 0,
+      stayReceivedCargoOrderNumber: 0
     };
   },
   mounted() {
+    this.getSimpleData();
     this.firstChart();
     this.secondChart();
     this.thirdChart();
     this.fourthChart();
   },
   methods: {
+    getSimpleData() {
+      this.$api.systemManageAPI.getStayProcessed().then(res => {
+        this.stayProcessedOrderNumber = res.data.stayProcessedOrderNumber;
+      });
+      this.$api.systemManageAPI.getTodayDelivery().then(res => {
+        this.todayDeliveryOrderNumber = res.data.todayDeliveryOrderNumber;
+      });
+      this.$api.systemManageAPI.getStayReceivedCargo().then(res => {
+        this.stayReceivedCargoOrderNumber =
+          res.data.stayReceivedCargoOrderNumber;
+      });
+    },
     firstChart() {
       const mycharts = this.$echarts.init(this.$refs.firstChart);
-      let chartData = {
-        xAxis: ["4/11", "4/12", "4/13", "4/14", "4/15", "4/16", "4/17"],
-        series: [
-          {
-            name: "待处理",
-            color: "#009688",
-            data: [20, 15, 24, 17, 29, 32, 36]
-          },
-          {
-            name: "已处理",
-            color: "#1e9fff",
-            data: [19, 15, 17, 12, 19, 24, 31]
-          }
-        ]
-      };
-      let option = {
-        title: {
-          text: ""
-        },
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "cross",
-            label: {
-              backgroundColor: "#6a7985"
-            }
-          }
-        },
-        legend: {
-          data: chartData.series.map(item => item.name),
-          top: "10%"
-        },
-        grid: {
-          y: "25%"
-        },
-        xAxis: [
-          {
-            type: "category",
-            boundaryGap: false,
-            data: chartData.xAxis
-          }
-        ],
-        yAxis: [
-          {
-            type: "value"
-          }
-        ],
-        series: chartData.series.map(item => {
-          return {
-            name: item.name,
-            type: "line",
-            stack: "数量",
-            itemStyle: {
-              normal: {
-                color: item.color,
-                lineStyle: {
-                  color: item.color
-                }
-              }
+      this.$api.systemManageAPI.getStayProcessedChart().then(res => {
+        let chartData = {
+          xAxis: res.data.map(item =>
+            this.$vb.format.formatDate(item.date, "MM/dd")
+          ),
+          series: [
+            {
+              name: "待处理",
+              color: "#009688",
+              data: res.data.map(item => item.stayProcessed)
             },
-            data: item.data,
-            smooth: true
-          };
-        })
-      };
-      mycharts.setOption(option);
+            {
+              name: "已处理",
+              color: "#1e9fff",
+              data: res.data.map(item => item.hasProcessed)
+            }
+          ]
+        };
+        let option = {
+          title: {
+            text: ""
+          },
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "cross",
+              label: {
+                backgroundColor: "#6a7985"
+              }
+            }
+          },
+          legend: {
+            data: chartData.series.map(item => item.name),
+            top: "10%"
+          },
+          grid: {
+            y: "25%"
+          },
+          xAxis: [
+            {
+              type: "category",
+              boundaryGap: false,
+              data: chartData.xAxis
+            }
+          ],
+          yAxis: [
+            {
+              type: "value"
+            }
+          ],
+          series: chartData.series.map(item => {
+            return {
+              name: item.name,
+              type: "line",
+              stack: "数量",
+              itemStyle: {
+                normal: {
+                  color: item.color,
+                  lineStyle: {
+                    color: item.color
+                  }
+                }
+              },
+              data: item.data,
+              smooth: true
+            };
+          })
+        };
+        mycharts.setOption(option);
+      });
       window.addEventListener("resize", () => mycharts.resize());
     },
     secondChart() {
@@ -381,67 +352,76 @@ export default {
     },
     thirdChart() {
       const mycharts = this.$echarts.init(this.$refs.thirdChart);
-      let chartData = {
-        xAxis: ["4/11", "4/12", "4/13", "4/14", "4/15", "4/16", "4/17"],
-        series: [
-          {
-            name: "未收货",
-            color: "#009688",
-            data: [11, 14, 10, 10, 12, 13, 12]
-          },
-          {
-            name: "已收货",
-            color: "#1e9fff",
-            data: [19, 15, 17, 12, 19, 16, 14]
-          }
-        ]
-      };
-      let option = {
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            // 坐标轴指示器，坐标轴触发有效
-            type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
-          }
-        },
-        grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
-          containLabel: true
-        },
-        legend: {
-          data: chartData.series.map(item => item.name),
-          top: "2%"
-        },
-        xAxis: [
-          {
-            type: "category",
-            data: chartData.xAxis,
-            axisTick: {
-              alignWithLabel: true
-            }
-          }
-        ],
-        yAxis: [
-          {
-            type: "value"
-          }
-        ],
-        series: chartData.series.map(item => {
-          return {
-            name: item.name,
-            type: "bar",
-            itemStyle: {
-              normal: {
-                color: item.color
-              }
+      this.$api.systemManageAPI.getStayReceivedCargoChart().then(res => {
+        let chartData = {
+          xAxis: res.data.map(item =>
+            this.$vb.format.formatDate(item.date, "MM/dd")
+          ),
+          series: [
+            {
+              name: "未收货",
+              color: "#009688",
+              data: res.data.map(item => item.notReceivedCargo)
             },
-            data: item.data
-          };
-        })
-      };
-      mycharts.setOption(option);
+            {
+              name: "已收货",
+              color: "#1e9fff",
+              data: res.data.map(item => item.hasReceivedCargo)
+            },
+            {
+              name: "退货",
+              color: "#e7505a",
+              data: res.data.map(item => item.refundCargo)
+            }
+          ]
+        };
+        let option = {
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              // 坐标轴指示器，坐标轴触发有效
+              type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+            }
+          },
+          grid: {
+            left: "3%",
+            right: "4%",
+            bottom: "3%",
+            containLabel: true
+          },
+          legend: {
+            data: chartData.series.map(item => item.name),
+            top: "2%"
+          },
+          xAxis: [
+            {
+              type: "category",
+              data: chartData.xAxis,
+              axisTick: {
+                alignWithLabel: true
+              }
+            }
+          ],
+          yAxis: [
+            {
+              type: "value"
+            }
+          ],
+          series: chartData.series.map(item => {
+            return {
+              name: item.name,
+              type: "bar",
+              itemStyle: {
+                normal: {
+                  color: item.color
+                }
+              },
+              data: item.data
+            };
+          })
+        };
+        mycharts.setOption(option);
+      });
       window.addEventListener("resize", () => mycharts.resize());
     },
     fourthChart() {
