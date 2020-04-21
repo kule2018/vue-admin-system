@@ -37,6 +37,7 @@
                   v-model="form.name"
                   size="small"
                   placeholder="请输入商品名称"
+                  clearable
                 />
               </el-form-item>
             </el-col>
@@ -51,6 +52,7 @@
                   @change="categoryChange"
                   placeholder="请选择大类"
                   ref="classify"
+                  clearable
                 >
                   <el-option
                     v-for="(item, index) in firstCategorys"
@@ -64,6 +66,7 @@
                   value=""
                   size="small"
                   placeholder="请选择小类"
+                  clearable
                 >
                   <el-option
                     v-for="(item, index) in secondCategorys"
@@ -81,6 +84,7 @@
                   value=""
                   size="small"
                   placeholder="请选择品牌"
+                  clearable
                 >
                   <el-option
                     v-for="(item, index) in brands"
@@ -100,6 +104,7 @@
                   value=""
                   size="small"
                   placeholder="请选择单位"
+                  clearable
                 >
                   <el-option
                     v-for="(item, index) in units"
@@ -119,6 +124,7 @@
                   :precision="2"
                   :controls="false"
                   placeholder="请输入商品价格"
+                  clearable
                 ></el-input-number>
               </el-form-item>
             </el-col>
@@ -130,6 +136,7 @@
                   v-model="form.specs"
                   size="small"
                   placeholder="请输入商品规格"
+                  clearable
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -140,6 +147,7 @@
                   value=""
                   size="small"
                   placeholder="请选择商品状态"
+                  clearable
                 >
                   <el-option
                     v-for="(item, index) in statuses"
@@ -161,6 +169,7 @@
                   :controls="false"
                   placeholder="请输入商品起售数"
                   :style="{ 'text-align': 'left' }"
+                  clearable
                 ></el-input-number>
               </el-form-item>
             </el-col>
@@ -172,6 +181,7 @@
                   size="small"
                   :controls="false"
                   placeholder="请输入商品库存数"
+                  clearable
                 ></el-input-number>
               </el-form-item>
             </el-col>
@@ -211,6 +221,7 @@
               rows="4"
               resize="none"
               placeholder="请输入商品描述"
+              clearable
             ></el-input>
           </el-form-item>
           <el-form-item label="轮播图">

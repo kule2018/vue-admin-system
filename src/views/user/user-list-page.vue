@@ -1,17 +1,18 @@
 <template>
   <div id="userListPanel">
     <div class="table-panel">
-      <div class="search-bar" @keydown.enter="search">
+      <div class="search-bar" @keydown.enter="search(1)">
         <el-input
           v-model="searchForm.nickName"
           placeholder="请输入昵称"
           size="small"
+          clearable
         />
         <el-button
           type="primary"
           icon="el-icon-search"
           size="small"
-          @click="search"
+          @click="search(1)"
           >查询</el-button
         >
       </div>
@@ -108,14 +109,15 @@ export default {
     this.search();
   },
   methods: {
-    search() {
+    search(...state) {
+      if (state[0] === 1) {
+        this.searchForm.pageNum = 1;
+      }
       this.tableData = [];
       this.isLoading = true;
       if (this.tabActiveName === "all") {
         this.$api.weChatUserInfoAPI
-          .getUserInfoList({
-            nickName: this.searchParam
-          })
+          .getUserInfoList(this.searchForm)
           .then(res => {
             if (lodash.isEqual(res.code, "success")) {
               this.tableData = res.data;
@@ -128,9 +130,7 @@ export default {
       }
       if (this.tabActiveName === "freeze") {
         this.$api.weChatUserInfoAPI
-          .getUserFreezeList({
-            nickName: this.searchParam
-          })
+          .getUserFreezeList(this.searchForm)
           .then(res => {
             if (lodash.isEqual(res.code, "success")) {
               this.tableData = res.data;
@@ -143,9 +143,7 @@ export default {
       }
       if (this.tabActiveName === "block") {
         this.$api.weChatUserInfoAPI
-          .getUserBlockList({
-            nickName: this.searchParam
-          })
+          .getUserBlockList(this.searchForm)
           .then(res => {
             if (lodash.isEqual(res.code, "success")) {
               this.tableData = res.data;

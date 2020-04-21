@@ -1,21 +1,24 @@
 <template>
   <div class="table-panel">
-    <div class="search-bar" @keydown.enter="search">
+    <div class="search-bar" @keydown.enter="search(1)">
       <el-input
         v-model="searchForm.name"
         placeholder="请输入商品名"
         size="small"
+        clearable
       ></el-input>
       <el-input
         v-model="searchForm.startPrice"
         placeholder="最低价"
         size="small"
+        clearable
       ></el-input>
       <i style="margin: 0 9px 0 0; color: #bbb;">--</i>
       <el-input
         v-model="searchForm.endPrice"
         placeholder="最高价"
         size="small"
+        clearable
       ></el-input>
       <el-select
         v-model="searchForm.special"
@@ -42,8 +45,8 @@
         value=""
         size="small"
         placeholder="请选择商品状态"
-        clearable
         @click.native.once="getSelect('status')"
+        clearable
       >
         <el-option
           v-for="(item, index) in statuses"
@@ -60,8 +63,8 @@
         placeholder="请选择大类"
         ref="classify"
         @click.native.once="getSelect('classify')"
-        clearable
         @clear="clearClassify"
+        clearable
       >
         <el-option
           v-for="(item, index) in firstCategorys"
@@ -89,7 +92,7 @@
         type="primary"
         icon="el-icon-search"
         size="mini"
-        @click="search"
+        @click="search(1)"
         >查询</el-button
       >
       <el-button type="primary" plain size="mini" @click="handleClick('add')"
@@ -175,7 +178,10 @@ export default {
     };
   },
   methods: {
-    search() {
+    search(...state) {
+      if (state[0] === 1) {
+        this.searchForm.pageNum = 1;
+      }
       this.isLoading = true;
       this.$api.materialManageAPI.getMaterialList(this.searchForm).then(res => {
         if (_.isEqual(res.code, "success")) {

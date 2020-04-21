@@ -37,6 +37,7 @@
               v-model="form.nickName"
               placeholder="请输入昵称"
               size="small"
+              clearable
             ></el-input>
           </el-form-item>
           <el-form-item label="用户名" prop="loginName">
@@ -44,6 +45,7 @@
               v-model="form.loginName"
               placeholder="请输入用户名"
               size="small"
+              clearable
             ></el-input>
           </el-form-item>
           <el-form-item
@@ -56,6 +58,7 @@
               placeholder="请输入密码"
               v-model="form.loginPwd"
               size="small"
+              clearable
             >
               <i
                 slot="suffix"
@@ -73,6 +76,7 @@
               value=""
               size="small"
               @change="roleChange"
+              clearable
             >
               <el-option
                 v-for="(item, index) in roleList"
@@ -82,11 +86,7 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item
-            label="供应商"
-            prop="supplierId"
-            v-if="+defaultRole === 450"
-          >
+          <el-form-item label="供应商" v-if="+defaultRole === 450">
             <el-input
               :readonly="true"
               v-model="supplierName"
@@ -141,9 +141,6 @@ export default {
         loginPwd: [{ required: true, message: "请输入密码", trigger: "blur" }],
         roleTypeId: [
           { required: true, message: "请选择角色类型", trigger: "change" }
-        ],
-        supplierId: [
-          { required: true, message: "请选择供应商", trigger: "none" }
         ]
       },
       roleList: [],
@@ -175,6 +172,10 @@ export default {
   methods: {
     onSubmit() {
       this.$refs.form.validate(valid => {
+        if (!this.form.supplierId && +this.defaultRole === 450) {
+          valid = false;
+          this.$layer.msg("请分配供应商");
+        }
         if (valid) {
           if (this.parentData.state === "add") {
             this.$api.sysUserInfoAPI.addUserInfo(this.form).then(res => {

@@ -39,6 +39,7 @@
                   v-model="form.sortNumber"
                   size="small"
                   placeholder="排序号"
+                  clearable
                 />
               </el-form-item>
             </el-col>
@@ -51,6 +52,7 @@
                   placeholder="请选择"
                   value=""
                   size="small"
+                  clearable
                 >
                   <el-option
                     v-for="(item, index) in productCategoryDropDownList"
@@ -68,6 +70,7 @@
                   v-model="form.name"
                   size="small"
                   placeholder="请输入类别名"
+                  clearable
                 />
               </el-form-item>
             </el-col>

@@ -11,7 +11,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="供应商名称" prop="name">
-                <el-input v-model="form.name" />
+                <el-input v-model="form.name" clearable />
               </el-form-item>
             </el-col>
             <el-col :span="12"
@@ -27,7 +27,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="法人" prop="legalPerson">
-                <el-input v-model="form.legalPerson"></el-input>
+                <el-input v-model="form.legalPerson" clearable></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
@@ -36,6 +36,7 @@
                   v-model="form.registerCapital"
                   :precision="2"
                   :controls="false"
+                  clearable
                 ></el-input-number>
               </el-form-item>
             </el-col>
@@ -43,12 +44,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="固定电话" prop="phone">
-                <el-input v-model="form.phone"></el-input>
+                <el-input v-model="form.phone" clearable></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="手机" prop="mobilePhone">
-                <el-input v-model="form.mobilePhone" maxlength="11"></el-input>
+                <el-input v-model="form.mobilePhone" maxlength="11" clearable></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -59,6 +60,7 @@
                   v-model="defaultCertificateType"
                   placeholder="请选择"
                   value=""
+                  clearable
                 >
                   <el-option
                     v-for="item in options"
@@ -72,34 +74,34 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="证件号" prop="certificateNumber">
-                <el-input v-model="form.certificateNumber"></el-input>
+                <el-input v-model="form.certificateNumber" clearable></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
               <el-form-item label="企业性质" prop="enterprisNature">
-                <el-input v-model="form.enterprisNature"></el-input>
+                <el-input v-model="form.enterprisNature" clearable></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="经营范围" prop="scopeBusine">
-                <el-input v-model="form.scopeBusine"></el-input>
+                <el-input v-model="form.scopeBusine" clearable></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-form-item label="公司地址" prop="companyAddress">
-            <el-input type="textarea" v-model="form.companyAddress"></el-input>
+            <el-input type="textarea" v-model="form.companyAddress" clearable></el-input>
           </el-form-item>
           <el-row>
             <el-col :span="12">
               <el-form-item label="营业执照号" prop="businessLicenseNumber">
-                <el-input v-model="form.businessLicenseNumber"> </el-input>
+                <el-input v-model="form.businessLicenseNumber" clearable> </el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="卫生许可证号" prop="sanitaryPermitNumber">
-                <el-input v-model="form.sanitaryPermitNumber"></el-input>
+                <el-input v-model="form.sanitaryPermitNumber" clearable></el-input>
               </el-form-item>
             </el-col>
           </el-row>

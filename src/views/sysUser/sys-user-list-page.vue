@@ -1,16 +1,17 @@
 <template>
   <div class="table-panel">
-    <div class="search-bar" @keydown.enter="search">
+    <div class="search-bar" @keydown.enter="search(1)">
       <el-input
         v-model="searchForm.name"
         placeholder="请输入昵称"
         size="small"
+        clearable
       ></el-input>
       <el-button
         type="primary"
         icon="el-icon-search"
         size="small"
-        @click="search"
+        @click="search(1)"
         >查询</el-button
       >
       <el-button type="primary" plain size="small" @click="handleClick('add')"
@@ -114,13 +115,15 @@ export default {
     };
   },
   methods: {
-    search() {
-      console.log(this.tableData);
+    search(...state) {
+      if (state[0] === 1) {
+        this.searchForm.pageNum = 1;
+      }
       this.isLoading = true;
       switch (this.tabActiveName) {
         case "all":
           this.$api.sysUserInfoAPI
-            .getUserInfoList({ name: this.searchParam })
+            .getUserInfoList(this.searchForm)
             .then(res => {
               if (lodash.isEqual(res.code, "success")) {
                 this.tableData = res.data;
@@ -134,7 +137,7 @@ export default {
           break;
         case "freeze":
           this.$api.sysUserInfoAPI
-            .queryFreezeUserInfo({ name: this.searchParam })
+            .queryFreezeUserInfo(this.searchForm)
             .then(res => {
               if (lodash.isEqual(res.code, "success")) {
                 this.tableData = res.data;
@@ -148,7 +151,7 @@ export default {
           break;
         case "block":
           this.$api.sysUserInfoAPI
-            .queryDefriendUserInfo({ name: this.searchParam })
+            .queryDefriendUserInfo(this.searchForm)
             .then(res => {
               if (lodash.isEqual(res.code, "success")) {
                 this.tableData = res.data;

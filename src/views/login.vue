@@ -65,6 +65,7 @@
           </label>
           <div class="key-code"></div>
           <button @click="login">登录</button>
+          <button @click="testLogin">后台测试</button>
         </div>
         <div class="scan-code-panel">
           <div ref="scanQrCode"></div>
@@ -111,28 +112,34 @@ export default {
     }
   },
   methods: {
+    testLogin() {
+      this.userInfo = {
+        userName: "hdtest",
+        password: "123456"
+      };
+      this.login();
+    },
     login: function() {
-      const self = this;
       this.loading = true;
       if (
-        lodash.isEmpty(self.userInfo.userName) ||
-        lodash.isEmpty(self.userInfo.password)
+        lodash.isEmpty(this.userInfo.userName) ||
+        lodash.isEmpty(this.userInfo.password)
       ) {
-        self.$vb.plugin.message.error("错误", "账号和密码为必填项");
-        self.loading = false;
+        this.$vb.plugin.message.error("错误", "账号和密码为必填项");
+        this.loading = false;
         return false;
       }
       this.$api.websiteManageAPI
-        .login({ name: self.userInfo.userName, pwd: self.userInfo.password })
+        .login({ name: this.userInfo.userName, pwd: this.userInfo.password })
         .then(res => {
-          self.loading = false;
+          this.loading = false;
           if (res.code === "success") {
             localStorage.setItem("userInfo", JSON.stringify(res.data));
-            self.$store.commit("setUserInfo", res.data);
+            this.$store.commit("setUserInfo", res.data);
             this.$router.push({ name: "index" });
             return;
           }
-          self.$vb.plugin.message.error("错误", res.msg);
+          this.$vb.plugin.message.error("错误", res.msg);
         });
     }
   },
