@@ -72,6 +72,10 @@
       <el-table-column prop="totalAmount" label="总金额"></el-table-column>
       <el-table-column prop="orderStateName" label="订单状态"></el-table-column>
       <el-table-column
+        prop="expectedTime"
+        label="期望送达时间"
+      ></el-table-column>
+      <el-table-column
         prop="supplierName"
         label="供应商"
         v-if="activeName === 'endAllot'"
