@@ -30,8 +30,8 @@
           <el-avatar :src="baseUrl + scope.row.icon" />
         </template>
       </el-table-column>
-      <el-table-column prop="sortNumber" label="排序号" />
       <el-table-column prop="name" label="分类名" />
+      <el-table-column prop="sortNumber" label="排序号" />
       <el-table-column fixed="right" width="150" label="操作">
         <template slot-scope="scope">
           <el-button

@@ -3,7 +3,7 @@
   <div class="table-panel">
     <div class="search-bar" @keydown.enter="search(1)">
       <el-input
-        v-model="searchForm.name"
+        v-model="searchForm.brandName"
         placeholder="请输入品牌名"
         size="small"
         clearable
@@ -61,7 +61,7 @@ export default {
     return {
       tableData: [],
       searchForm: {
-        name: "",
+        brandName: "",
         pageNum: 1,
         pageSize: 10
       },
