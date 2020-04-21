@@ -49,19 +49,23 @@
           </div>
           <div>
             <div>付款方式</div>
-            <div>{{ detailsInfo.modePayment }}</div>
+            <div>{{ detailsInfo.modePayment || "无" }}</div>
           </div>
           <div>
             <div>供应商名</div>
-            <div>{{ detailsInfo.supplierName }}</div>
+            <div>{{ detailsInfo.supplierName || "无" }}</div>
           </div>
           <div>
             <div>分配状态</div>
-            <div>{{ detailsInfo.osStatusName }}</div>
+            <div>{{ detailsInfo.osStatusName || "未分配" }}</div>
           </div>
           <div>
             <div>分配时间</div>
-            <div>{{ detailsInfo.allocationTime }}</div>
+            <div>{{ detailsInfo.allocationTime || "无" }}</div>
+          </div>
+          <div>
+            <div>订单备注</div>
+            <div>{{ detailsInfo.remark || "无" }}</div>
           </div>
         </div>
       </el-tab-pane>

@@ -294,14 +294,16 @@ export default {
           ],
           yAxis: [
             {
-              type: "value"
+              type: "value",
+              min: 0,
+              interval: 0
             }
           ],
           series: chartData.series.map(item => {
             return {
               name: item.name,
               type: "line",
-              stack: "数量",
+              stack: item.name + "数量",
               itemStyle: {
                 normal: {
                   color: item.color,
@@ -321,73 +323,76 @@ export default {
     },
     secondChart() {
       const mycharts = this.$echarts.init(this.$refs.secondChart);
-      let chartData = {
-        xAxis: ["4/11", "4/12", "4/13", "4/14", "4/15", "4/16", "4/17"],
-        series: [
-          {
-            name: "待处理",
-            color: "#009688",
-            data: [1, 4, 0, 0, 2, 3, 2]
-          },
-          {
-            name: "已发货",
-            color: "#1e9fff",
-            data: [19, 15, 17, 12, 19, 16, 14]
-          }
-        ]
-      };
-      let option = {
-        title: {
-          text: ""
-        },
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "cross",
-            label: {
-              backgroundColor: "#6a7985"
-            }
-          }
-        },
-        legend: {
-          data: chartData.series.map(item => item.name),
-          top: "10%"
-        },
-        grid: {
-          y: "25%"
-        },
-        xAxis: [
-          {
-            type: "category",
-            boundaryGap: false,
-            data: chartData.xAxis
-          }
-        ],
-        yAxis: [
-          {
-            type: "value"
-          }
-        ],
-        series: chartData.series.map(item => {
-          return {
-            name: item.name,
-            type: "line",
-            stack: "数量",
-            itemStyle: {
-              normal: {
-                color: item.color,
-                lineStyle: {
-                  color: item.color
-                }
-              }
+      this.$api.systemManageAPI.getHairCargoChart().then(res => {
+        let chartData = {
+          xAxis: res.data.map(item =>
+            this.$vb.format.formatDate(item.date, "MM/dd")
+          ),
+          series: [
+            {
+              name: "待处理",
+              color: "#009688",
+              data: res.data.map(item => item.stayProcessed)
             },
-            // areaStyle: {},
-            data: item.data,
-            smooth: true
-          };
-        })
-      };
-      mycharts.setOption(option);
+            {
+              name: "已发货",
+              color: "#1e9fff",
+              data: res.data.map(item => item.hasHairCargo)
+            }
+          ]
+        };
+        let option = {
+          title: {
+            text: ""
+          },
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "cross",
+              label: {
+                backgroundColor: "#6a7985"
+              }
+            }
+          },
+          legend: {
+            data: chartData.series.map(item => item.name),
+            top: "10%"
+          },
+          grid: {
+            y: "25%"
+          },
+          xAxis: [
+            {
+              type: "category",
+              boundaryGap: false,
+              data: chartData.xAxis
+            }
+          ],
+          yAxis: [
+            {
+              type: "value"
+            }
+          ],
+          series: chartData.series.map(item => {
+            return {
+              name: item.name,
+              type: "line",
+              stack: item.name + "数量",
+              itemStyle: {
+                normal: {
+                  color: item.color,
+                  lineStyle: {
+                    color: item.color
+                  }
+                }
+              },
+              data: item.data,
+              smooth: true
+            };
+          })
+        };
+        mycharts.setOption(option);
+      });
       window.addEventListener("resize", () => mycharts.resize());
     },
     thirdChart() {
@@ -466,67 +471,72 @@ export default {
     },
     fourthChart() {
       const mycharts = this.$echarts.init(this.$refs.fourthChart);
-      let chartData = {
-        xAxis: ["4/11", "4/12", "4/13", "4/14", "4/15", "4/16", "4/17"],
-        series: [
-          {
-            name: "待处理",
-            color: "#009688",
-            data: [1, 0, 1, 1, 2, 1, 0]
-          },
-          {
-            name: "已处理",
-            color: "#1e9fff",
-            data: [10, 11, 9, 11, 8, 10, 12]
-          }
-        ]
-      };
-      let option = {
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            // 坐标轴指示器，坐标轴触发有效
-            type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
-          }
-        },
-        grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
-          containLabel: true
-        },
-        legend: {
-          data: chartData.series.map(item => item.name),
-          top: "2%"
-        },
-        xAxis: [
-          {
-            type: "category",
-            data: chartData.xAxis,
-            axisTick: {
-              alignWithLabel: true
-            }
-          }
-        ],
-        yAxis: [
-          {
-            type: "value"
-          }
-        ],
-        series: chartData.series.map(item => {
-          return {
-            name: item.name,
-            type: "bar",
-            itemStyle: {
-              normal: {
-                color: item.color
-              }
+      this.$api.systemManageAPI.getHairCargoChart().then(res => {
+        let chartData = {
+          xAxis: res.data.map(item =>
+            this.$vb.format.formatDate(item.date, "MM/dd")
+          ),
+          series: [
+            {
+              name: "待审核",
+              color: "#009688",
+              data: res.data.map(item => item.stayProcessed)
             },
-            data: item.data
-          };
-        })
-      };
-      mycharts.setOption(option);
+            {
+              name: "已审核",
+              color: "#1e9fff",
+              data: res.data.map(item => item.hasHairCargo)
+            }
+          ]
+        };
+        let option = {
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              // 坐标轴指示器，坐标轴触发有效
+              type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+            }
+          },
+          grid: {
+            left: "3%",
+            right: "4%",
+            bottom: "3%",
+            containLabel: true
+          },
+          legend: {
+            data: chartData.series.map(item => item.name),
+            top: "2%"
+          },
+          xAxis: [
+            {
+              type: "category",
+              data: chartData.xAxis,
+              axisTick: {
+                alignWithLabel: true
+              }
+            }
+          ],
+          yAxis: [
+            {
+              type: "value",
+              min: 0
+            }
+          ],
+          series: chartData.series.map(item => {
+            return {
+              name: item.name,
+              type: "bar",
+              itemStyle: {
+                normal: {
+                  color: item.color
+                }
+              },
+              data: item.data
+            };
+          })
+        };
+        mycharts.setOption(option);
+      });
       window.addEventListener("resize", () => mycharts.resize());
     }
   }

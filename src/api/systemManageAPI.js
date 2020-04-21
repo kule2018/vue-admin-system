@@ -41,6 +41,13 @@ const systemManageAPI = {
       `${base.defaultBaseUrl}/sys/home/stayReceivedCargoChart`,
       params
     );
+  },
+  // 出货同统计图表
+  getHairCargoChart(params) {
+    return services._axios.get(
+      `${base.defaultBaseUrl}/sys/home/hairCargoChart`,
+      params
+    );
   }
 };
 
