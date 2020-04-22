@@ -80,21 +80,64 @@
         </el-image>
       </div>
     </div>
+    <div>
+      <div>审核状态</div>
+      <div>{{ detailsInfo.acName }}</div>
+    </div>
+    <div class="fill" v-if="+detailsInfo.acId === 10070">
+      <div>拒绝原因</div>
+      <div>{{ detailsInfo.reason }}</div>
+    </div>
+    <div class="button__bottom" v-if="showButton">
+      <el-tooltip
+        placement="top"
+        width="50"
+        manual="true"
+        effect="light"
+        v-model="reasonVisible"
+      >
+        <p slot="content" style="font-size: 14px;">
+          <el-icon
+            class="el-icon-error"
+            style="color: #f78a8a; margin-right: 5px;"
+          ></el-icon
+          >请填写拒绝原因
+        </p>
+        <el-input
+          ref="rejectInput"
+          placeholder="拒绝需填写拒绝原因"
+          size="small"
+          style="width: 300px;"
+          v-model="reason"
+        ></el-input>
+      </el-tooltip>
+      <el-button type="info" size="small" @click="handleClick('reject')"
+        >拒绝</el-button
+      >
+      <el-button type="primary" size="small" @click="handleClick('resolve')"
+        >同意</el-button
+      >
+    </div>
   </div>
 </template>
 
 <script>
 import lodash from "lodash";
 import baseUrl from "@/api/base";
+import _ from "lodash";
 
 export default {
   name: "supplier-list-details-page",
   data() {
     return {
-      detailsInfo: {}
+      detailsInfo: {},
+      showButton: false,
+      reason: "",
+      reasonVisible: false
     };
   },
   mounted() {
+    this.showButton = this.parentData.state === "todo";
     this.$api.supplierManageAPI
       .getSupplierInfo({
         supplierId: this.parentData.supplierId
@@ -123,6 +166,51 @@ export default {
           this.$vb.plugin.message.error(`获取供应商信息失败:${res.code}`);
         }
       });
+  },
+  methods: {
+    handleClick(state) {
+      const self = this;
+      let sendData = {
+        supplierId: this.parentData.supplierId,
+        reason: this.reason
+      };
+      switch (state) {
+        case "reject":
+          if (this.reason !== "") {
+            this.$api.supplierManageAPI
+              .auditRejectSupplier(sendData)
+              .then(res => {
+                if (_.isEqual(res.code, "success")) {
+                  this.$layer.msg(res.msg);
+                  this.$parent.search();
+                  this.$layer.close(this.layerid);
+                } else {
+                  self.$vb.plugin.message.error("失败", res.msg);
+                }
+              });
+          } else {
+            this.reasonVisible = true;
+            this.$refs.rejectInput.$el.children[0].focus();
+            setTimeout(() => {
+              self.reasonVisible = false;
+            }, 2500);
+          }
+          break;
+        case "resolve":
+          this.$api.supplierManageAPI.auditAgreeSupplier(sendData).then(res => {
+            if (_.isEqual(res.code, "success")) {
+              this.$layer.msg(res.msg);
+              this.$parent.search();
+              this.$layer.close(this.layerid);
+            } else {
+              self.$vb.plugin.message.error("失败", res.msg);
+            }
+          });
+          break;
+        default:
+          break;
+      }
+    }
   },
   props: {
     // 父组件传的数据

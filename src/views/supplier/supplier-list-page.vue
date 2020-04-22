@@ -50,7 +50,8 @@
           <el-table-column prop="companyAddress" label="公司地址" />
           <el-table-column prop="mobilePhone" label="手机" />
           <el-table-column prop="supplierStatusName" label="状态" />
-          <el-table-column fixed="right" width="210" label="操作">
+          <el-table-column prop="acName" label="审核状态" />
+          <el-table-column fixed="right" width="275" label="操作">
             <template slot-scope="scope">
               <el-button
                 v-if="+scope.row.statusCode === 61"
@@ -58,6 +59,17 @@
                 type="primary"
                 size="mini"
                 >变动</el-button
+              >
+              <el-button
+                v-if="
+                  (+$store.state.userInfo.roleTypeId === 150 ||
+                    +$store.state.userInfo.roleTypeId === 300) &&
+                    +scope.row.acId === 10050
+                "
+                @click.stop="handleClick(7, scope.row)"
+                type="primary"
+                size="mini"
+                >处理</el-button
               >
               <el-button
                 v-if="+scope.row.statusCode === 61"
@@ -162,6 +174,18 @@ export default {
             supplierListDetails,
             this,
             { supplierId: val[0].supplierId, colNum: "two-col" },
+            "供应商详情",
+            800,
+            "80%",
+            function() {}
+          );
+          break;
+        case 7:
+          // 处理
+          this.$vb.plugin.openLayer(
+            supplierListDetails,
+            this,
+            { supplierId: val[0].supplierId, colNum: "two-col", state: "todo" },
             "供应商详情",
             800,
             "80%",
@@ -291,7 +315,6 @@ export default {
       }
     },
     tabsClick(val) {
-      console.log(val);
       switch (val) {
         // 全部
         case "all":
@@ -299,9 +322,12 @@ export default {
           break;
         // 查询冻结
         case "freeze":
+          this.isLoading = true;
           this.$api.supplierManageAPI.queryFreezeSuppliers().then(res => {
             if (lodash.isEqual(res.code, "success")) {
+              this.total = res.total;
               this.tableData = res.data;
+              this.isLoading = false;
             } else {
               this.$vb.plugin.message.error(res.msg);
             }
@@ -309,9 +335,12 @@ export default {
           break;
         // 查询拉黑
         case "blacklist":
+          this.isLoading = true;
           this.$api.supplierManageAPI.queryPullBlackSuppliers().then(res => {
             if (lodash.isEqual(res.code, "success")) {
+              this.total = res.total;
               this.tableData = res.data;
+              this.isLoading = false;
             } else {
               this.$vb.plugin.message.error(res.msg);
             }
