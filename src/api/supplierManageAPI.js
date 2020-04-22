@@ -84,10 +84,25 @@ const supplierManageAPI = {
       params
     );
   },
+  // 分配供应商查询
   allotSupplier(params) {
     return services._axios.get(
       `${base.defaultBaseUrl}/common/supplier/search`,
       { params }
+    );
+  },
+  // 审核供应商:同意
+  auditAgreeSupplier(params) {
+    return services._axios.post(
+      `${base.defaultBaseUrl}/sys/supplier/auditAgree`,
+      params
+    );
+  },
+  // 审核供应商:退回
+  auditRejectSupplier(params) {
+    return services._axios.post(
+      `${base.defaultBaseUrl}/sys/supplier/auditReject`,
+      params
     );
   }
 };
