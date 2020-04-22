@@ -39,7 +39,7 @@
                 <el-upload
                   class="avatar-uploader"
                   :class="{ hide: form.icon }"
-                  action="http://172.16.0.110/common/upload"
+                  :action="baseUrl + '/common/upload'"
                   :show-file-list="false"
                   :on-success="uploadSuccess"
                   :before-upload="beforeUpload"
@@ -76,6 +76,7 @@
 <script>
 import base from "@/api/base";
 import lodash from "lodash";
+
 export default {
   name: "commodity-classify-edit-page",
   data() {
@@ -96,7 +97,8 @@ export default {
         icon: [{ required: true, message: "请上传类别图" }]
       },
       // 提交状态
-      submissionStatus: false
+      submissionStatus: false,
+      baseUrl: ""
     };
   },
   methods: {
@@ -171,6 +173,7 @@ export default {
     }
   },
   mounted() {
+    this.baseUrl = base.defaultBaseUrl;
     if (this.parentData.state === "update") {
       this.$api.commodityClassifyMangeAPI
         .getCommodityClassifyList({
