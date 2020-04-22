@@ -16,7 +16,7 @@
                 <el-upload
                   class="avatar-uploader"
                   :class="{ hide: form.coverFigurePath }"
-                  action="http://172.16.0.110/common/upload"
+                  :action="baseUrl + '/common/upload'"
                   :show-file-list="false"
                   :on-success="uploadSuccess"
                   :before-upload="beforeUpload"
@@ -226,7 +226,7 @@
           </el-form-item>
           <el-form-item label="轮播图">
             <el-upload
-              action="http://172.16.0.110/common/upload"
+              :action="baseUrl + '/common/upload'"
               list-type="picture-card"
               :on-remove="
                 (file, fileList) => {
@@ -286,7 +286,7 @@ export default {
         newProduct: false, // 是否新产品
         price: "", // 价格
         saleNum: 1, //起售数
-        pictureList: []
+        pictureList: [] // 轮播图
       },
       defaultStatusCode: "",
       defaultClassifyId: "",

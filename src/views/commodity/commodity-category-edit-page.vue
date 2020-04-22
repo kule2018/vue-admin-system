@@ -18,7 +18,7 @@
                 <el-upload
                   class="avatar-uploader"
                   :class="{ hide: form.icon }"
-                  action="http://172.16.0.110/common/upload"
+                  :action="baseUrl + '/common/upload'"
                   :show-file-list="false"
                   :on-success="uploadSuccess"
                   :before-upload="beforeUpload"
@@ -126,7 +126,8 @@ export default {
         icon: [{ required: true, message: "请上传类别图" }]
       },
       // 提交状态
-      submissionStatus: false
+      submissionStatus: false,
+      baseUrl: ""
     };
   },
   watch: {
@@ -206,6 +207,7 @@ export default {
     }
   },
   mounted() {
+    this.baseUrl = base.defaultBaseUrl;
     // 获取商品分类列表
     this.$api.commodityClassifyMangeAPI
       .getCommodityClassifyList({ classifyId: this.parentData.classifyId })

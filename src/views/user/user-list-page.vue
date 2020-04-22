@@ -33,7 +33,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="nickName" label="昵称" />
-        <el-table-column prop="gender" label="性别" />
+        <el-table-column prop="genderName" label="性别" />
         <el-table-column prop="province" label="省" />
         <el-table-column prop="balance" label="余额" />
         <el-table-column prop="integral" label="积分" />

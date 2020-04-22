@@ -121,7 +121,7 @@
                 <el-upload
                   class="avatar-uploader"
                   :class="{ hide: businessLicense }"
-                  action="http://172.16.0.110/common/upload"
+                  :action="baseUrl + '/common/upload'"
                   :show-file-list="false"
                   :on-success="operateSuccess"
                   :before-upload="beforeAvatarUpload"
@@ -151,7 +151,7 @@
                 <el-upload
                   class="avatar-uploader"
                   :class="{ hide: healthPermit }"
-                  action="http://172.16.0.110/common/upload"
+                  :action="baseUrl + '/common/upload'"
                   :show-file-list="false"
                   :on-success="healthSuccess"
                   :before-upload="beforeAvatarUpload"
@@ -188,6 +188,7 @@
 <script>
 import _ from "lodash";
 import base from "@/api/base";
+
 export default {
   name: "supplier-list-edit-page",
   data() {
@@ -258,10 +259,12 @@ export default {
       imageUrl: "",
       businessLicense: "",
       healthPermit: "",
-      options: []
+      options: [],
+      baseUrl: ""
     };
   },
   mounted() {
+    this.baseUrl = base.defaultBaseUrl;
     this.$api.supplierManageAPI.getCertificateType({}).then(res => {
       this.options = res.data;
     });
