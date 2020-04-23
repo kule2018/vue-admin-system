@@ -151,7 +151,7 @@
               ></path>
             </svg>
             <div class="tips-info-panel">
-              <div class="num">{{ stayReceivedCargoOrderNumber }}</div>
+              <div class="num">{{ stayAuditSupplierNumber }}</div>
               <div class="title">待审核供应商</div>
             </div>
             <router-link to="" class="more-link">
@@ -222,7 +222,8 @@ export default {
     return {
       stayProcessedOrderNumber: 0,
       todayDeliveryOrderNumber: 0,
-      stayReceivedCargoOrderNumber: 0
+      stayReceivedCargoOrderNumber: 0,
+      stayAuditSupplierNumber: 0
     };
   },
   mounted() {
@@ -243,6 +244,9 @@ export default {
       this.$api.systemManageAPI.getStayReceivedCargo().then(res => {
         this.stayReceivedCargoOrderNumber =
           res.data.stayReceivedCargoOrderNumber;
+      });
+      this.$api.systemManageAPI.getStayAuditSupplier().then(res => {
+        this.stayAuditSupplierNumber = res.data.stayAuditSupplierNumber;
       });
     },
     firstChart() {
@@ -471,21 +475,26 @@ export default {
     },
     fourthChart() {
       const mycharts = this.$echarts.init(this.$refs.fourthChart);
-      this.$api.systemManageAPI.getHairCargoChart().then(res => {
+      this.$api.systemManageAPI.getStayAuditSupplierChart().then(res => {
         let chartData = {
           xAxis: res.data.map(item =>
             this.$vb.format.formatDate(item.date, "MM/dd")
           ),
           series: [
             {
+              name: "申请",
+              color: "#e9616a",
+              data: res.data.map(item => item.apply)
+            },
+            {
               name: "待审核",
               color: "#009688",
-              data: res.data.map(item => item.stayProcessed)
+              data: res.data.map(item => item.stayAudit)
             },
             {
               name: "已审核",
               color: "#1e9fff",
-              data: res.data.map(item => item.hasHairCargo)
+              data: res.data.map(item => item.hasAudit)
             }
           ]
         };

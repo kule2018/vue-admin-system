@@ -28,6 +28,13 @@ const systemManageAPI = {
       params
     );
   },
+  // 待审核供应商数量
+  getStayAuditSupplier(params) {
+    return services._axios.get(
+      `${base.defaultBaseUrl}/sys/home/stayAuditSupplier`,
+      params
+    );
+  },
   // 待处理订单图表
   getStayProcessedChart(params) {
     return services._axios.get(
@@ -46,6 +53,13 @@ const systemManageAPI = {
   getHairCargoChart(params) {
     return services._axios.get(
       `${base.defaultBaseUrl}/sys/home/hairCargoChart`,
+      params
+    );
+  },
+  // 出货同统计图表
+  getStayAuditSupplierChart(params) {
+    return services._axios.get(
+      `${base.defaultBaseUrl}/sys/home/stayAuditSupplierChart`,
       params
     );
   }
