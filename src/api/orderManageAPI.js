@@ -60,6 +60,13 @@ const orderManageAPI = {
       `${base.defaultBaseUrl}/sys/order/delivery`,
       params
     );
+  },
+  // 收回
+  withdraw(params) {
+    return services._axios.post(
+      `${base.defaultBaseUrl}/sys/order/withdraw`,
+      params
+    );
   }
 };
 

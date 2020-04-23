@@ -113,10 +113,10 @@
             >
             <el-button
               v-if="
-                activeName === 'endAllot' &&
+                +$store.state.userInfo.roleTypeId === 450 &&
+                  activeName === 'endAllot' &&
                   +scope.row.state === 200 &&
-                  +scope.row.osStatusId === 10100 &&
-                  false
+                  +scope.row.osStatusId === 10100
               "
               @click.stop="handleClick('shipment', scope.row)"
               type="primary"
@@ -124,15 +124,23 @@
               >发货</el-button
             >
             <el-button
-              v-if="+scope.row.osStatusId === 10000"
+              v-if="
+                +$store.state.userInfo.roleTypeId === 450 &&
+                  +scope.row.osStatusId === 10000
+              "
               @click.stop="handleClick('todo', scope.row)"
               type="primary"
               size="mini"
               >处理</el-button
             >
             <el-button
-              v-if="activeName === 'endAllot'"
-              @click.stop=""
+              v-if="
+                +$store.state.userInfo.roleTypeId !== 450 &&
+                  activeName === 'endAllot' &&
+                  +scope.row.state === 200 &&
+                  +scope.row.osStatusId === 10000
+              "
+              @click.stop="handleClick('withdraw', scope.row)"
               type="primary"
               size="mini"
               >收回</el-button
@@ -271,6 +279,30 @@ export default {
             })
             .catch(() => {});
           break;
+        case "withdraw":
+          this.$confirm("确认收回吗?", "提示", {
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+            type: "warning"
+          })
+            .then(() => {
+              this.$api.orderManageAPI
+                .withdraw({
+                  orderSupplierId: val[0].orderSupplierId,
+                  orderId: val[0].orderId,
+                  supplierId: val[0].supplierId
+                })
+                .then(res => {
+                  if (_.isEqual(res.code, "success")) {
+                    this.$vb.plugin.message.success(res.msg);
+                    this.search();
+                  } else {
+                    this.$vb.plugin.message.error(res.msg);
+                  }
+                });
+            })
+            .catch(() => {});
+          break;
         default:
           break;
       }
@@ -287,10 +319,13 @@ export default {
       this.handleClick("detail", row);
     },
     handleTabClick() {
+      this.searchForm.pageNum = 1;
       this.search();
     }
   },
   mounted() {
+    this.$store.state.userInfo.roleTypeId === 450 &&
+      (this.activeName = "endAllot");
     this.search();
     this.$api.orderManageAPI.getOrderState({}).then(res => {
       this.orderStatus = res.data;
