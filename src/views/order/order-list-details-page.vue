@@ -129,7 +129,6 @@ export default {
   },
   methods: {
     handleClick(state) {
-      console.log(this.detailsInfo.supplierId);
       switch (state) {
         case "resolve":
           // 接收
