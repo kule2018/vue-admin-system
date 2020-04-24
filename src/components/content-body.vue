@@ -69,8 +69,8 @@ export default {
         //基础配置
         self.layim.config({
           uploadImage: {
-          	//（返回的数据格式见下文）
-          	url: self.baseAddress + '/common/uploadImage'
+          	url: self.baseAddress + '/common/uploadImage',
+          	type: 'post'
           },
           title: self.info.data.data.mine.username,
           initSkin: "2.jpg", //1-5 设置初始背景
