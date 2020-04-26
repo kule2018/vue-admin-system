@@ -312,7 +312,7 @@ export default {
             .catch(() => {});
           break;
         case "export":
-          this.downloadDocument(`${this.baseUrl}/sys/order/export?orderId=${val[0].orderNo}`,val[0].name);
+          this.downloadDocument(`${this.baseUrl}/sys/order/export?orderId=${val[0].orderId}`,val[0].name);
           break;
         default:
           break;
