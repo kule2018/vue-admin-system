@@ -91,7 +91,7 @@
         v-if="activeName === 'endAllot'"
         fixed="right"
       ></el-table-column>
-      <el-table-column label="操作" width="150" fixed="right">
+      <el-table-column label="操作" width="220" fixed="right">
         <template slot-scope="scope">
           <template v-if="+scope.row.state === 200">
             <el-button
@@ -110,6 +110,12 @@
               type="primary"
               size="mini"
               >发货</el-button
+            >
+            <el-button
+              @click.stop="handleClick('export', scope.row)"
+              type="primary"
+              size="mini"
+              >导出</el-button
             >
             <el-button
               v-if="
@@ -167,6 +173,7 @@
 import _ from "lodash";
 import orderDetailPage from "@/views/order/order-list-details-page";
 import allotSupplierPage from "@/views/supplier/allot-supplier-page";
+import base from "@/api/base"
 export default {
   name: "order-list-page",
   data() {
@@ -181,6 +188,7 @@ export default {
         pageSize: 10
       },
       tableData: [],
+      baseUrl: base.defaultBaseUrl,
       isLoading: false,
       total: 0,
       orderStatus: [],
@@ -303,9 +311,18 @@ export default {
             })
             .catch(() => {});
           break;
+        case "export":
+          this.downloadDocument(`${this.baseUrl}/sys/order/export?orderId=${val[0].orderNo}`,val[0].name);
+          break;
         default:
           break;
       }
+    },
+    downloadDocument(content, fileName) {
+      let aEle = document.createElement("a");
+      aEle.download = fileName;
+      aEle.href = content;
+      aEle.click();
     },
     handleSizeChange(size) {
       this.searchForm.pageSize = size;

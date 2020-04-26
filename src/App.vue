@@ -16,6 +16,8 @@ export default {
     $route(val) {
       if (val.path === "/login" && this.$store.state.websocket) {
         this.$store.state.websocket.close();
+        let layim = document.getElementsByClassName("layui-layim-chat")[0];
+        layim.remove();
       }
       if (
         document.getElementsByClassName("layui-layim").length > 0 &&

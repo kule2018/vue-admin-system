@@ -298,9 +298,7 @@ export default {
           ],
           yAxis: [
             {
-              type: "value",
-              min: 0,
-              interval: 0
+              type: "value"
             }
           ],
           series: chartData.series.map(item => {
