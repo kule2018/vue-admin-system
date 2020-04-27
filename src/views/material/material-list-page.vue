@@ -107,7 +107,11 @@
     >
       <el-table-column prop="name" label="商品名"></el-table-column>
       <el-table-column prop="categoryName" label="分类名"></el-table-column>
-      <el-table-column prop="price" label="价格"></el-table-column>
+      <el-table-column label="价格">
+        <template slot-scope="scope">
+          {{ scope.row.price | formatMoney }}
+        </template>
+      </el-table-column>
       <el-table-column prop="unitName" label="单位名称"></el-table-column>
       <el-table-column prop="inventoryNum" label="库存数"></el-table-column>
       <el-table-column label="新产品">
@@ -122,10 +126,22 @@
           <template v-else>否</template>
         </template>
       </el-table-column>
-      <el-table-column prop="statusName" label="状态"></el-table-column>
+      <el-table-column prop="statusName" label="状态">
+        <template slot-scope="scope">
+          <span :style="{ color: stateColor(scope.row.statusCode) }">
+            {{ scope.row.statusName }}
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="150">
         <template slot-scope="scope">
           <el-button
+            v-if="
+              (($store.state.userInfo.roleTypeId === 150 ||
+                $store.state.userInfo.roleTypeId === 300) &&
+                $store.state.userInfo.supplierId === null) ||
+                $store.state.userInfo.supplierId === scope.row.supplierId
+            "
             @click.stop="handleClick('update', scope.row)"
             type="primary"
             size="mini"
@@ -134,7 +150,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
+    <el-paginationd
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="searchForm.pageNum"
@@ -144,7 +160,7 @@
       :total="total"
       class="page"
     >
-    </el-pagination>
+    </el-paginationd>
   </div>
 </template>
 
@@ -152,6 +168,8 @@
 import _ from "lodash";
 import materialDetailPage from "@/views/material/material-list-details-page";
 import materialEditPage from "@/views/material/material-list-edit-page";
+import format from "@/utils/format";
+
 export default {
   name: "order-list-page",
   data() {
@@ -177,7 +195,19 @@ export default {
       secondCategorys: []
     };
   },
+  filters: {
+    formatMoney(money) {
+      return format.formatMoney(money, 2, "￥");
+    }
+  },
   methods: {
+    stateColor(id) {
+      return (
+        (id === 600 && "#67c23a") ||
+        (id === 900 && "#f56c6c") ||
+        (id === 1000 && "#409eff")
+      );
+    },
     search(...state) {
       if (state[0] === 1) {
         this.searchForm.pageNum = 1;

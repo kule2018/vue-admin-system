@@ -78,7 +78,13 @@
           {{ scope.row.totalAmount | formatMoney }}
         </template>
       </el-table-column>
-      <el-table-column prop="orderStateName" label="订单状态"></el-table-column>
+      <el-table-column label="订单状态">
+        <template slot-scope="scope">
+          <span :style="{ color: stateColor(scope.row.state) }">{{
+            scope.row.orderStateName
+          }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="期望送达时间">
         <template slot-scope="scope">
           {{ scope.row.expectedTime | formatDate }}
@@ -89,11 +95,13 @@
         label="供应商"
         v-if="activeName === 'endAllot'"
       ></el-table-column>
-      <el-table-column
-        prop="osStatusName"
-        label="分配状态"
-        v-if="activeName === 'endAllot'"
-      ></el-table-column>
+      <el-table-column label="分配状态" v-if="activeName === 'endAllot'">
+        <template slot-scope="scope">
+          <span :style="{ color: osStateColor(scope.row.osStatusId) }">{{
+            scope.row.osStatusName
+          }}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="allocationTime"
         label="分配时间"
@@ -216,6 +224,24 @@ export default {
     }
   },
   methods: {
+    stateColor(id) {
+      return (
+        (id === 100 && "#f56c6c") ||
+        (id === 200 && "#e6a23c") ||
+        (id === 300 && "#67c23a") ||
+        (id === 400 && "#67c23a") ||
+        (id === 500 && "#909399") ||
+        (id === 600 && "#909399")
+      );
+    },
+    osStateColor(id) {
+      return (
+        (id === 10000 && "#e6a23c") ||
+        (id === 10100 && "#67c23a") ||
+        (id === 10200 && "#f56c6c") ||
+        (id === 10300 && "#909399")
+      );
+    },
     search(...state) {
       if (state[0] === 1) {
         this.searchForm.pageNum = 1;
