@@ -67,6 +67,10 @@
             <div>订单备注</div>
             <div>{{ detailsInfo.remark || "无" }}</div>
           </div>
+          <div>
+            <div>订单地址</div>
+            <div>{{ detailsInfo.shippingAddress.address || "无" }}</div>
+          </div>
         </div>
       </el-tab-pane>
       <el-tab-pane label="商品信息" name="materialInfo">

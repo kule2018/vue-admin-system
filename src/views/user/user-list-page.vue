@@ -37,6 +37,7 @@
         <el-table-column prop="province" label="省" />
         <el-table-column prop="balance" label="余额" />
         <el-table-column prop="integral" label="积分" />
+        <el-table-column prop="supplierName" label="供应商" />
         <el-table-column prop="statusName" label="状态" />
         <el-table-column fixed="right" width="150" label="操作">
           <template slot-scope="scope">
