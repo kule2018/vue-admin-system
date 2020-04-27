@@ -30,7 +30,7 @@
     </div>
     <div>
       <div>价格</div>
-      <div>{{ detailsInfo.price }}</div>
+      <div>{{ detailsInfo.price | formatMoney }}</div>
     </div>
     <div>
       <div>规格</div>
@@ -72,6 +72,8 @@
 <script>
 import lodash from "lodash";
 import base from "@/api/base";
+import format from "@/utils/format";
+
 export default {
   name: "order-list-details-page",
   data() {
@@ -79,6 +81,11 @@ export default {
       detailsInfo: {},
       baseUrl: ""
     };
+  },
+  filters: {
+    formatMoney(money) {
+      return format.formatMoney(money, 2, "￥");
+    }
   },
   mounted() {
     this.$api.materialManageAPI

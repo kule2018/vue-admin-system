@@ -50,11 +50,22 @@
           <el-table-column prop="companyAddress" label="公司地址" />
           <el-table-column prop="mobilePhone" label="手机" />
           <el-table-column prop="supplierStatusName" label="状态" />
-          <el-table-column prop="acName" label="审核状态" />
+          <el-table-column label="审核状态">
+            <template slot-scope="scope">
+              <span :style="{ color: stateColor(scope.row.acId) }">{{
+                scope.row.acName
+              }}</span>
+            </template>
+          </el-table-column>
           <el-table-column fixed="right" width="275" label="操作">
             <template slot-scope="scope">
               <el-button
-                v-if="+scope.row.statusCode === 61"
+                v-if="
+                  $store.state.userInfo.roleTypeId === 450 &&
+                    scope.row.acId === 10050 &&
+                    scope.row.supplierId === $store.state.userInfo.supplierId &&
+                    +scope.row.statusCode === 61
+                "
                 @click.stop="handleClick(4, scope.row)"
                 type="primary"
                 size="mini"
@@ -62,9 +73,9 @@
               >
               <el-button
                 v-if="
-                  (+$store.state.userInfo.roleTypeId === 150 ||
-                    +$store.state.userInfo.roleTypeId === 300) &&
-                    +scope.row.acId === 10050
+                  ($store.state.userInfo.roleTypeId === 150 ||
+                    $store.state.userInfo.roleTypeId === 300) &&
+                    scope.row.acId === 10050
                 "
                 @click.stop="handleClick(7, scope.row)"
                 type="primary"
@@ -72,28 +83,48 @@
                 >处理</el-button
               >
               <el-button
-                v-if="+scope.row.statusCode === 61"
+                v-if="
+                  ($store.state.userInfo.roleTypeId === 150 ||
+                    $store.state.userInfo.roleTypeId === 300) &&
+                    scope.row.acId === 10060 &&
+                    scope.row.statusCode === 61
+                "
                 @click.stop="handleClick(1, scope.row)"
                 type="primary"
                 size="mini"
                 >冻结</el-button
               >
               <el-button
-                v-if="+scope.row.statusCode === 61"
+                v-if="
+                  ($store.state.userInfo.roleTypeId === 150 ||
+                    $store.state.userInfo.roleTypeId === 300) &&
+                    scope.row.acId === 10060 &&
+                    scope.row.statusCode === 61
+                "
                 @click.stop="handleClick(2, scope.row)"
                 type="primary"
                 size="mini"
                 >拉黑</el-button
               >
               <el-button
-                v-if="+scope.row.statusCode === 71"
+                v-if="
+                  ($store.state.userInfo.roleTypeId === 150 ||
+                    $store.state.userInfo.roleTypeId === 300) &&
+                    scope.row.acId === 10060 &&
+                    scope.row.statusCode === 71
+                "
                 @click.stop="handleClick(5, scope.row)"
                 type="primary"
                 size="mini"
                 >解除冻结</el-button
               >
               <el-button
-                v-if="+scope.row.statusCode === 81"
+                v-if="
+                  ($store.state.userInfo.roleTypeId === 150 ||
+                    $store.state.userInfo.roleTypeId === 300) &&
+                    scope.row.acId === 10060 &&
+                    scope.row.statusCode === 81
+                "
                 @click.stop="handleClick(6, scope.row)"
                 type="primary"
                 size="mini"
@@ -151,6 +182,13 @@ export default {
     this.search();
   },
   methods: {
+    stateColor(id) {
+      return (
+        (id === 10050 && "#e6a23c") ||
+        (id === 10060 && "#67c23a") ||
+        (id === 10070 && "#f56c6c")
+      );
+    },
     search(...state) {
       if (state[0] === 1) {
         this.searchForm.pageNum = 1;
