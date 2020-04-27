@@ -1,9 +1,14 @@
+function isValidDate(date) {
+  return date instanceof Date && !isNaN(date.getTime());
+}
+
 export default {
   padLeftZero: function(str) {
     return ("00" + str).substr(str.length);
   },
   formatDate(date, fmt) {
     date = new Date(date);
+    if (!isValidDate(date)) return "";
     if (/(y+)/.test(fmt)) {
       fmt = fmt.replace(
         RegExp.$1,
@@ -38,7 +43,7 @@ export default {
      * thousands_sep：千分位符号
      * */
     number = (number + "").replace(/[^0-9+-Ee.]/g, "");
-    var n = !isFinite(+number) ? 0 : +number,
+    let n = !isFinite(+number) ? 0 : +number,
       prec = !isFinite(+decimals) ? 2 : Math.abs(decimals),
       pre = typeof prefix === "undefined" ? "" : prefix,
       sep = typeof thousands_sep === "undefined" ? "," : thousands_sep,

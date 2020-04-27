@@ -54,7 +54,7 @@
     <el-tabs
       v-model="activeName"
       @tab-click="handleTabClick"
-      v-if="+$store.state.userInfo.roleTypeId === 150"
+      v-if="+$store.state.userInfo.roleTypeId !== 450"
     >
       <el-tab-pane label="未分配" name="waitAllot"></el-tab-pane>
       <el-tab-pane label="已分配" name="endAllot"></el-tab-pane>
@@ -68,13 +68,22 @@
       <el-table-column prop="orderNo" label="订单号"></el-table-column>
       <el-table-column prop="name" label="订单名"></el-table-column>
       <el-table-column prop="nickName" label="下单用户"></el-table-column>
-      <el-table-column prop="orderTime" label="下单时间"></el-table-column>
-      <el-table-column prop="totalAmount" label="总金额"></el-table-column>
+      <el-table-column label="下单时间">
+        <template slot-scope="scope">
+          {{ scope.row.orderTime | formatDate }}
+        </template>
+      </el-table-column>
+      <el-table-column label="总金额">
+        <template slot-scope="scope">
+          {{ scope.row.totalAmount | formatMoney }}
+        </template>
+      </el-table-column>
       <el-table-column prop="orderStateName" label="订单状态"></el-table-column>
-      <el-table-column
-        prop="expectedTime"
-        label="期望送达时间"
-      ></el-table-column>
+      <el-table-column label="期望送达时间">
+        <template slot-scope="scope">
+          {{ scope.row.expectedTime | formatDate }}
+        </template>
+      </el-table-column>
       <el-table-column
         prop="supplierName"
         label="供应商"
@@ -173,7 +182,9 @@
 import _ from "lodash";
 import orderDetailPage from "@/views/order/order-list-details-page";
 import allotSupplierPage from "@/views/supplier/allot-supplier-page";
-import base from "@/api/base"
+import base from "@/api/base";
+import format from "@/utils/format";
+
 export default {
   name: "order-list-page",
   data() {
@@ -195,6 +206,14 @@ export default {
       orderSupplierStatus: [],
       activeName: "waitAllot"
     };
+  },
+  filters: {
+    formatDate(date) {
+      return format.formatDate(date, "yyyy-MM-dd hh:mm");
+    },
+    formatMoney(money) {
+      return format.formatMoney(money, 2, "￥");
+    }
   },
   methods: {
     search(...state) {
@@ -312,7 +331,10 @@ export default {
             .catch(() => {});
           break;
         case "export":
-          this.downloadDocument(`${this.baseUrl}/sys/order/export?orderId=${val[0].orderId}`,val[0].name);
+          this.downloadDocument(
+            `${this.baseUrl}/sys/order/export?orderId=${val[0].orderId}`,
+            val[0].name
+          );
           break;
         default:
           break;
