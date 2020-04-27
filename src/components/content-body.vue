@@ -69,8 +69,8 @@ export default {
         //基础配置
         self.layim.config({
           uploadImage: {
-          	url: self.baseAddress + '/common/uploadImage',
-          	type: 'post'
+            url: self.baseAddress + "/common/uploadImage",
+            type: "post"
           },
           title: self.info.data.data.mine.username,
           initSkin: "2.jpg", //1-5 设置初始背景
@@ -143,15 +143,16 @@ export default {
           data = JSON.parse(data);
 
           if (data.emit === "chatMessage") {
-          	
-          	let avatar;
-          	if (data.sendPersonId) {
-          		avatar = data.avatar
-          	}
-          	else {
-          		avatar = data.avatar.indexOf(self.baseAddress) == -1 ? self.baseAddress + data.avatar : data.avatar 
-          	}
-          	
+            let avatar;
+            if (data.sendPersonId) {
+              avatar = data.avatar;
+            } else {
+              avatar =
+                data.avatar.indexOf(self.baseAddress) == -1
+                  ? self.baseAddress + data.avatar
+                  : data.avatar;
+            }
+
             // res.data 即你发送消息传递的数据（阅读：监听发送的消息）
             self.layim.getMessage({
               // 消息来源用户名
@@ -171,7 +172,8 @@ export default {
               // 消息的发送者 id（比如群组中的某个消息发送者），可用于自动解决浏览器多窗口时的一些问题
               fromid: data.sendPersonId,
               // 服务端时间戳毫秒数。注意：如果你返回的是标准的 unix 时间戳，记得要 *1000
-              timestamp: data.timestamp != null ? new Date(data.timestamp) : new Date()
+              timestamp:
+                data.timestamp != null ? new Date(data.timestamp) : new Date()
             });
           }
         };
