@@ -21,6 +21,7 @@ export default {
     return {
       baseAddress: base.defaultBaseUrl,
       baseWsAddress: base.defaultWsUrl,
+      layImUrl:base.layImUrl,
       layim: "",
       layer: "",
       info: {
@@ -79,7 +80,7 @@ export default {
           // 是否开启群组
           isgroup: false,
           notice: true, //是否开启桌面消息提醒，默认false
-          chatLog: "/layim/demo/chatlog.html" //聊天记录页面地址，若不开启，剔除该项即可
+          chatLog: self.layImUrl+"/layim-chat-mobile/src/pages/history-record.html" //聊天记录页面地址，若不开启，剔除该项即可
         });
 
         // 打开一个 web socket

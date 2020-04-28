@@ -13,12 +13,7 @@ export default {
     mainContent
   },
   watch: {
-    $route(val) {
-      if (val.path === "/login" && this.$store.state.websocket) {
-        this.$store.state.websocket.close();
-        let layim = document.getElementsByClassName("layui-layim-chat")[0];
-        layim.remove();
-      }
+    $route() {
       if (
         document.getElementsByClassName("layui-layim").length > 0 &&
         this.$route.path === "/login"
@@ -31,6 +26,20 @@ export default {
         this.$route.path === "/login"
       ) {
         let layim = document.getElementsByClassName("layui-layim-min")[0];
+        layim.remove();
+      }
+      if (
+        document.getElementsByClassName("layui-layim-chat").length > 0 &&
+        this.$route.path === "/login"
+      ) {
+        let layim = document.getElementsByClassName("layui-layim-chat")[0];
+        layim.remove();
+      }
+      if (
+        document.getElementsByClassName("layui-layer-page").length > 0 &&
+        this.$route.path === "/login"
+      ) {
+        let layim = document.getElementsByClassName("layui-layer-page")[0];
         layim.remove();
       }
     }
