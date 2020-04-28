@@ -122,7 +122,7 @@
               >分配</el-button
             >
             <el-button
-              v-if="activeName === 'waitAllot' && +scope.row.state === 200"
+              v-if="activeName === 'waitAllot' && +scope.row.state === 200 && +$store.state.userInfo.roleTypeId === 150 && +$store.state.userInfo.roleTypeId === 300"
               @click.stop="handleClick('shipment', scope.row)"
               type="primary"
               size="mini"
