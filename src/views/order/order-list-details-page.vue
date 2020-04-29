@@ -67,9 +67,9 @@
             <div>订单备注</div>
             <div>{{ detailsInfo.remark || "无" }}</div>
           </div>
-          <div>
+          <div v-if="detailsInfo.shippingAddress">
             <div>订单地址</div>
-            <div>{{ detailsInfo.shippingAddress.address || "无" }}</div>
+            <div>{{ detailsInfo.shippingAddress.address }}</div>
           </div>
         </div>
       </el-tab-pane>
@@ -200,7 +200,6 @@ export default {
           Array.prototype.forEach.call(res.data.orderMaterialList, item => {
             item.coverFigurePath = base.defaultBaseUrl + item.coverFigurePath;
           });
-          console.log(res.data);
           this.detailsInfo = res.data;
         } else {
           this.$vb.plugin.message.error(`获取订单信息失败:${res.code}`);
