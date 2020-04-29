@@ -80,7 +80,8 @@ export default {
           // 是否开启群组
           isgroup: false,
           notice: true, //是否开启桌面消息提醒，默认false
-          chatLog: self.layImUrl+"/layim-chat-mobile/src/pages/history-record.html" //聊天记录页面地址，若不开启，剔除该项即可
+          //聊天记录页面地址，若不开启，剔除该项即可， 已优化路径传参
+          chatLog: self.layImUrl + "/layim-chat-mobile/src/pages/history-record.html?sendId=" + self.info.data.data.mine.id 
         });
 
         // 打开一个 web socket
@@ -112,6 +113,27 @@ export default {
           console.log("关闭 WebSocket 连接", ev);
           self.$store.commit("wsData", null);
         };
+        
+        console.log('聊天记录')
+        
+        self.layim.on("log", function(data) {
+        	console.log(data, '点击了聊天记录')
+        });
+        
+        self.layim.on('tool(chatLog)', function(insert, send, obj){ //事件中的tool为固定字符，而code则为过滤器，对应的是工具别名（alias）
+				  console.log('点击了聊天记录按钮')
+				  layer.prompt({
+				    title: '插入代码'
+				    ,formType: 2
+				    ,shade: 0
+				  }, function(text, index){
+				    layer.close(index);
+				    insert('[pre class=layui-code]' + text + '[/pre]'); //将内容插入到编辑器，主要由insert完成
+				    //send(); //自动发送
+				  });
+				  console.log(this); //获取当前工具的DOM对象
+				  console.log(obj); //获得当前会话窗口的DOM对象、基础信息
+				});
 
         // 监听发送消息
         self.layim.on("sendMessage", function(data) {

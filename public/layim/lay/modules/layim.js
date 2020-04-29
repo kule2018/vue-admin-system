@@ -1708,7 +1708,7 @@ layui
                 anim: 2,
                 id: "layui-layim-chatlog",
                 content:
-                  j.base.chatLog + "?id=" + a.data.id + "&type=" + a.data.type
+                  j.base.chatLog + (j.base.chatLog.indexOf('?') != -1 ? "&" : "?") + "id=" + a.data.id + "&type=" + a.data.type + (a.data.temporary === true ? ("&temporary=" + a.data.temporary) : "")
               })))
             : t.msg("未开启更多聊天记录");
         },

@@ -1,0 +1,4 @@
+项目路径
+	\public\layim\lay\modules\layim.js
+	当前修改的文件是压缩过的 layim 3.7.1 版本，第 1711 行后面追加  + (a.data.temporary === true ? ("&temporary=" + a.data.temporary) : "")
+	打开聊天记录窗口时：在源码的基础上追加了 &temporary 参数，区分是否临时聊天窗口，不是临时聊天窗口则没有这个参数
