@@ -20,6 +20,14 @@
             <div>{{ detailsInfo.nickName }}</div>
           </div>
           <div>
+            <div>联系人</div>
+            <div>{{ detailsInfo.shippingAddress? detailsInfo.shippingAddress.name:"无" }}</div>
+          </div>
+          <div>
+            <div>电话</div>
+            <div>{{ detailsInfo.shippingAddress?detailsInfo.shippingAddress.phone:"无" }}</div>
+          </div>
+          <div>
             <div>下单时间</div>
             <div>{{ detailsInfo.orderTime }}</div>
           </div>
@@ -29,23 +37,23 @@
           </div>
           <div>
             <div>待付金额</div>
-            <div>{{ detailsInfo.amountToBePaid || 0 }}</div>
+            <div>￥{{ detailsInfo.amountToBePaid || 0 }}</div>
           </div>
           <div>
             <div>折扣金额</div>
-            <div>{{ detailsInfo.discountAmount || 0 }}</div>
+            <div>￥{{ detailsInfo.discountAmount || 0 }}</div>
           </div>
           <div>
             <div>支付金额</div>
-            <div>{{ detailsInfo.amountPay || 0 }}</div>
+            <div>￥{{ detailsInfo.amountPay || 0 }}</div>
           </div>
           <div>
             <div>运费</div>
-            <div>{{ detailsInfo.freight || 0 }}</div>
+            <div>￥{{ detailsInfo.freight || 0 }}</div>
           </div>
           <div>
             <div>总金额</div>
-            <div>{{ detailsInfo.totalAmount || 0 }}</div>
+            <div>￥{{ detailsInfo.totalAmount || 0 }}</div>
           </div>
           <div>
             <div>付款方式</div>
@@ -67,9 +75,9 @@
             <div>订单备注</div>
             <div>{{ detailsInfo.remark || "无" }}</div>
           </div>
-          <div v-if="detailsInfo.shippingAddress">
+          <div>
             <div>订单地址</div>
-            <div>{{ detailsInfo.shippingAddress.address }}</div>
+            <div>{{ detailsInfo.shippingAddress?detailsInfo.shippingAddress.address:"无" }}</div>
           </div>
         </div>
       </el-tab-pane>
