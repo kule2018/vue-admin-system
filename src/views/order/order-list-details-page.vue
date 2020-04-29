@@ -29,7 +29,7 @@
           </div>
           <div>
             <div>下单时间</div>
-            <div>{{ detailsInfo.orderTime }}</div>
+            <div>{{detailsInfo.orderTime}}</div>
           </div>
           <div>
             <div>订单状态</div>
@@ -69,7 +69,7 @@
           </div>
           <div>
             <div>分配时间</div>
-            <div>{{ detailsInfo.allocationTime || "无" }}</div>
+            <div>{{detailsInfo.allocationTime}}</div>
           </div>
           <div>
             <div>订单备注</div>
@@ -130,6 +130,7 @@
 <script>
 import _ from "lodash";
 import base from "@/api/base";
+import format from "@/utils/format";
 export default {
   name: "order-list-details-page",
   data() {
@@ -208,8 +209,13 @@ export default {
           Array.prototype.forEach.call(res.data.orderMaterialList, item => {
             item.coverFigurePath = base.defaultBaseUrl + item.coverFigurePath;
             item.price = `￥ ${item.price}`;
+            item.allocationTime = format.formatDate(item.allocationTime, "yyyy-MM-dd hh:mm");
+            item.orderTime = format.formatDate(item.orderTime, "yyyy-MM-dd hh:mm");
           });
+          res.data.orderTime = format.formatDate(res.data.orderTime, "yyyy-MM-dd hh:mm");
+          res.data.allocationTime = format.formatDate(res.data.allocationTime, "yyyy-MM-dd hh:mm");
           this.detailsInfo = res.data;
+          console.log(res.data);
         } else {
           this.$vb.plugin.message.error(`获取订单信息失败:${res.code}`);
         }
