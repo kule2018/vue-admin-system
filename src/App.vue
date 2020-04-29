@@ -13,7 +13,8 @@ export default {
     mainContent
   },
   watch: {
-    $route() {
+    $route(val) {
+      console.log(val);
       if (
         document.getElementsByClassName("layui-layim").length > 0 &&
         this.$route.path === "/login"

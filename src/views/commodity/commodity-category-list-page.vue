@@ -60,7 +60,6 @@
 
 <script>
 import lodash from "lodash";
-import base from "@/api/base";
 import commodityCategoryEditPage from "@/views/commodity/commodity-category-edit-page.vue";
 import commodityCategoryDetailsPage from "@/views/commodity/commodity-category-details-page.vue";
 
