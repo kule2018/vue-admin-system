@@ -207,6 +207,7 @@ export default {
         if (_.isEqual(res.code, "success")) {
           Array.prototype.forEach.call(res.data.orderMaterialList, item => {
             item.coverFigurePath = base.defaultBaseUrl + item.coverFigurePath;
+            item.price = `￥ ${item.price}`;
           });
           this.detailsInfo = res.data;
         } else {
