@@ -92,7 +92,7 @@
       <el-tooltip
         placement="top"
         width="50"
-        manual="true"
+        :manual="true"
         effect="light"
         v-model="reasonVisible"
       >
