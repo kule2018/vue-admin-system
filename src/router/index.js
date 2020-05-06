@@ -85,6 +85,12 @@ const routes = [
             name: "sysOrderSearch",
             path: "sysOrderSearch",
             component: () => import("@/views/order/order-list-page")
+          },
+          {
+            name: "sysBulletinBoardSearch",
+            path: "sysBulletinBoardSearch",
+            component: () =>
+              import("@/views/sysBulletin/sys-bulletin-list-page")
           }
         ]
       }
