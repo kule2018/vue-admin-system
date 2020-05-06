@@ -89,12 +89,8 @@
 <script>
 import { Icon } from "element-ui";
 import menu from "@/config/menu";
-import addDataPage from "@/views/demo/add-data-page";
-import tablePage from "@/views/demo/table-page";
 import base from "@/api/base";
 import lodash from "lodash";
-import detailPage from "@/views/demo/detail-page";
-import detailPageOne from "@/views/demo/detail-page-one";
 
 export default {
   name: "index",
@@ -132,55 +128,6 @@ export default {
       this.$store.state.userInfo = {};
       this.$router.replace("/login");
       history.pushState(null, null, document.URL);
-    },
-    testAdd() {
-      this.$vb.plugin.openLayer(
-        addDataPage,
-        this,
-        { name: "传值测试" },
-        "录入",
-        900,
-        600
-      );
-    },
-    testNotify() {
-      this.$vb.plugin.message.success("测试", "测试内容");
-    },
-    testResult() {
-      this.$store.commit("changeResultState", "error");
-    },
-    testDataTable() {
-      this.$vb.plugin.openLayer(
-        tablePage,
-        this,
-        { name: "传值测试" },
-        "数据表格测试",
-        900,
-        600
-      );
-    },
-    testDetail() {
-      this.$vb.plugin.openLayer(
-        detailPage,
-        this,
-        { name: "传值测试", colNum: "two-col" },
-        "详情页面测试",
-        650,
-        520
-      );
-    },
-    testDetailOne() {
-      this.$vb.plugin.openLayer(
-        detailPageOne,
-        this,
-        { name: "传值测试", colNum: "one-col" },
-        "详情页面测试",
-        580,
-        820,
-        function() {
-          // 窗口关闭后执行
-        }
-      );
     }
   }
 };

@@ -63,7 +63,7 @@
       </div>
     </div>
     <div class="fill">
-      <div>描述</div>
+      <div>商品描述</div>
       <div>{{ detailsInfo.describe }}</div>
     </div>
   </div>

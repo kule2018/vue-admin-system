@@ -26,6 +26,8 @@ import commodityBrandMangeAPI from "@/api/commodityBrandMangeAPI";
 import orderManageAPI from "@/api/orderManageAPI";
 // 即时通讯管理接口
 import imManageAPI from "@/api/imManageAPI";
+// 系统公告接口
+import sysBulletinBoardManageAPI from "@/api/sysBulletinBoardManageAPI";
 
 // 导出接口
 export default {
@@ -40,5 +42,6 @@ export default {
   commodityCategoryMangeAPI,
   commodityBrandMangeAPI,
   orderManageAPI,
-  imManageAPI
+  imManageAPI,
+  sysBulletinBoardManageAPI
 };

@@ -214,16 +214,6 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <el-form-item label="描述">
-            <el-input
-              v-model="form.describe"
-              type="textarea"
-              rows="4"
-              resize="none"
-              placeholder="请输入商品描述"
-              clearable
-            ></el-input>
-          </el-form-item>
           <el-form-item label="轮播图">
             <el-upload
               :action="baseUrl + '/common/upload'"
@@ -246,6 +236,25 @@
               <img width="100%" :src="dialogImageUrl" alt="" />
             </el-dialog>
           </el-form-item>
+          <el-form-item label="商品描述">
+            <el-input
+              v-model="form.describe"
+              type="textarea"
+              rows="4"
+              resize="none"
+              placeholder="请输入商品描述"
+              clearable
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="商品详情">
+            <tinymce-editor
+              v-if="isLoaded"
+              ref="editor"
+              v-model="form.detailContent"
+              :value="form.detailContent"
+              placeholder="请输入商品详情"
+            />
+          </el-form-item>
         </el-form>
       </div>
     </div>
@@ -267,9 +276,11 @@
 <script>
 import _ from "lodash";
 import base from "@/api/base";
+import TinymceEditor from "@/components/TinymceEditor";
 
 export default {
   name: "order-list-edit-page",
+  components: { TinymceEditor },
   data() {
     return {
       form: {
@@ -283,6 +294,7 @@ export default {
         special: false, // 是否特价
         specs: "", // 规格
         describe: "", // 描述
+        detailContent: "", // 详情
         newProduct: false, // 是否新产品
         price: "", // 价格
         saleNum: 1, //起售数
@@ -319,7 +331,8 @@ export default {
       submissionStatus: false, // 提交状态
       baseUrl: "",
       dialogImageUrl: "",
-      dialogVisible: false
+      dialogVisible: false,
+      isLoaded: false
     };
   },
   computed: {
@@ -450,8 +463,10 @@ export default {
     }
   },
   mounted() {
+    const self = this;
     this.baseUrl = base.defaultBaseUrl;
     this.getSelect();
+    this.isLoaded = true;
     if (this.parentData.state === "update") {
       this.$api.materialManageAPI
         .getMaterialInfo({
@@ -476,6 +491,10 @@ export default {
           } else {
             this.$vb.plugin.message.error(`获取订单信息失败:${res.code}`);
           }
+          self.isLoaded = false;
+          this.$nextTick(() => {
+            self.isLoaded = true;
+          });
         });
     }
   },

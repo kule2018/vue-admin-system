@@ -150,7 +150,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-paginationd
+    <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="searchForm.pageNum"
@@ -160,7 +160,7 @@
       :total="total"
       class="page"
     >
-    </el-paginationd>
+    </el-pagination>
   </div>
 </template>
 

@@ -49,7 +49,11 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="手机" prop="mobilePhone">
-                <el-input v-model="form.mobilePhone" maxlength="11" clearable></el-input>
+                <el-input
+                  v-model="form.mobilePhone"
+                  maxlength="11"
+                  clearable
+                ></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -91,17 +95,25 @@
             </el-col>
           </el-row>
           <el-form-item label="公司地址" prop="companyAddress">
-            <el-input type="textarea" v-model="form.companyAddress" clearable></el-input>
+            <el-input
+              type="textarea"
+              v-model="form.companyAddress"
+              clearable
+            ></el-input>
           </el-form-item>
           <el-row>
             <el-col :span="12">
               <el-form-item label="营业执照号" prop="businessLicenseNumber">
-                <el-input v-model="form.businessLicenseNumber" clearable> </el-input>
+                <el-input v-model="form.businessLicenseNumber" clearable>
+                </el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="卫生许可证号" prop="sanitaryPermitNumber">
-                <el-input v-model="form.sanitaryPermitNumber" clearable></el-input>
+                <el-input
+                  v-model="form.sanitaryPermitNumber"
+                  clearable
+                ></el-input>
               </el-form-item>
             </el-col>
           </el-row>

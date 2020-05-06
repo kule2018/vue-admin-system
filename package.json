@@ -10,11 +10,13 @@
   "dependencies": {
     "@femessage/el-data-table": "^1.18.4",
     "@femessage/el-form-renderer": "^1.14.4",
+    "@tinymce/tinymce-vue": "^3.2.1",
     "core-js": "^3.6.4",
     "echarts": "^4.6.0",
     "element-ui": "^2.4.5",
     "layui-src": "^2.5.5",
     "lodash": "^4.17.15",
+    "tinymce": "^5.2.2",
     "vue": "^2.6.11",
     "vue-layer": "^1.1.7",
     "vue-router": "^3.1.5",

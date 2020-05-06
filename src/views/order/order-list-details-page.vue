@@ -21,15 +21,27 @@
           </div>
           <div>
             <div>联系人</div>
-            <div>{{ detailsInfo.shippingAddress? detailsInfo.shippingAddress.name:"无" }}</div>
+            <div>
+              {{
+                detailsInfo.shippingAddress
+                  ? detailsInfo.shippingAddress.name
+                  : "无"
+              }}
+            </div>
           </div>
           <div>
             <div>电话</div>
-            <div>{{ detailsInfo.shippingAddress?detailsInfo.shippingAddress.phone:"无" }}</div>
+            <div>
+              {{
+                detailsInfo.shippingAddress
+                  ? detailsInfo.shippingAddress.phone
+                  : "无"
+              }}
+            </div>
           </div>
           <div>
             <div>下单时间</div>
-            <div>{{detailsInfo.orderTime}}</div>
+            <div>{{ detailsInfo.orderTime }}</div>
           </div>
           <div>
             <div>订单状态</div>
@@ -69,7 +81,7 @@
           </div>
           <div>
             <div>分配时间</div>
-            <div>{{detailsInfo.allocationTime}}</div>
+            <div>{{ detailsInfo.allocationTime }}</div>
           </div>
           <div>
             <div>订单备注</div>
@@ -77,7 +89,13 @@
           </div>
           <div>
             <div>订单地址</div>
-            <div>{{ detailsInfo.shippingAddress?detailsInfo.shippingAddress.address:"无" }}</div>
+            <div>
+              {{
+                detailsInfo.shippingAddress
+                  ? detailsInfo.shippingAddress.address
+                  : "无"
+              }}
+            </div>
           </div>
         </div>
       </el-tab-pane>
@@ -209,11 +227,23 @@ export default {
           Array.prototype.forEach.call(res.data.orderMaterialList, item => {
             item.coverFigurePath = base.defaultBaseUrl + item.coverFigurePath;
             item.price = `￥ ${item.price}`;
-            item.allocationTime = format.formatDate(item.allocationTime, "yyyy-MM-dd hh:mm");
-            item.orderTime = format.formatDate(item.orderTime, "yyyy-MM-dd hh:mm");
+            item.allocationTime = format.formatDate(
+              item.allocationTime,
+              "yyyy-MM-dd hh:mm"
+            );
+            item.orderTime = format.formatDate(
+              item.orderTime,
+              "yyyy-MM-dd hh:mm"
+            );
           });
-          res.data.orderTime = format.formatDate(res.data.orderTime, "yyyy-MM-dd hh:mm");
-          res.data.allocationTime = format.formatDate(res.data.allocationTime, "yyyy-MM-dd hh:mm");
+          res.data.orderTime = format.formatDate(
+            res.data.orderTime,
+            "yyyy-MM-dd hh:mm"
+          );
+          res.data.allocationTime = format.formatDate(
+            res.data.allocationTime,
+            "yyyy-MM-dd hh:mm"
+          );
           this.detailsInfo = res.data;
           console.log(res.data);
         } else {
