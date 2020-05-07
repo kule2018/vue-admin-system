@@ -21,7 +21,7 @@
             plain
             size="small"
             @click="handleClick(3, '')"
-            >新增</el-button
+            >增加</el-button
           >
         </div>
         <el-tabs v-model="tabActiveName" @tab-click="tabsClick(tabActiveName)">

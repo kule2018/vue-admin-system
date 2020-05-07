@@ -2,7 +2,7 @@
   <div class="table-panel">
     <div class="search-bar" @keydown.enter="search(1)">
       <el-input
-        v-model="searchForm.name"
+        v-model="searchForm.content"
         placeholder="请输入公告内容"
         size="small"
         clearable
