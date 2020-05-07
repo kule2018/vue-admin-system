@@ -103,6 +103,7 @@ export default {
       this.$api.supplierManageAPI.allotSupplier(this.searchForm).then(res => {
         this.isLoading = false;
         this.supplierList = res.data;
+        this.total = res.total;
       });
     },
     onSubmit() {
