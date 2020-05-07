@@ -16,7 +16,7 @@
         >查询</el-button
       >
       <el-button type="primary" plain size="small" @click="handleClick(0)"
-        >新增</el-button
+        >增加</el-button
       >
     </div>
     <el-table
