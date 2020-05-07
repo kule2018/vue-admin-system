@@ -379,6 +379,7 @@ export default {
     },
     handleSizeChange(size) {
       this.searchForm.pageSize = size;
+      this.searchForm.pageNum = 1;
       this.search();
     },
     handleCurrentChange(page) {
