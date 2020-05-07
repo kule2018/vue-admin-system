@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-box" :class="parentData.colNum">
+  <div class="detail-box" :class="parentData.colNum" v-loading="loading">
     <div>
       <div>用户头像</div>
       <div>
@@ -31,11 +31,13 @@
 
 <script>
 import baseUrl from "@/api/base";
+import _ from "lodash";
 export default {
   name: "sys-user-detail",
   data() {
     return {
-      sysUserInfo: {}
+      sysUserInfo: {},
+      loading: true
     };
   },
   props: {
@@ -60,17 +62,22 @@ export default {
     }
   },
   mounted() {
-    const self = this;
     this.$api.sysUserInfoAPI
       .getUserInfo({ userid: this.parentData.userid })
       .then(res => {
-        res.data.iconPath = baseUrl.defaultBaseUrl + res.data.iconPath;
-        self.sysUserInfo = res.data;
+        if (_.isEqual(res.code, "success")) {
+          res.data.iconPath = baseUrl.defaultBaseUrl + res.data.iconPath;
+          this.sysUserInfo = res.data;
+        } else {
+          this.$layer.close(this.layerid);
+          this.$vb.plugin.message.error(`获取系统用户信息失败:${res.code}`);
+        }
+        this.loading = false;
       });
   }
 };
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/user-list-details-page.scss";
+@import "~@/assets/scss/user/user-list-details-page.scss";
 </style>

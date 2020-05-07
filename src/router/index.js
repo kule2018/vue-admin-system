@@ -91,6 +91,11 @@ const routes = [
             path: "sysBulletinBoardSearch",
             component: () =>
               import("@/views/sysBulletin/sys-bulletin-list-page")
+          },
+          {
+            name: "sysSalesPromotionSearch",
+            path: "sysSalesPromotionSearch",
+            component: () => import("@/views/sysSales/sys-sales-list-page")
           }
         ]
       }

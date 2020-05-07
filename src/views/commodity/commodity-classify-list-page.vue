@@ -154,5 +154,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/commodity-classify-list.scss";
+@import "~@/assets/scss/commodity/commodity-classify-list.scss";
 </style>

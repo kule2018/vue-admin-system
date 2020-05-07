@@ -1,5 +1,5 @@
 <template>
-  <div id="layerContent" class="sys-bulletin-edit">
+  <div id="layerContent" class="sys-bulletin-edit" v-loading="loading">
     <div class="content-panel">
       <div class="main-content">
         <el-form :model="form" :rules="rules" ref="form" label-width="80px">
@@ -77,7 +77,8 @@ export default {
             return time.getTime() < this.form.startTime;
           }
         }
-      }
+      },
+      loading: false
     };
   },
   methods: {
@@ -150,6 +151,7 @@ export default {
   },
   mounted() {
     if (this.parentData.state === "update") {
+      this.loading = true;
       this.$api.sysBulletinBoardManageAPI
         .getSysBulletinInfo({
           bulletinBoardId: this.parentData.bulletinBoardId
@@ -158,6 +160,7 @@ export default {
           res.data.startTime = new Date(res.data.startTime);
           res.data.endTime = new Date(res.data.endTime);
           Object.assign(this.form, res.data);
+          this.loading = false;
         });
     }
   }

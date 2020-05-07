@@ -268,5 +268,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/commodity-category-edit-page.scss";
+@import "~@/assets/scss/commodity/commodity-category-edit-page.scss";
 </style>
