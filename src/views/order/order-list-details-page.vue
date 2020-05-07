@@ -20,26 +20,6 @@
             <div>{{ detailsInfo.nickName }}</div>
           </div>
           <div>
-            <div>联系人</div>
-            <div>
-              {{
-                detailsInfo.shippingAddress
-                  ? detailsInfo.shippingAddress.name
-                  : "无"
-              }}
-            </div>
-          </div>
-          <div>
-            <div>电话</div>
-            <div>
-              {{
-                detailsInfo.shippingAddress
-                  ? detailsInfo.shippingAddress.phone
-                  : "无"
-              }}
-            </div>
-          </div>
-          <div>
             <div>下单时间</div>
             <div>{{ detailsInfo.orderTime }}</div>
           </div>
@@ -88,6 +68,26 @@
             <div>{{ detailsInfo.remark || "无" }}</div>
           </div>
           <div>
+            <div>联系人</div>
+            <div>
+              {{
+                detailsInfo.shippingAddress
+                  ? detailsInfo.shippingAddress.name
+                  : "无"
+              }}
+            </div>
+          </div>
+          <div>
+            <div>联系电话</div>
+            <div>
+              {{
+                detailsInfo.shippingAddress
+                  ? detailsInfo.shippingAddress.phone
+                  : "无"
+              }}
+            </div>
+          </div>
+          <div class="fill">
             <div>订单地址</div>
             <div>
               {{
