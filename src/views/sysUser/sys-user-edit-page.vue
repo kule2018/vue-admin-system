@@ -1,5 +1,5 @@
 <template>
-  <div id="layerContent" class="sys-user-edit">
+  <div id="layerContent" class="sys-user-edit" v-loading="loading">
     <div class="content-panel">
       <div class="main-content">
         <el-form :model="form" :rules="rules" ref="form" label-width="80px">
@@ -150,7 +150,8 @@ export default {
       baseUrl: "",
       defaultSupplierId: "",
       supplierName: "",
-      roleChangeFlag: 0
+      roleChangeFlag: 0,
+      loading: false
     };
   },
   watch: {
@@ -289,6 +290,7 @@ export default {
     });
     this.baseUrl = baseUrl.defaultBaseUrl;
     if (this.parentData.state === "update") {
+      this.loading = true;
       this.$api.sysUserInfoAPI
         .getUserInfo({ userid: this.parentData.userid })
         .then(res => {
@@ -296,6 +298,7 @@ export default {
           this.defaultSupplierId = res.data.supplierId;
           this.supplierName = res.data.supplierName;
           self.form = Object.assign({}, res.data);
+          this.loading = false;
         });
     }
   }

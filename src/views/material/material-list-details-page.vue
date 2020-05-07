@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-box" :class="parentData.colNum">
+  <div class="detail-box" :class="parentData.colNum" v-loading="loading">
     <div class="fill">
       <div>商品图</div>
       <div>
@@ -66,6 +66,13 @@
       <div>商品描述</div>
       <div>{{ detailsInfo.describe }}</div>
     </div>
+    <div class="fill">
+      <div>商品详情</div>
+      <div
+        v-html="detailsInfo.detailContent"
+        style="height: 200px; overflow-y: auto; display: block;"
+      ></div>
+    </div>
   </div>
 </template>
 
@@ -79,7 +86,8 @@ export default {
   data() {
     return {
       detailsInfo: {},
-      baseUrl: ""
+      baseUrl: "",
+      loading: true
     };
   },
   filters: {
@@ -98,8 +106,10 @@ export default {
             base.defaultBaseUrl + res.data.coverFigurePath;
           this.detailsInfo = res.data;
         } else {
+          this.$layer.close(this.layerid);
           this.$vb.plugin.message.error(`获取订单信息失败:${res.code}`);
         }
+        this.loading = false;
       });
   },
   props: {

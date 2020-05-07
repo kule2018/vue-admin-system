@@ -1,5 +1,5 @@
 <template>
-  <div class="order-detail">
+  <div class="order-detail" v-loading="loading">
     <el-tabs v-model="activeName" type="card" class="order-detail-tab">
       <el-tab-pane label="订单信息" name="orderInfo">
         <div class="detail-box" :class="parentData.colNum">
@@ -155,7 +155,8 @@ export default {
     return {
       detailsInfo: {},
       activeName: "orderInfo",
-      showButton: false
+      showButton: false,
+      loading: true
     };
   },
   methods: {
@@ -247,8 +248,10 @@ export default {
           this.detailsInfo = res.data;
           console.log(res.data);
         } else {
+          this.$layer.close(this.layerid);
           this.$vb.plugin.message.error(`获取订单信息失败:${res.code}`);
         }
+        this.loading = false;
       });
   },
   props: {
@@ -276,5 +279,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/order-list-details-page.scss";
+@import "~@/assets/scss/order/order-list-details-page.scss";
 </style>

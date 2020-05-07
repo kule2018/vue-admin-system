@@ -51,6 +51,10 @@ export default {
     placeholder: {
       type: String,
       default: "请输入文字..."
+    },
+    height: {
+      type: Number,
+      default: 300
     }
   },
   data() {
@@ -62,7 +66,7 @@ export default {
         content_css: `${this.baseUrl}/tinymce/skins/content/default/content.css`,
         // skin_url: `${this.baseUrl}/tinymce/skins/ui/oxide-dark`, // 暗色系
         // content_css: `${this.baseUrl}/tinymce/skins/content/dark/content.css`, // 暗色系
-        height: 300,
+        height: this.height,
         plugins: this.plugins,
         toolbar: this.toolbar,
         statusbar: true, // 底部的状态栏

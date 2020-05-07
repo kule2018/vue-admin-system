@@ -28,6 +28,8 @@ import orderManageAPI from "@/api/orderManageAPI";
 import imManageAPI from "@/api/imManageAPI";
 // 系统公告接口
 import sysBulletinBoardManageAPI from "@/api/sysBulletinBoardManageAPI";
+// 活动接口
+import sysSalesManageAPI from "@/api/sysSalesPromotionManageAPI";
 
 // 导出接口
 export default {
@@ -43,5 +45,6 @@ export default {
   commodityBrandMangeAPI,
   orderManageAPI,
   imManageAPI,
-  sysBulletinBoardManageAPI
+  sysBulletinBoardManageAPI,
+  sysSalesManageAPI
 };

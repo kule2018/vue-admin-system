@@ -1,5 +1,5 @@
 <template>
-  <div id="layerContent" class="sys-user-edit">
+  <div id="layerContent" class="sys-user-edit" v-loading="loading">
     <div class="content-panel">
       <div class="main-content">
         <el-form ref="form" :model="form" :rules="rules" label-width="130px">
@@ -332,7 +332,8 @@ export default {
       baseUrl: "",
       dialogImageUrl: "",
       dialogVisible: false,
-      isLoaded: false
+      isLoaded: false,
+      loading: false
     };
   },
   computed: {
@@ -466,8 +467,11 @@ export default {
     const self = this;
     this.baseUrl = base.defaultBaseUrl;
     this.getSelect();
-    this.isLoaded = true;
+    this.$nextTick(() => {
+      self.isLoaded = true;
+    });
     if (this.parentData.state === "update") {
+      this.loading = true;
       this.$api.materialManageAPI
         .getMaterialInfo({
           materialId: this.parentData.materialId
@@ -493,6 +497,7 @@ export default {
           }
           self.isLoaded = false;
           this.$nextTick(() => {
+            self.loading = false;
             self.isLoaded = true;
           });
         });
@@ -524,5 +529,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/order-list-edit-page.scss";
+@import "~@/assets/scss/order/order-list-edit-page.scss";
 </style>

@@ -404,5 +404,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/supplier-list-page.scss";
+@import "~@/assets/scss/supplier/supplier-list-page.scss";
 </style>

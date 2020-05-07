@@ -2,8 +2,8 @@
   <div class="table-panel">
     <div class="search-bar" @keydown.enter="search(1)">
       <el-input
-        v-model="searchForm.name"
-        placeholder="请输入公告内容"
+        v-model="searchForm.title"
+        placeholder="请输入活动标题"
         size="small"
         clearable
       ></el-input>
@@ -24,7 +24,7 @@
       @row-click="openDetails"
       v-loading.fullscreen="isLoading"
     >
-      <el-table-column prop="content" label="公告内容"></el-table-column>
+      <el-table-column prop="title" label="活动标题"></el-table-column>
       <el-table-column
         prop="startTime"
         label="开始时间"
@@ -38,7 +38,7 @@
       <el-table-column label="操作" width="150">
         <template slot-scope="scope">
           <el-button
-            @click.stop="handleClick('update', scope.row.bulletinBoardId)"
+            @click.stop="handleClick('update', scope.row.salesPromotionId)"
             type="primary"
             size="mini"
             >变动</el-button
@@ -62,15 +62,15 @@
 
 <script>
 import lodash from "lodash";
-import sysBulletinDetail from "@/views/sysBulletin/sys-bulletin-detail-page";
-import sysBulletinEdit from "@/views/sysBulletin/sys-bulletin-edit-page";
+import sysSalesDetail from "@/views/sysSales/sys-sales-detail-page";
+import sysSalesEdit from "@/views/sysSales/sys-sales-edit-page";
 
 export default {
   name: "sys-user-list-page",
   data() {
     return {
       searchForm: {
-        content: "",
+        title: "",
         pageNum: 1,
         pageSize: 10
       },
@@ -86,49 +86,47 @@ export default {
         this.searchForm.pageNum = 1;
       }
       this.isLoading = true;
-      this.$api.sysBulletinBoardManageAPI
-        .getSysBulletinList(this.searchForm)
-        .then(res => {
-          if (lodash.isEqual(res.code, "success")) {
-            this.tableData = res.data;
-            this.total = res.total;
-            this.isLoading = false;
-          } else {
-            this.isLoading = false;
-            this.$vb.plugin.message.error(res.msg);
-          }
-        });
+      this.$api.sysSalesManageAPI.getSysSalesList(this.searchForm).then(res => {
+        if (lodash.isEqual(res.code, "success")) {
+          this.tableData = res.data;
+          this.total = res.total;
+          this.isLoading = false;
+        } else {
+          this.isLoading = false;
+          this.$vb.plugin.message.error(res.msg);
+        }
+      });
     },
     handleClick(state, ...id) {
       switch (state) {
         case "detail":
           this.$vb.plugin.openLayer(
-            sysBulletinDetail,
+            sysSalesDetail,
             this,
-            { colNum: "one-col", bulletinBoardId: id[0] },
-            "系统公告详情",
-            420,
-            330
+            { colNum: "one-col", salesPromotionId: id[0] },
+            "活动详情",
+            800,
+            "80%"
           );
           break;
         case "add":
           this.$vb.plugin.openLayer(
-            sysBulletinEdit,
+            sysSalesEdit,
             this,
             { state: state },
-            "系统公告增加",
-            520,
-            380
+            "活动增加",
+            800,
+            "80%"
           );
           break;
         case "update":
           this.$vb.plugin.openLayer(
-            sysBulletinEdit,
+            sysSalesEdit,
             this,
-            { state: state, bulletinBoardId: id[0] },
-            "系统公告变动",
-            520,
-            380
+            { state: state, salesPromotionId: id[0] },
+            "活动变动",
+            800,
+            "80%"
           );
           break;
         default:
@@ -147,7 +145,7 @@ export default {
       this.search();
     },
     openDetails(row) {
-      this.handleClick("detail", row.bulletinBoardId);
+      this.handleClick("detail", row.salesPromotionId);
     }
   },
   mounted() {

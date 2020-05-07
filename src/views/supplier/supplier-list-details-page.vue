@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-box" :class="parentData.colNum">
+  <div class="detail-box" :class="parentData.colNum" v-loading="loading">
     <div>
       <div>供应商名称</div>
       <div>{{ detailsInfo.name }}</div>
@@ -133,7 +133,8 @@ export default {
       detailsInfo: {},
       showButton: false,
       reason: "",
-      reasonVisible: false
+      reasonVisible: false,
+      loading: true
     };
   },
   mounted() {
@@ -163,8 +164,10 @@ export default {
           this.detailsInfo = res.data;
           this.detailsInfo = Object.assign({}, this.detailsInfo);
         } else {
+          this.$layer.close(this.layerid);
           this.$vb.plugin.message.error(`获取供应商信息失败:${res.code}`);
         }
+        this.loading = false;
       });
   },
   methods: {
@@ -237,5 +240,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/supplier-list-details-page.scss";
+@import "~@/assets/scss/supplier/supplier-list-details-page.scss";
 </style>

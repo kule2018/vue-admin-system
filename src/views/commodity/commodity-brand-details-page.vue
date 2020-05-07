@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-box" :class="parentData.colNum">
+  <div class="detail-box" :class="parentData.colNum" v-loading="loading">
     <div>
       <div>品牌名</div>
       <div>{{ detailsInfo.brandName }}</div>
@@ -11,7 +11,8 @@
 export default {
   data() {
     return {
-      detailsInfo: {}
+      detailsInfo: {},
+      loading: true
     };
   },
   mounted() {
@@ -20,6 +21,7 @@ export default {
       .getCommodityBrandInfo({ brandId: this.parentData.brandId })
       .then(res => {
         self.detailsInfo = res.data;
+        this.loading = false;
       });
   },
   props: {
@@ -47,5 +49,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/user-list-details-page.scss";
+@import "~@/assets/scss/user/user-list-details-page.scss";
 </style>

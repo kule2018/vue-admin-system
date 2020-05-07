@@ -1,5 +1,5 @@
 <template>
-  <div id="layerContent" class="sys-user-edit">
+  <div id="layerContent" class="sys-user-edit" v-loading="loading">
     <div class="content-panel">
       <div class="main-content">
         <el-form
@@ -272,7 +272,8 @@ export default {
       businessLicense: "",
       healthPermit: "",
       options: [],
-      baseUrl: ""
+      baseUrl: "",
+      loading: false
     };
   },
   mounted() {
@@ -281,6 +282,7 @@ export default {
       this.options = res.data;
     });
     if (_.isEqual(this.parentData.state, "update")) {
+      this.loading = true;
       this.$api.supplierManageAPI
         .getSupplierInfo({ supplierId: this.parentData.supplierId })
         .then(res => {
@@ -290,6 +292,7 @@ export default {
           this.healthPermit =
             base.defaultBaseUrl + res.data.sanitaryPermitElecChart;
           this.defaultCertificateType = res.data.certificateType;
+          this.loading = false;
         });
     }
   },
@@ -384,5 +387,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/supplier-list-edit-page.scss";
+@import "~@/assets/scss/supplier/supplier-list-edit-page.scss";
 </style>

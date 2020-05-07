@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading="loading">
     <div class="detail-box" :class="parentData.colNum">
       <div>
         <div>用户头像</div>
@@ -51,7 +51,8 @@ export default {
   data() {
     return {
       userInfo: {},
-      baseUrl: ""
+      baseUrl: "",
+      loading: true
     };
   },
   mounted() {
@@ -63,8 +64,10 @@ export default {
         if (_.isEqual(res.code, "success")) {
           this.userInfo = res.data;
         } else {
+          this.$layer.close(this.layerid);
           this.$vb.plugin.message.error(`获取用户信息失败:${res.code}`);
         }
+        this.loading = false;
       });
   },
   methods: {
@@ -146,5 +149,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/user-list-details-page.scss";
+@import "~@/assets/scss/user/user-list-details-page.scss";
 </style>

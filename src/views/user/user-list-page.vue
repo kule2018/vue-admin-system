@@ -277,5 +277,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/user-list-page.scss";
+@import "~@/assets/scss/user/user-list-page.scss";
 </style>

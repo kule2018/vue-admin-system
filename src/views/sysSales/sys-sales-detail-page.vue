@@ -1,8 +1,20 @@
 <template>
   <div class="detail-box" :class="parentData.colNum" v-loading="loading">
     <div>
-      <div>公告内容</div>
-      <div>{{ detail.content }}</div>
+      <div>活动封面</div>
+      <div>
+        <el-image
+          style="width: 100px; height: 100px"
+          v-if="detail.coverFigurePath"
+          :src="detail.coverFigurePath"
+          :preview-src-list="[detail.coverFigurePath]"
+        >
+        </el-image>
+      </div>
+    </div>
+    <div>
+      <div>活动标题</div>
+      <div>{{ detail.title }}</div>
     </div>
     <div>
       <div>开始时间</div>
@@ -12,10 +24,15 @@
       <div>结束时间</div>
       <div>{{ detail.endTime }}</div>
     </div>
+    <div>
+      <div>活动详情</div>
+      <div v-html="detail.detailContent" style="display: block;"></div>
+    </div>
   </div>
 </template>
 
 <script>
+import base from "@/api/base";
 import _ from "lodash";
 
 export default {
@@ -23,6 +40,7 @@ export default {
   data() {
     return {
       detail: {},
+      baseUrl: "",
       loading: true
     };
   },
@@ -48,16 +66,18 @@ export default {
     }
   },
   mounted() {
-    this.$api.sysBulletinBoardManageAPI
-      .getSysBulletinInfo({ bulletinBoardId: this.parentData.bulletinBoardId })
+    this.baseUrl = base.defaultBaseUrl;
+    this.$api.sysSalesManageAPI
+      .getSysSalesInfo({ salesPromotionId: this.parentData.salesPromotionId })
       .then(res => {
         if (_.isEqual(res.code, "success")) {
+          res.data.coverFigurePath = this.baseUrl + res.data.coverFigurePath;
           this.detail = res.data;
-          this.loading = false;
         } else {
           this.$layer.close(this.layerid);
-          this.$vb.plugin.message.error(`获取公告信息失败:${res.code}`);
+          this.$vb.plugin.message.error(`获取活动信息失败:${res.code}`);
         }
+        this.loading = false;
       });
   }
 };

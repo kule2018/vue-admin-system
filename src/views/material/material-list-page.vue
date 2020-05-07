@@ -307,5 +307,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~@/assets/scss/order-list-page.scss";
+@import "~@/assets/scss/order/order-list-page.scss";
 </style>
