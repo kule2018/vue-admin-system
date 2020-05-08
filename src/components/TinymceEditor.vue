@@ -22,6 +22,8 @@ import "tinymce/plugins/code";
 import "tinymce/plugins/table";
 import "tinymce/plugins/lists";
 import "tinymce/plugins/wordcount"; // 字数统计插件
+// apiBase
+import base from "@/api/base";
 
 export default {
   name: "TinymceEditor",
@@ -73,7 +75,11 @@ export default {
         menubar: false, // 最上方的菜单
         branding: false, // 水印“Powered by TinyMCE”
         images_upload_handler: (blobInfo, success) => {
-          success("data:image/jpg;base64," + blobInfo.base64());
+          let formData = new FormData();
+          formData.append("file", blobInfo.blob(), blobInfo.filename());
+          this.$api.fileManageAPI.singleFileUpload(formData).then(res => {
+            success(`${base.defaultBaseUrl}${res.data.path}`);
+          });
         }
       },
       editorValue: this.value
@@ -85,14 +91,11 @@ export default {
     }
   },
   mounted() {
-    const self = this;
     tinymce
       .init({
         placeholder: this.placeholder
       })
-      .then(() => {
-        console.log(self.value);
-      });
+      .then(() => {});
   },
   methods: {
     handleClick(e) {
