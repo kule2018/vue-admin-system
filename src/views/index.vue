@@ -27,8 +27,9 @@
           <transition name="func-menu">
             <dl class="func-menu" v-if="showFuncMenu">
               <dd><icon class="el-icon-s-custom" /><span>个性设置</span></dd>
-              <!--<dd><icon class="el-icon-s-open" /><span>主题修改</span></dd>-->
-              <dd><icon class="el-icon-lock" /><span>密码修改</span></dd>
+              <dd @click="updatePassword">
+                <icon class="el-icon-lock" /><span>密码修改</span>
+              </dd>
               <dd @click="logout">
                 <icon class="el-icon-switch-button" /><span>退出登录</span>
               </dd>
@@ -91,6 +92,7 @@ import { Icon } from "element-ui";
 import menu from "@/config/menu";
 import base from "@/api/base";
 import lodash from "lodash";
+import updatePassword from "@/views/sysUser/sys-user-update-password";
 
 export default {
   name: "index",
@@ -122,6 +124,16 @@ export default {
     },
     zoom() {
       this.isCollapse = !this.isCollapse;
+    },
+    updatePassword() {
+      this.$vb.plugin.openLayer(
+        updatePassword,
+        this,
+        { colNum: "one-col", userid: this.$store.state.userInfo.userid },
+        "密码修改",
+        520,
+        460
+      );
     },
     logout() {
       localStorage.removeItem("userInfo");

@@ -1,0 +1,6 @@
+.detail-box.one-col {
+  & > div > div:nth-of-type(1):not(.main-content) {
+    width: 28% !important;
+    flex-basis: 17%;
+  }
+}

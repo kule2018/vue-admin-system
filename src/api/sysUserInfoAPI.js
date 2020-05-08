@@ -72,6 +72,13 @@ const sysUserInfoAPI = {
       `${base.defaultBaseUrl}/sys/user/defriend`,
       params
     );
+  },
+  // 修改密码 {userid:"",oldPwd:"",newPwd:""}
+  updatePassword(params) {
+    return services._axios.post(
+      `${base.defaultBaseUrl}/sys/user/updatePwd`,
+      params
+    );
   }
 };
 

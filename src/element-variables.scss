@@ -111,12 +111,12 @@ $layer-main-width: 90%;
   &.one-col {
     padding: 10px 50px;
 
-    & > div > div:nth-of-type(1) {
-      width: 28%;
+    & > div > div:nth-of-type(1):not(.main-content) {
+      width: 30% !important;
     }
   }
 
-  & > div {
+  & > div:not(.btn-panel) {
     box-sizing: border-box;
     display: flex;
     padding: 10px 0;
@@ -131,8 +131,12 @@ $layer-main-width: 90%;
       height: 100%;
     }
 
-    & > div:nth-of-type(1) {
-      width: 130px;
+    & > div:nth-of-type(1):not(.main-content) {
+      width: 150px;
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 25px;
+      box-sizing: border-box;
     }
 
     & > div:nth-of-type(2) {
@@ -162,15 +166,15 @@ $layer-main-width: 90%;
     }
   }
 
-  &.one-col > div {
+  &.one-col > div:not(.btn-panel) {
     flex-basis: 100%;
   }
 
-  &.two-col > div {
+  &.two-col > div:not(.btn-panel) {
     flex-basis: 50%;
   }
 
-  & > .fill {
+  & > .fill:not(.btn-panel) {
     flex-basis: 100% !important;
   }
 }

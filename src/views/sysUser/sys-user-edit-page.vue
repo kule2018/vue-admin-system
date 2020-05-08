@@ -42,11 +42,13 @@
           </el-form-item>
           <el-form-item label="用户名" prop="loginName">
             <el-input
+              v-if="parentData.state === 'add'"
               v-model="form.loginName"
               placeholder="请输入用户名"
               size="small"
               clearable
             ></el-input>
+            <span v-else>{{ form.loginName }}</span>
           </el-form-item>
           <el-form-item
             label="密码"
