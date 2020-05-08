@@ -63,6 +63,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-@import "~@/assets/scss/user/user-list-details-page.scss";
-</style>
+<style scoped lang="scss"></style>

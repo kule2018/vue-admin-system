@@ -2,8 +2,17 @@
   height: calc(100% - 52px);
 
   & > div {
-    & > div:first-of-type {
-      width: 90px;
+    & > div:first-of-type:not(.main-content) {
+      flex-basis: 100px;
+      align-items: center;
     }
+  }
+
+  [required]:before {
+    content: '*';
+    color: #F56C6C;
+    position: relative;
+    margin-right: 4px;
+    margin-left: -10px;
   }
 }
