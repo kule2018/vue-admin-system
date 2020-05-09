@@ -68,10 +68,7 @@
     </div>
     <div class="fill">
       <div>商品详情</div>
-      <div
-        v-html="detailsInfo.detailContent"
-        style="height: 200px; overflow-y: auto; display: block;"
-      ></div>
+      <div v-html="detailsInfo.detailContent" style="display: block;"></div>
     </div>
   </div>
 </template>
